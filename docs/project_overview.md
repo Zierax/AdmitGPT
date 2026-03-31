@@ -4,10 +4,9 @@ AdmitGPT is a deterministic, client-side college admissions analysis engine desi
 
 ## 1. The Transparency Manifesto
 
-**"Mathematics over Magic."**
+**"Transparency over Guesswork."**
 
-AdmitGPT is built on a core principle: **Information is the ultimate gatekeeper, and mathematics should never be a secret.**
-While consulting firms sell "insider knowledge" for thousands of dollars per hour, AdmitGPT provides a calculated reality for free. Every algorithm is verifiable. Every limitation is rigorously disclosed. This isn't just an app; it’s a systematic strike against information inequality, engineered by a student for students.
+While consultants sell insider magic, AdmitGPT provides calculated reality. My logic is open-source and runs entirely in your browser. No data collection, no hidden formulas. A systematic strike against information inequality. The admissions industry thrives on fear and ambiguity. By making the math transparent, we return the power to the students. This is about leveling the playing field for everyone. Built for transparency, designed by students.
 
 ## 2. Key Features
 
@@ -28,13 +27,13 @@ AdmitGPT utilizes a native underlying `vitest` unit-testing layer checking mathe
 - Ensures zero-dataset failures or runtime integrity crashes. 
 - Verifies edge cases (missing data, pure outlier profiles).
 
-### 2.4 The "AI Bridge" PDF with Machine-Readable Context
-The generated PDF report abandons conventional "summaries" in favor of treating the output as a **high-density data artifact**.
+### 2.4 The Verification Artifact
+The generated PDF report abandons conventional "summaries" in favor of treating the output as a **high-density mathematical artifact**. 
 - **Human-Readable Traces:** Visual bell-curves, explicit formula descriptions, cluster analyses, and calculated Euclidean profiles matching.
-- **Machine-Readable Schema Dump:** Includes a rigorous structured JSON block internally embedding the matrix weights, vectors, raw deltas, and intermediate scoring steps explicitly designed for future consumption by external optimization AI, fundamentally prioritizing LLM readability.
+- **Audit Cryptography:** AES-256 signatures are integrated straight into the PDF to preserve structural integrity when shared without central databases.
 
-### 2.5 Optional Local LLM Interpreters
-Instead of acting as a wrapper app, AdmitGPT allows users to locally store their own OpenAI/Gemini/Groq keys, directly leveraging the compiled math tables and vector metrics without their raw data leaving the client framework context.
+### 2.5 Server-Side Privacy Isolation
+All admissions evaluations are 100% processed without leaving the client device browser. The only server-side operation operates a self-contained SQLite `messages.db` mechanism strictly dedicated to private outlier-founder communication pathways, protecting personal identities completely from third-party vendor logging.
 
 ### 2.6 CommonApp Auto-Extraction
 Permits uploading `.pdf` files to auto-extract GPAs, tests, and intended majors via heuristics, preventing manual workflow bloat.
@@ -43,9 +42,9 @@ Permits uploading `.pdf` files to auto-extract GPAs, tests, and intended majors 
 
 - **Frontend:** Next.js (app structure), TypeScript, Tailwind CSS (brutalist design).
 - **In-Browser Processing:** Advanced CSV handling and `pdfjs-dist` file evaluations.
-- **Reporting:** `jspdf` vector plotting intertwined with JSON injection.
+- **Reporting:** `jspdf` vector plotting for offline PDF generation.
+- **Data Persistence:** Local `better-sqlite3` environment for Zero-Tracking secure communication.
 - **Testing:** `vitest` logic suite ensuring formula validation globally.
-- **Privacy Core:** 100% Zero-Data architecture.
 
 ## 4. Getting Started
 

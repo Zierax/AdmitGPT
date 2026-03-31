@@ -139,16 +139,15 @@ export function buildInvitationMailto(
     profileLinks: string,
     spikeScore: number,
 ): string {
-    const header = getEmailHeader();
     const recipient = "dariangosztafio@gmail.com";
-    const subject = encodeURIComponent(`${header} | ${name} | Spike: ${spikeScore.toFixed(1)}`);
+    const subject = encodeURIComponent(`AdmitGPT Audit | ${name} | Spike: ${spikeScore.toFixed(1)}`);
     const body = encodeURIComponent(
-        `Outlier Invitation Accepted\n` +
+        `Outlier Invitation\n` +
         `Name: ${name}\n` +
         `Email: ${email}\n` +
         `Score: ${spikeScore.toFixed(1)}\n\n` +
         `Links: ${profileLinks}\n\n` +
-        `Sent via AdmitGPT v1.0`
+        `Sent via AdmitGPT`
     );
     return `mailto:${recipient}?subject=${subject}&body=${body}`;
 }
@@ -159,13 +158,5 @@ export function buildInvitationMailto(
 export function buildVulnerabilityReportMailto(
     description: string,
 ): string {
-    const subject = encodeURIComponent('AdmitGPT Logic Vulnerability Report');
-    const body = encodeURIComponent(
-        `Logic Vulnerability Report\n` +
-        `━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n` +
-        `Description:\n${description}\n\n` +
-        `Reported at: ${new Date().toISOString()}\n` +
-        `Source: AdmitGPT In-App Vulnerability Reporter`
-    );
-    return `mailto:dariangosztafio@gmail.com?subject=${subject}&body=${body}`;
+    return `mailto:dariangosztafio@gmail.com`;
 }

@@ -262,7 +262,7 @@ export function computeSpikeScore(extracurriculars: UserEC[], awards: UserAward[
 
     total += diversityBonus + depthBonus;
 
-    return Math.min(total, 15.0);
+    return total;
 }
 
 /**

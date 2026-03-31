@@ -14,12 +14,6 @@ interface HeaderProps {
 export default function Header({ onBack, showBack, onDownloadPDF, showDownloadPDF }: HeaderProps) {
   const [isWhyOpen, setIsWhyOpen] = useState(false);
 
-  const reportLogicFlaw = () => {
-    const subject = encodeURIComponent("AdmitGPT: Logic Discrepancy Report");
-    const body = encodeURIComponent("Describe the logical discrepancy found in the GPA/SAT/Z-Score calculations here... [User Findings]. Provide your name for the Hall of Fame credit.");
-    window.location.href = `mailto:dariangosztafio@gmail.com?subject=${subject}&body=${body}`;
-  };
-
   return (
     <>
       <nav className="flex items-center justify-between px-6 md:px-10 py-5 border-b border-white/5 sticky top-0 z-50 bg-black/40 backdrop-blur-3xl shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
@@ -158,19 +152,9 @@ export default function Header({ onBack, showBack, onDownloadPDF, showDownloadPD
 
                 <div className="pt-8 border-t border-white/10 grid sm:grid-cols-2 gap-8 md:gap-12">
                   <div className="space-y-4">
-                    <div className="flex items-center gap-2 text-[var(--color-primary)]">
-                      <Shield size={20} />
-                      <h3 className="font-mono font-bold tracking-tight uppercase">Audit Feedback</h3>
-                    </div>
                     <p className="text-[10px] md:text-xs text-[var(--color-muted)] leading-relaxed">
-                      If you find a discrepancy in the GPA/SAT/Z-Score logic, report it. I credit every researcher who improves the engine.
+                      Built for transparency, designed by students.
                     </p>
-                    <button 
-                      onClick={reportLogicFlaw}
-                      className="btn-primary w-full !text-[11px]"
-                    >
-                      Report Logic Error
-                    </button>
                   </div>
                   <div className="space-y-4 flex flex-col justify-end">
                     <div className="flex items-center gap-4 text-[var(--color-muted)] mb-2">

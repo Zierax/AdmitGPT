@@ -1,7 +1,7 @@
 # AdmitGPT v1.0
-### The High-Stakes Admissions Authority & Verification Engine
+### Transparency over Guesswork
 
-AdmitGPT is a transparent, mathematically rigorous, and fully client-side college admissions analytical engine. It rejects "black box" algorithms in favor of a **Gated Multiplicative Model** that balances academic hard-gates with high-impact "Spike" achievements.
+While consultants sell insider magic, AdmitGPT provides calculated reality. My logic is open-source and runs entirely in your browser. No data collection, no hidden formulas. A systematic strike against information inequality. The admissions industry thrives on fear and ambiguity. By making the math transparent, we return the power to the students. This is about leveling the playing field for everyone. Built for transparency, designed by students.
 
 ---
 
@@ -9,9 +9,9 @@ AdmitGPT is a transparent, mathematically rigorous, and fully client-side colleg
 
 - **Gated Multiplicative Architecture**: Enforces academic rigor while allowing outliers to shine through specialized "Spike" modeling.
 - **Identity & Verification Engine**: Every result is cryptographically signed. Standard students receive an "Audit Signature," while high-achievement outliers receive a premium "Candidate Excellence Certificate."
-- **Full Privacy Protection**: All calculations run locally in your browser. Sensitive data can be masked while maintaining a valid cryptographic audit trail.
+- **Full Privacy Protection**: All calculations run locally in your browser. Zero tracking. The database runs locally on the application server.
 - **Transparency First**: Every formula, weight, and limitation is disclosed. Access the [Transparency Engine](/transparency) to see the math behind the numbers.
-- **Peer Invitation System**: High-achievement outliers gain a direct "Peer Invitation" channel to the creator for personal mentorship and story-sharing.
+- **Private Gateway**: High-achievement outliers gain a direct, securely encrypted "Private Invitation" channel to the creator via a local SQLite runtime designed with absolute privacy in mind.
 
 ##  Technology Stack
 
@@ -19,6 +19,7 @@ AdmitGPT is a transparent, mathematically rigorous, and fully client-side colleg
 - **Security**: AES-256 CTR (CryptoJS) for Audit Signatures
 - **PDF Core**: jsPDF for secure, cryptographically-signed report generation
 - **Math Engine**: Multi-dimensional probability modeling with k-NN clustering across a 5.5MB dataset (~10,000+ profiles)
+- **Data Persistence**: Local SQLite (`better-sqlite3`) for private in-app outlier messaging.
 
 ##  Getting Started Locally
 

@@ -626,15 +626,9 @@ function LandingPage({
           <p>© 2026 AdmitGPT. Built for the Transparency Movement.</p>
           <div className="flex gap-4">
             <a href="/transparency" className="hover:text-[var(--color-foreground)] transition-colors">Transparency Report</a>
-            <button
-              onClick={() => {
-                const mailto = buildVulnerabilityReportMailto("General System Vulnerability / Logic Error Report");
-                window.location.href = mailto;
-              }}
-              className="hover:text-[var(--color-foreground)] transition-colors flex items-center gap-1"
-            >
-              <Bug size={12} /> Report Vulnerability
-            </button>
+            <a href="mailto:dariangosztafio@gmail.com" className="hover:text-[var(--color-foreground)] transition-colors flex items-center gap-1">
+              <Mail size={12} /> Contact Us
+            </a>
             <a href="https://github.com/Zierax/AdmitGPT" className="hover:text-[var(--color-foreground)] transition-colors">Source Code</a>
           </div>
         </div>
@@ -828,6 +822,16 @@ function FormPage({
 function Step1Demographics({ profile, setProfile }: { profile: UserProfile; setProfile: React.Dispatch<React.SetStateAction<UserProfile>> }) {
   return (
     <div className="space-y-5">
+      <div>
+        <label className="block text-sm font-medium mb-2">Student Name (For Certificate)</label>
+        <input
+          type="text"
+          className="input-field"
+          placeholder="Enter your full name"
+          value={profile.name || ""}
+          onChange={(e) => setProfile({ ...profile, name: e.target.value })}
+        />
+      </div>
       <div>
         <label className="block text-sm font-medium mb-2">Are you an international applicant?</label>
         <div className="flex gap-4 mb-6">
@@ -1872,7 +1876,7 @@ function ResultsPage({
                     <div className="grid grid-cols-3 gap-1 px-4 py-5 rounded-lg border border-white/5 bg-black/60 font-sans text-[10px] shadow-inner">
                       <div className="flex flex-col gap-1 border-r border-white/5 pr-4">
                         <span className="text-[var(--color-muted)] uppercase tracking-wider font-bold">Analysis Rating</span>
-                        <span className="text-lg font-bold text-white tracking-tight font-sans">{spikeScore.toFixed(2)}<span className="text-xs text-white/30 ml-1">/ 15.0</span></span>
+                        <span className="text-lg font-bold text-white tracking-tight font-sans">{spikeScore.toFixed(2)}</span>
                       </div>
                       <div className="flex flex-col gap-1 border-r border-white/5 px-4">
                         <span className="text-[var(--color-muted)] uppercase tracking-wider font-bold">Profile Tier</span>
@@ -1918,26 +1922,10 @@ function ResultsPage({
 
                       {isSpikeOutlier && (
                         <button
-                          onClick={() => {
-                            const profileLinks = [
-                              profile.github ? `GitHub: ${profile.github}` : "",
-                              profile.instagram ? `Instagram: ${profile.instagram}` : "",
-                              profile.linkedin ? `LinkedIn: ${profile.linkedin}` : ""
-                            ].filter(Boolean).join(", ");
-
-                            const mailto = buildInvitationMailto(
-                              profile.name || "Anonymous",
-                              "user@example.com",
-                              profileLinks || "No links provided",
-                              spikeScore
-                            );
-
-                            window.location.href = mailto;
-                            alert("Invitation Prepared. Please hit 'Send' in your mail client.");
-                          }}
-                          className="btn-primary !py-2.5 !px-6 !text-[11px] font-black uppercase tracking-[0.15em] !bg-[var(--color-primary)] !text-black !border-[var(--color-primary)] hover:brightness-110 shadow-[0_10px_20px_rgba(191,255,0,0.15)] flex items-center justify-center gap-2"
+                          onClick={() => document.getElementById('personal-invitation')?.scrollIntoView({ behavior: 'smooth' })}
+                          className="btn-primary !py-2.5 !px-6 !text-[11px] font-black uppercase tracking-[0.15em] !bg-[var(--color-primary)] !text-black !border-[var(--color-primary)] hover:brightness-110 shadow-[0_10px_20px_rgba(191,255,0,0.15)] flex items-center justify-center gap-2 no-underline"
                         >
-                          <Mail size={12} /> Peer Invitation
+                          <Mail size={12} /> Claim Invitation
                         </button>
                       )}
                     </div>
@@ -2108,94 +2096,7 @@ function ResultsPage({
           </div>
         )}
 
-        {/* AI Mode Toggle */}
-        <div className="glass-card p-6 animate-fade-in-up">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-bold flex items-center gap-2">
-              <Brain size={18} className="text-[var(--color-accent)]" />
-              AI-Enhanced Analysis (Optional)
-            </h3>
-            <button
-              onClick={() => setAiEnabled(!aiEnabled)}
-              className={`relative w-12 h-6 rounded-full transition-colors ${aiEnabled ? "bg-[var(--color-primary)]" : "bg-[var(--color-border)]"
-                }`}
-            >
-              <div
-                className={`absolute top-0.5 w-5 h-5 rounded-full bg-white transition-transform ${aiEnabled ? "translate-x-6" : "translate-x-0.5"
-                  }`}
-              />
-            </button>
-          </div>
-
-          {aiEnabled && (
-            <div className="space-y-4 animate-slide-in">
-              <p className="text-xs text-[var(--color-muted)]">
-                The math engine always runs first. AI provides additional interpretation.
-                Your API key is stored in your browser only — never transmitted to us.
-              </p>
-
-              <div className="grid grid-cols-3 gap-3">
-                {(["gemini", "openai", "groq"] as AIProvider[]).map((provider) => (
-                  <button
-                    key={provider}
-                    onClick={() => {
-                      const savedKey = getAPIKey(provider);
-                      const defaultModel = provider === 'gemini' ? 'gemini-2.5-flash' :
-                        provider === 'openai' ? 'gpt-4o' :
-                          'llama-3.1-70b-versatile';
-                      setAiConfig({ ...aiConfig, provider, apiKey: savedKey || "", model: defaultModel });
-                    }}
-                    className={`py-2 rounded-lg border text-xs font-medium transition-all ${aiConfig.provider === provider
-                      ? "border-[var(--color-primary)] bg-[var(--color-primary-glow)] text-[var(--color-primary)]"
-                      : "border-[var(--color-border)] text-[var(--color-muted)]"
-                      }`}
-                  >
-                    {provider === "gemini" ? "Gemini" : provider === "openai" ? "GPT-4o" : "Groq"}
-                  </button>
-                ))}
-              </div>
-
-              <input
-                type="password"
-                className="input-field"
-                placeholder={`Enter your ${aiConfig.provider} API key`}
-                value={aiConfig.apiKey}
-                onChange={(e) => setAiConfig({ ...aiConfig, apiKey: e.target.value })}
-              />
-
-              <button
-                onClick={onRunAI}
-                disabled={!aiConfig.apiKey || aiLoading}
-                className="btn-primary w-full"
-              >
-                {aiLoading ? (
-                  <>
-                    <div className="loading-spinner !w-4 !h-4 !border-2" />
-                    Analyzing...
-                  </>
-                ) : (
-                  <>
-                    <Sparkles size={16} /> Run AI Analysis
-                  </>
-                )}
-              </button>
-
-              {aiResults.length > 0 && (
-                <div className="space-y-3">
-                  {aiResults.map((r, i) => (
-                    <div key={i} className="p-4 rounded-lg border border-[var(--color-accent)] bg-[rgba(139,92,246,0.05)]">
-                      <h4 className="font-semibold text-sm text-[var(--color-accent)]">{r.schoolName}</h4>
-                      {r.sharperEstimate && <p className="text-sm mt-1"><strong>Estimate:</strong> {r.sharperEstimate}</p>}
-                      {r.decisionDecider && <p className="text-sm mt-1"><strong>Decision Decider:</strong> {r.decisionDecider}</p>}
-                      {r.actionPlan && <p className="text-sm mt-1"><strong>Action:</strong> {r.actionPlan}</p>}
-                      {r.reasoning && <p className="text-xs text-[var(--color-muted)] mt-2">{r.reasoning}</p>}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+          {/* AI Mode Toggle Removed */}
 
         {/* Personal Invitation — Personal Connection */}
         {results.length > 0 && results[0].spikeScore > 6.5 && results[0].outlierClassification !== 'STANDARD' && (
@@ -2211,18 +2112,6 @@ function ResultsPage({
               <a href="/transparency" className="inline-flex items-center gap-1 text-[var(--color-primary)] hover:underline">
                 <Eye size={12} /> Transparency
               </a>
-              <button
-                onClick={() => {
-                  const mailto = buildVulnerabilityReportMailto(
-                    `Logic Discrepancy Report\nName: ${profile.name}\nMajor: ${profile.intendedMajor}\nSAT: ${profile.sat}\nGPA: ${profile.unweightedGPA}`
-                  );
-                  window.location.href = mailto;
-                  alert("Report prepared in your mail client. Please hit 'Send' manually.");
-                }}
-                className="inline-flex items-center gap-1 text-[var(--color-warning)] hover:underline"
-              >
-                <Bug size={12} /> Report Discrepancy
-              </button>
             </div>
 
             <div className="hidden sm:block h-3 w-px bg-white/10 mx-2" />
@@ -2452,25 +2341,55 @@ function OutlierInvitation({ spikeScore, classification }: { spikeScore: number;
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [profileLinks, setProfileLinks] = useState('');
+  const [message, setMessage] = useState('');
   const [accepted, setAccepted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
   const themeInfo = getOutlierTheme(classification);
 
-  const handleAccept = () => {
-    if (!name.trim() || !email.trim()) {
-      alert('Please enter your name and email to accept the invitation.');
+  const handleAccept = async () => {
+    if (!name.trim() || !message.trim()) {
+      setError('Name and message are required.');
       return;
     }
-    const mailto = buildInvitationMailto(name, email, profileLinks, spikeScore);
-    window.location.href = mailto;
-    setAccepted(true);
+    
+    setIsSubmitting(true);
+    setError('');
+
+    try {
+      const res = await fetch('/api/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email: email || 'N/A',
+          message,
+          links: profileLinks,
+          score: spikeScore,
+          classification: classification,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to submit message.');
+      }
+
+      setAccepted(true);
+    } catch (err: any) {
+      setError(err.message || 'Something went wrong.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div id="personal-invitation" className="glass-card p-8 animate-fade-in-up border-l-4 border-l-[var(--color-accent)] scroll-mt-8 shadow-2xl">
+    <div id="personal-invitation" className="glass-card p-8 animate-fade-in-up border-l-4 border-l-[var(--color-accent)] scroll-mt-8 shadow-2xl relative">
       <div className="flex items-center gap-3 mb-4">
         <Heart size={24} className="text-[var(--color-accent)]" />
-        <h3 className="text-xl font-black font-sans text-white tracking-tight">Personal Invitation</h3>
+        <h3 className="text-xl font-black font-sans text-white tracking-tight">Private Invitation</h3>
       </div>
 
       {themeInfo.message && (
@@ -2487,7 +2406,7 @@ function OutlierInvitation({ spikeScore, classification }: { spikeScore: number;
       <div className="p-5 bg-[rgba(255,255,255,0.03)] border border-[var(--color-border)] mb-6">
         <p className="text-sm text-[var(--color-foreground)] leading-relaxed mb-4">
           So you seem to have great achievements and skills. I want to know you personally and hear your story by my own ears — with no systems and calculations.
-          If you agree, you can accept by writing your name, email, and profile links below. They will be sent to me directly.
+          If you agree, you can accept by writing your message and links below. 
         </p>
         <p className="text-[10px] text-[var(--color-muted)] font-sans uppercase tracking-widest font-bold">
           — Ziad Salah, Creator of AdmitGPT
@@ -2498,47 +2417,23 @@ function OutlierInvitation({ spikeScore, classification }: { spikeScore: number;
         <div className="space-y-4">
           <div className="text-center p-6 border border-[var(--color-success)] bg-[rgba(16,185,129,0.05)] rounded-lg">
             <Check size={32} className="text-[var(--color-success)] mx-auto mb-2" />
-            <p className="text-sm font-bold text-[var(--color-success)] uppercase tracking-widest">Invitation Accepted</p>
-            <p className="text-xs text-[var(--color-muted)] mt-2">Your email client should have opened. If not, use the manual transfer button below.</p>
+            <p className="text-sm font-bold text-[var(--color-success)] uppercase tracking-widest">Message Securely Sent</p>
+            <p className="text-xs text-[var(--color-muted)] mt-2">Your data was saved locally on the private server. It has not been sent via external email providers.</p>
           </div>
-          <button
-            onClick={async () => {
-              const body = `Personal Invitation Accepted\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nName: ${name}\nEmail: ${email}\nAnalysis Rating: ${spikeScore.toFixed(1)}\nProfile Links: ${profileLinks}\n\nThis person has accepted your personal invitation through AdmitGPT v1.0.`;
-              try {
-                if (navigator.clipboard) {
-                  await navigator.clipboard.writeText(body);
-                  alert("Invitation details copied to clipboard. You can now manually send them to the creator.");
-                } else {
-                  const textArea = document.createElement("textarea");
-                  textArea.value = body;
-                  document.body.appendChild(textArea);
-                  textArea.select();
-                  document.execCommand('copy');
-                  document.body.removeChild(textArea);
-                  alert("Invitation details copied to clipboard.");
-                }
-              } catch (e) {
-                alert("Failed to copy. Please copy the text from the screen.");
-              }
-            }}
-            className="w-full btn-secondary text-xs"
-          >
-            <Lock size={12} className="mr-2" /> Copy Invitation Details Manually
-          </button>
         </div>
       ) : (
         <div className="space-y-3">
           <input
             type="text"
             className="input-field"
-            placeholder="Your Full Name"
+            placeholder="Your Full Name *"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <input
             type="email"
             className="input-field"
-            placeholder="Your Email Address"
+            placeholder="Your Email Address (Optional)"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -2549,16 +2444,26 @@ function OutlierInvitation({ spikeScore, classification }: { spikeScore: number;
             value={profileLinks}
             onChange={(e) => setProfileLinks(e.target.value)}
           />
+          <textarea
+            className="input-field min-h-[120px] resize-none"
+            placeholder="Introduce yourself, your story, your vision... *"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+          
+          {error && <p className="text-[11px] text-[var(--color-danger)] font-bold">{error}</p>}
+          
           <button
             onClick={handleAccept}
-            disabled={!name.trim() || !email.trim()}
-            className="btn-primary w-full !bg-white !text-black !border-white hover:!bg-[var(--color-primary)] disabled:opacity-30"
+            disabled={!name.trim() || !message.trim() || isSubmitting}
+            className="btn-primary w-full !bg-white !text-black !border-white hover:!bg-[var(--color-primary)] disabled:opacity-30 transition-all font-bold"
           >
-            <Mail size={16} /> Accept Invitation
+            {isSubmitting ? 'Transmitting Data...' : <><Shield size={16} /> Submit Securely</>}
           </button>
-          <p className="text-[10px] text-[var(--color-muted)] font-sans text-center uppercase tracking-wider font-bold">
-            {isLocalMode() ? 'OFFLINE_MODE — Credentials not configured' : 'Secure Transmission • No external logging'}
-          </p>
+          
+          <div className="flex items-center justify-center gap-2 text-[10px] text-[var(--color-muted)] font-sans uppercase tracking-wider font-bold mt-2">
+            <Lock size={10} /> 100% Private Database — No Third Parties
+          </div>
         </div>
       )}
     </div>

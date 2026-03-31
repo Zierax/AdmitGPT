@@ -37,11 +37,10 @@ export default function TransparencyPage() {
             </nav>
 
             <div className="max-w-3xl mx-auto px-6 py-8 space-y-6">
-                <div className="text-center mb-8">
-                    <h1 className="text-3xl font-extrabold glow-text mb-3">Every Formula. Every Limitation.</h1>
-                    <p className="text-[var(--color-muted)]">
-                        If we can&apos;t show you how the number was calculated,<br />
-                        we have no right to show you the number.
+                <div className="text-center mb-10 max-w-2xl mx-auto">
+                    <h1 className="text-3xl font-black text-white tracking-tighter uppercase mb-4 underline decoration-[var(--color-primary)] decoration-4 underline-offset-4 italic">Transparency over Guesswork.</h1>
+                    <p className="text-sm text-[var(--color-muted)] leading-relaxed italic">
+                        While consultants sell insider magic, AdmitGPT provides calculated reality. My logic is open-source and runs entirely in your browser. No data collection, no hidden formulas. A systematic strike against information inequality. The admissions industry thrives on fear and ambiguity. By making the math transparent, we return the power to the students. This is about leveling the playing field for everyone. Built for transparency, designed by students.
                     </p>
                 </div>
 

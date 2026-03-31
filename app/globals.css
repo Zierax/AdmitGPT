@@ -360,4 +360,10 @@
   ::-webkit-scrollbar-thumb:hover {
     background: var(--color-muted);
   }
+
+  /* Fix for select option background color */
+  select option {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
 }
