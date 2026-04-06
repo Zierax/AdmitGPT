@@ -1,0 +1,11 @@
+{
+  "name": "admitgpt",
+  "compatibility_date": "2026-04-06",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "admitgpt_db",
+      "database_id": "63a6d6a2-d56f-4d69-a5bb-fbbf0d57838a" 
+    }
+  ]
+}
