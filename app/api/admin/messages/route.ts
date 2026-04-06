@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getMessages, updateMessageStatus, deleteMessage } from '@/lib/db';
-
+export const runtime = 'edge';
 // Require Admin Passcode Header for all requests
 function isAuthenticated(req: Request) {
     const passcode = req.headers.get('x-admin-passcode');
