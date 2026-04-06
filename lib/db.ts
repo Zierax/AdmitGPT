@@ -10,8 +10,8 @@ export interface MessageRecord {
     timestamp: string;
 }
 
-export async function insertMessage(db: D1Database, data: any) {
-    return await db.prepare(`
+export async function insertMessage(db: any, data: any) {
+    const result = await db.prepare(`
         INSERT INTO messages (name, email, message, links, score, classification)
         VALUES (?, ?, ?, ?, ?, ?)
     `).bind(
@@ -22,17 +22,21 @@ export async function insertMessage(db: D1Database, data: any) {
         data.score || 0,
         data.classification || 'STANDARD'
     ).run();
+    
+    return { success: true, id: result.meta.last_row_id };
 }
 
-export async function getMessages(db: D1Database) {
+export async function getMessages(db: any) {
     const { results } = await db.prepare('SELECT * FROM messages ORDER BY timestamp DESC').all();
-    return results as unknown as MessageRecord[];
+    return results as MessageRecord[];
 }
 
-export async function updateMessageStatus(db: D1Database, id: number, status: string) {
-    return await db.prepare('UPDATE messages SET status = ? WHERE id = ?').bind(status, id).run();
+export async function updateMessageStatus(db: any, id: number, status: string) {
+    await db.prepare('UPDATE messages SET status = ? WHERE id = ?').bind(status, id).run();
+    return { success: true };
 }
 
-export async function deleteMessage(db: D1Database, id: number) {
-    return await db.prepare('DELETE FROM messages WHERE id = ?').bind(id).run();
+export async function deleteMessage(db: any, id: number) {
+    await db.prepare('DELETE FROM messages WHERE id = ?').bind(id).run();
+    return { success: true };
 }
