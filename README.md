@@ -1,3 +1,9 @@
+**All time Users: ~6000**
+
+**Traction 13-20/may/2026 1674 new user user**
+<img width="1655" height="883" alt="image" src="https://github.com/user-attachments/assets/26040882-724e-4ed9-8a08-307a1bc827a0" />
+
+
 # AdmitGPT v1.0
 ### Transparency over Guesswork
 
