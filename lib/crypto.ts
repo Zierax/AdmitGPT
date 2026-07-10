@@ -33,6 +33,8 @@ function classificationToCode(c: OutlierClassification): number {
         case 'STRATEGIC_ELITE_SCHOLAR': return 2;
         case 'RADICAL_IMPACT_ARCHITECT': return 3;
         case 'ABSOLUTE_INTELLIGENCE_PHENOMENON': return 4;
+        case 'TRANSCENDENT': return 5;
+        case 'SINGULARITY': return 6;
         default: return 0;
     }
 }
@@ -43,6 +45,8 @@ function codeToClassification(code: number): OutlierClassification {
         case 2: return 'STRATEGIC_ELITE_SCHOLAR';
         case 3: return 'RADICAL_IMPACT_ARCHITECT';
         case 4: return 'ABSOLUTE_INTELLIGENCE_PHENOMENON';
+        case 5: return 'TRANSCENDENT';
+        case 6: return 'SINGULARITY';
         default: return 'STANDARD';
     }
 }
@@ -145,6 +149,8 @@ export function getClassificationName(code: number): string {
         case 'STRATEGIC_ELITE_SCHOLAR': return 'Strategic Elite Scholar';
         case 'RADICAL_IMPACT_ARCHITECT': return 'Radical Impact Architect';
         case 'ABSOLUTE_INTELLIGENCE_PHENOMENON': return 'Absolute Intelligence Phenomenon';
+        case 'TRANSCENDENT': return 'Transcendent';
+        case 'SINGULARITY': return 'Singularity';
         default: return 'Standard Profile';
     }
 }

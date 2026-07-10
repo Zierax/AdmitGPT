@@ -242,12 +242,14 @@ export function computeSpikeScore(extracurriculars: UserEC[], awards: UserAward[
             // CORE FORMULA: S = Σ(W × T × R × P × D × V) × C
             const itemBase = W * T * R * P * D * V;
 
-            // SATURATION LOGIC: Prevent "infinite" scores while rewarding extreme outliers.
-            // Items start to hit diminishing returns after 10.0 base points.
-            const itemContribution = (itemBase > 10.0 ? 10.0 + Math.sqrt(itemBase - 10.0) : itemBase) * C;
+            // SATURATION LOGIC: Prevent runaway scores while preserving differentiation
+            // at the top end. Diminishing returns begin after 10.0 base points, but the
+            // asymptotic term keeps growing so extreme outliers remain distinct.
+            const itemContribution = (itemBase > 10.0
+                ? 10.0 + 2 * Math.log1p(itemBase - 10.0)
+                : itemBase) * C;
 
-            // SCALING FACTOR: 3.5 -> 5.5
-            // Increased to create more "room" for differentiation at the top end.
+            // SCALING FACTOR: keeps the curve readable while leaving room for outlying spikes.
             total += itemContribution / 5.5;
         }
     }
@@ -283,6 +285,10 @@ export function classifyOutlier(
     const isLowAcademic = (gpa !== null && gpa < 3.0) || (sat !== null && sat < 1200);
     const isHighAcademic = (gpa !== null && gpa >= 3.7) && (sat === null || sat >= 1400);
 
+    // Singularity — off the charts; the rarest tier (no artificial ceiling)
+    if (spikeScore > 25) return 'SINGULARITY';
+    // Transcendent — extreme, sustained multi-domain impact
+    if (spikeScore > 18) return 'TRANSCENDENT';
     // The Black Swan — Absolute Intelligence Phenomenon
     if (spikeScore > 13.5) return 'ABSOLUTE_INTELLIGENCE_PHENOMENON';
     // Radical Impact Architect — any academic baseline
@@ -327,6 +333,20 @@ export function getOutlierTheme(classification: OutlierClassification): { theme:
                 color: 'text-[var(--color-danger)]',
                 description: 'The "Black Swan" event. A statistical outlier so extreme it transcends standard predictive models. You possess 0.01% execution power.',
                 message: 'To the mind that transcends boundaries: Your results place you in the 0.01%. You are not just a high-achiever; you are a Phenomenon.'
+            };
+        case 'TRANSCENDENT':
+            return {
+                theme: 'Cosmic / Iridescent',
+                color: 'text-[var(--color-accent)]',
+                description: 'Transcendent impact. Your spike compounds across domains — each achievement amplifies the next. You are operating several standard deviations beyond the applicant pool.',
+                message: 'Few profiles ever reach this band. Your execution is not merely high — it is self-reinforcing across fields.'
+            };
+        case 'SINGULARITY':
+            return {
+                theme: 'Pure Energy / White Hot',
+                color: 'text-[var(--color-primary)]',
+                description: 'The Singularity. A once-in-a-generation convergence of spike, depth, and breadth. The model can no longer meaningfully bound your potential.',
+                message: 'You are the outlier the model was built to find. There is no higher tier — only forward.'
             };
         case 'DATA_ANOMALY':
             return {
@@ -858,9 +878,9 @@ function determineProtocol(
 
         return {
             protocol: 'GAME_MAKER',
-            // BUG FIX: Spike Weight scaled to 0.35 Logit modifier (so 15.0 * 0.35 = 5.25 logit max)
+            // Spike Weight scaled to 0.35 Logit modifier so the real spike magnitude drives the uplift.
             weights: { academicWeight: acWeight, spikeWeight: 0.35 },
-            adjustedSpikeScore: 15.0,
+            adjustedSpikeScore: spikeScore,
             confidenceLabel: 'GLOBAL_ASSET_DETECTED',
         };
     }

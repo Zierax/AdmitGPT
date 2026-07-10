@@ -170,7 +170,7 @@ function generateIdentityVerificationPage(doc: jsPDF, profile: UserProfile, spik
 
     doc.setTextColor(...COLORS.dark);
     doc.setFont('courier', 'bold');
-    doc.text(`${spikeScore.toFixed(2)} / 15.0`, 90, dataY + 10);
+    doc.text(`${spikeScore.toFixed(2)}`, 90, dataY + 10);
     doc.text(classification.replace(/_/g, ' '), 90, dataY + 20);
     doc.text(new Date().toLocaleDateString('en-CA'), 90, dataY + 30);
 

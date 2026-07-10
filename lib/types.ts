@@ -192,7 +192,9 @@ export type OutlierClassification =
     | 'NON_CONFORMIST_VISIONARY'     // Spike > 8 | Low GPA/SAT
     | 'STRATEGIC_ELITE_SCHOLAR'       // Spike > 6.5 | High GPA/SAT
     | 'RADICAL_IMPACT_ARCHITECT'      // Spike > 12 | Any Academic Baseline
-    | 'ABSOLUTE_INTELLIGENCE_PHENOMENON' // Spike > 14 | The Black Swan
+    | 'ABSOLUTE_INTELLIGENCE_PHENOMENON' // Spike > 13.5 | The Black Swan
+    | 'TRANSCENDENT'                  // Spike > 18 | Sustained multi-domain impact
+    | 'SINGULARITY'                   // Spike > 25 | The rarest tier (no ceiling)
     | 'DATA_ANOMALY'                   // International Non-Standard or Insufficient Data
     | 'STANDARD';                     // Normal profile
 
