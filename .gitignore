@@ -44,3 +44,6 @@ next-env.d.ts
 
 # sqlite db
 *.db
+
+# publication (private/unpublished assets)
+/publication/

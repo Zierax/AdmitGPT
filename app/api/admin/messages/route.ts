@@ -5,9 +5,9 @@ export const runtime = 'edge';
 
 function isAuthenticated(req: Request) {
     const passcode = req.headers.get('x-admin-passcode');
-    const expectedPasscode = process.env.NEXT_PUBLIC_PASSCODE_OF_OUTLINERS;
-    
-    if (!expectedPasscode || passcode !== expectedPasscode) {
+    const expectedPasscode = process.env.PASSCODE_OF_OUTLINERS;
+
+    if (!expectedPasscode || !passcode || passcode !== expectedPasscode) {
         return false;
     }
     return true;

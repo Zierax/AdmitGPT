@@ -15,9 +15,9 @@ While consultants sell insider magic, AdmitGPT provides calculated reality. My l
 
 - **Gated Multiplicative Architecture**: Enforces academic rigor while allowing outliers to shine through specialized "Spike" modeling.
 - **Identity & Verification Engine**: Every result is cryptographically signed. Standard students receive an "Audit Signature," while high-achievement outliers receive a premium "Candidate Excellence Certificate."
-- **Full Privacy Protection**: All calculations run locally in your browser. Zero tracking. The database runs locally on the application server.
+- **Full Privacy Protection**: All calculations run locally in your browser. Zero tracking. Only opt-in outlier messages are persisted, in a Cloudflare D1 database.
 - **Transparency First**: Every formula, weight, and limitation is disclosed. Access the [Transparency Engine](/transparency) to see the math behind the numbers.
-- **Private Gateway**: High-achievement outliers gain a direct, securely encrypted "Private Invitation" channel to the creator via a local SQLite runtime designed with absolute privacy in mind.
+- **Private Gateway**: High-achievement outliers gain a direct "Private Invitation" channel to the creator, backed by a Cloudflare D1 (SQLite) datastore designed with privacy in mind.
 
 ##  Technology Stack
 
@@ -25,7 +25,7 @@ While consultants sell insider magic, AdmitGPT provides calculated reality. My l
 - **Security**: AES-256 CTR (CryptoJS) for Audit Signatures
 - **PDF Core**: jsPDF for secure, cryptographically-signed report generation
 - **Math Engine**: Multi-dimensional probability modeling with k-NN clustering across a 5.5MB dataset (~10,000+ profiles)
-- **Data Persistence**: Local SQLite (`better-sqlite3`) for private in-app outlier messaging.
+- **Data Persistence**: Cloudflare D1 (SQLite at the edge) for private in-app outlier messaging.
 
 ##  Getting Started Locally
 

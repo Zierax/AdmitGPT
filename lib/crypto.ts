@@ -10,6 +10,8 @@ import { CertificateSignature, OutlierClassification } from './types';
 // We access them directly without 'process' guards to allow the bundler to perform literal replacement.
 const PASSCODE = process.env.NEXT_PUBLIC_PASSCODE_OF_OUTLINERS || '';
 const EMAIL_HEADER = process.env.NEXT_PUBLIC_EMAIL_HEADER || 'ADMITGPT';
+const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'dariangosztafio@gmail.com';
+const ORIGIN_FALLBACK = process.env.NEXT_PUBLIC_SITE_ORIGIN || 'https://admitgpt.pages.dev';
 
 // Client-side diagnostic for missing config
 if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development' && !PASSCODE) {
@@ -49,11 +51,18 @@ function codeToClassification(code: number): OutlierClassification {
  * Generate a unique UUID for the certificate
  */
 function generateUUID(): string {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-        const r = Math.random() * 16 | 0;
-        const v = c === 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+        return crypto.randomUUID();
+    }
+    if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
+        const bytes = new Uint8Array(16);
+        crypto.getRandomValues(bytes);
+        bytes[6] = (bytes[6] & 0x0f) | 0x40;
+        bytes[8] = (bytes[8] & 0x3f) | 0x80;
+        const hex = Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
+        return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+    }
+    throw new Error('Secure random generator unavailable');
 }
 
 /**
@@ -126,7 +135,7 @@ export function getClassificationName(code: number): string {
  * Generate the verification URL for the QR code
  */
 export function getVerificationURL(encryptedCode: string): string {
-    const base = typeof window !== 'undefined' ? window.location.origin : 'https://admitgpt.io';
+    const base = typeof window !== 'undefined' ? window.location.origin : ORIGIN_FALLBACK;
     return `${base}/verify?code=${encodeURIComponent(encryptedCode)}`;
 }
 
@@ -139,7 +148,7 @@ export function buildInvitationMailto(
     profileLinks: string,
     spikeScore: number,
 ): string {
-    const recipient = "dariangosztafio@gmail.com";
+    const recipient = CONTACT_EMAIL;
     const subject = encodeURIComponent(`AdmitGPT Audit | ${name} | Spike: ${spikeScore.toFixed(1)}`);
     const body = encodeURIComponent(
         `Outlier Invitation\n` +
@@ -158,5 +167,5 @@ export function buildInvitationMailto(
 export function buildVulnerabilityReportMailto(
     description: string,
 ): string {
-    return `mailto:dariangosztafio@gmail.com`;
+    return `mailto:${CONTACT_EMAIL}`;
 }
