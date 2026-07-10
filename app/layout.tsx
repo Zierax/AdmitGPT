@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     "Ivy day predictions",
     "Zierax AdmitGPT"
   ],
-  authors: [{ name: "Zierax", url: "https://github.com/Zierax/AdmitGPT" }],
+  authors: [{ name: "Zierax", url: "https://github.com/Zierax/AdmitGPT" }], // NEXT_PUBLIC_GITHUB_URL override available via siteConfig
   creator: "Zierax",
   publisher: "AdmitGPT",
   generator: "Next.js",

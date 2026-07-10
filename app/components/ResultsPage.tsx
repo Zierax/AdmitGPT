@@ -21,6 +21,7 @@ import {
   isLocalMode,
 } from "@/lib/crypto";
 import { classifyOutlier, getOutlierTheme } from "@/lib/engine";
+import { CONTACT_EMAIL, GITHUB_URL, INSTAGRAM_URL } from "@/lib/siteConfig";
 import {
   AlertTriangle,
   Shield,
@@ -459,11 +460,11 @@ export function ResultsPage({
 
             <div className="hidden sm:block h-3 w-px bg-white/10 mx-2" />
 
-            <div className="flex items-center gap-4">
-              <a href="https://github.com/Zierax/AdmitGPT" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
+              <div className="flex items-center gap-4">
+              <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
                 <Github size={16} />
               </a>
-              <a href="https://instagram.com/z14d.d" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
+              <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
                 <Instagram size={16} />
               </a>
             </div>

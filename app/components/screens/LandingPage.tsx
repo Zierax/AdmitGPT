@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Header from "@/app/components/Header";
+import { CONTACT_EMAIL, GITHUB_URL } from "@/lib/siteConfig";
 import { Sparkles, ArrowRight, Mail } from "lucide-react";
 
 export function LandingPage({
@@ -104,10 +105,10 @@ export function LandingPage({
           <p>© 2026 AdmitGPT. Built for the Transparency Movement.</p>
           <div className="flex gap-4">
             <a href="/transparency" className="hover:text-[var(--color-foreground)] transition-colors">Transparency Report</a>
-            <a href="mailto:dariangosztafio@gmail.com" className="hover:text-[var(--color-foreground)] transition-colors flex items-center gap-1">
+            <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-[var(--color-foreground)] transition-colors flex items-center gap-1">
               <Mail size={12} /> Contact Us
             </a>
-            <a href="https://github.com/Zierax/AdmitGPT" className="hover:text-[var(--color-foreground)] transition-colors">Source Code</a>
+            <a href={GITHUB_URL} className="hover:text-[var(--color-foreground)] transition-colors">Source Code</a>
           </div>
         </div>
       </footer>

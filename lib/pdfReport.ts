@@ -8,7 +8,7 @@ import autoTable from 'jspdf-autotable';
 import { UserProfile, EngineResult, GapAnalysis, DatasetStats, OutlierClassification } from './types';
 import { getMajorCategoryLabel } from './dataLoader';
 import { getOutlierTheme, classifyOutlier } from './engine';
-import { generateSignature, getVerificationURL } from './crypto';
+import { generateSignature, getVerificationURL, generateSecureId } from './crypto';
 
 const COLORS = {
     primary: [191, 255, 0] as [number, number, number],      // Lime
@@ -45,7 +45,7 @@ function addHeader(doc: jsPDF, title: string, pageNum: number) {
     doc.text(sanitize(title), 15, 22);
 
     doc.setFontSize(8);
-    const reportId = Math.random().toString(36).substr(2, 9).toUpperCase();
+    const reportId = generateSecureId(9);
     doc.text(`REPORT_ID: ${reportId}`, 195, 14, { align: 'right' });
     doc.text(`PAGE: ${pageNum}`, 195, 22, { align: 'right' });
 }

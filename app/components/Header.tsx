@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { Eye, Github, ChevronDown, X, Shield, Users, Zap, ExternalLink, Mail, AlertTriangle, Instagram } from "lucide-react";
+import { GITHUB_URL, INSTAGRAM_URL, CONTACT_EMAIL } from "@/lib/siteConfig";
 
 interface HeaderProps {
   onBack?: () => void;
@@ -59,7 +60,7 @@ export default function Header({ onBack, showBack, onDownloadPDF, showDownloadPD
 
           <div className="flex items-center gap-4 border-l border-white/10 pl-6">
             <a
-              href="https://github.com/Zierax/AdmitGPT"
+              href={GITHUB_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="text-[var(--color-muted)] hover:text-white transition-colors"
@@ -67,7 +68,7 @@ export default function Header({ onBack, showBack, onDownloadPDF, showDownloadPD
               <Github size={20} />
             </a>
             <a
-              href="https://instagram.com/z14d.d"
+              href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="text-[var(--color-muted)] hover:text-white transition-colors"
@@ -159,8 +160,8 @@ export default function Header({ onBack, showBack, onDownloadPDF, showDownloadPD
                   <div className="space-y-4 flex flex-col justify-end">
                     <div className="flex items-center gap-4 text-[var(--color-muted)] mb-2">
                        <div className="flex items-center gap-3">
-                        <a href="https://github.com/Zierax/AdmitGPT" className="hover:text-[var(--color-primary)] transition-colors"><Github size={22} /></a>
-                        <a href="https://instagram.com/z14d.d" className="hover:text-[var(--color-primary)] transition-colors"><Instagram size={22} /></a>
+                         <a href={GITHUB_URL} className="hover:text-[var(--color-primary)] transition-colors"><Github size={22} /></a>
+                         <a href={INSTAGRAM_URL} className="hover:text-[var(--color-primary)] transition-colors"><Instagram size={22} /></a>
                        </div>
                       <div className="h-px flex-1 bg-[var(--color-border)]"></div>
                       <span className="font-mono text-[9px] uppercase tracking-widest opacity-40">Built for you</span>

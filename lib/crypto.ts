@@ -5,13 +5,13 @@
 
 import CryptoJS from 'crypto-js';
 import { CertificateSignature, OutlierClassification } from './types';
+import { CONTACT_EMAIL, SITE_ORIGIN } from './siteConfig';
 
 // .env access: Next.js injects NEXT_PUBLIC_ variables into the client bundle at build time.
 // We access them directly without 'process' guards to allow the bundler to perform literal replacement.
 const PASSCODE = process.env.NEXT_PUBLIC_PASSCODE_OF_OUTLINERS || '';
 const EMAIL_HEADER = process.env.NEXT_PUBLIC_EMAIL_HEADER || 'ADMITGPT';
-const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'dariangosztafio@gmail.com';
-const ORIGIN_FALLBACK = process.env.NEXT_PUBLIC_SITE_ORIGIN || 'https://admitgpt.pages.dev';
+const ORIGIN_FALLBACK = SITE_ORIGIN;
 
 // Client-side diagnostic for missing config
 if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development' && !PASSCODE) {
@@ -63,6 +63,24 @@ function generateUUID(): string {
         return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
     }
     throw new Error('Secure random generator unavailable');
+}
+
+/**
+ * Generate a short, secure, human-readable report identifier (no hyphens).
+ * Uses cryptographically strong randomness; throws if unavailable.
+ */
+export function generateSecureId(length = 9): string {
+    if (typeof crypto === 'undefined' || typeof crypto.getRandomValues !== 'function') {
+        throw new Error('Secure random generator unavailable');
+    }
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const bytes = new Uint8Array(length);
+    crypto.getRandomValues(bytes);
+    let id = '';
+    for (let i = 0; i < length; i++) {
+        id += alphabet[bytes[i] % alphabet.length];
+    }
+    return id;
 }
 
 /**
