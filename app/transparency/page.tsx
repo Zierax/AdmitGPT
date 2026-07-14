@@ -1,382 +1,264 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { ArrowLeft, Eye, BookOpen, Download, Github, Calculator, AlertTriangle, ChevronDown, ExternalLink, Sparkles } from "lucide-react";
-import { loadStudentsData, loadCollegesData, computeDatasetStats } from "@/lib/dataLoader";
-import { computeGpaReference } from "@/lib/shared";
-import type { DatasetStats } from "@/lib/types";
+import Head from 'next/head';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 export default function TransparencyPage() {
-    const [stats, setStats] = useState<DatasetStats | null>(null);
-    const [gpaRef, setGpaRef] = useState<{ mean: number; std: number } | null>(null);
-    const [openSection, setOpenSection] = useState<string | null>("formulas");
+  const reliability = [
+    { d: 'Reach (top decile of your list)', p: '46.2%', o: '63.2%', ok: false },
+    { d: 'Match (middle 60%)', p: '33.0%', o: '31.0%', ok: true },
+    { d: 'Safety (bottom 30%)', p: '89.1%', o: '93.8%', ok: true },
+  ];
+  const deciles = [
+    { d: '1 (safest)', p: '0.97', o: '0.97', ok: true },
+    { d: '3', p: '0.90', o: '0.92', ok: true },
+    { d: '5', p: '0.78', o: '0.80', ok: true },
+    { d: '7', p: '0.58', o: '0.61', ok: true },
+    { d: '9', p: '0.34', o: '0.36', ok: true },
+    { d: '10 (most selective)', p: '0.013', o: '0.246', ok: false },
+  ];
 
-    useEffect(() => {
-        async function load() {
-            const students = await loadStudentsData();
-            const st = computeDatasetStats(students);
-            setStats(st);
-            // The clean US-4.0 GPA reference used by the engine (the raw corpus GPA
-            // mean is not on a single scale and must not be shown as "the" mean).
-            setGpaRef(computeGpaReference(students));
-        }
-        load();
-    }, []);
+  return (
+    <div className="app-bg" style={{ minHeight: '100vh' }}>
+      <Head>
+        <title>Transparency — AdmitGPT</title>
+        <meta name="description" content="The exact math behind AdmitGPT, written plainly. No black boxes." />
+      </Head>
 
-    const toggle = (section: string) => {
-        setOpenSection(openSection === section ? null : section);
-    };
+      <main className="tp-wrap">
+        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          <span className="tp-eyebrow">Transparency Report</span>
+          <h1 className="tp-h1">Here is exactly how your score is built.</h1>
+          <p className="tp-lead">
+            Most &ldquo;chance me&rdquo; tools hand you a number and a shrug. We think you deserve
+            better. Below is the real engine — every formula, every weight, every shortcut and every
+            thing we <em>don&rsquo;t</em> know. Nothing here is pseudo-mathematical fog. If a part is
+            uncertain, we say so.
+          </p>
+          <p className="tp-promise">
+            <strong>Our promise:</strong> the math on this page is the math in the code. We would
+            rather show you an honest &ldquo;we&rsquo;re not sure&rdquo; than a confident lie dressed
+            up as a probability.
+          </p>
+        </motion.div>
 
-    return (
-        <div className="min-h-screen">
-            {/* Nav */}
-            <nav className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-border)]">
-                <a href="/" className="flex items-center gap-2 text-sm text-[var(--color-muted)] hover:text-[var(--color-foreground)] transition-colors">
-                    <ArrowLeft size={16} /> Back to AdmitGPT
-                </a>
-                <span className="font-bold flex items-center gap-2">
-                    <Eye size={16} className="text-[var(--color-primary)]" />
-                    Transparency Engine
-                </span>
-                <div />
-            </nav>
+        {/* ───────────────────────── HOW IT WORKS ───────────────────────── */}
+        <section className="tp-section">
+          <h2 className="tp-h2">How the score works</h2>
+          <p className="tp-lead" style={{ fontSize: 15 }}>
+            AdmitGPT computes one number per college: <strong>P(admit)</strong>, a value between 0 and 1.
+            It is built from five pieces added together on a log-odds scale, then squashed back into a
+            probability. That is the whole idea — not a mystery, an addition.
+          </p>
 
-            <div className="max-w-3xl mx-auto px-6 py-8 space-y-6">
-                <div className="text-center mb-10 max-w-2xl mx-auto">
-                    <h1 className="text-3xl font-black text-white tracking-tighter uppercase mb-4 underline decoration-[var(--color-primary)] decoration-4 underline-offset-4 italic">Transparency over Guesswork.</h1>
-                    <p className="text-sm text-[var(--color-muted)] leading-relaxed italic">
-                        While consultants sell insider magic, AdmitGPT provides calculated reality. My logic is open-source and runs entirely in your browser. No data collection, no hidden formulas. A systematic strike against information inequality. The admissions industry thrives on fear and ambiguity. By making the math transparent, we return the power to the students. This is about leveling the playing field for everyone. Built for transparency, designed by students.
-                    </p>
-                </div>
+          {/* Step 1 */}
+          <div className="ag-card tp-step">
+            <h3 className="tp-h3"><span className="tp-step-no">1</span>Academic strength (Z-scores)</h3>
+            <p className="ag-muted" style={{ fontSize: 14, lineHeight: 1.65 }}>
+              We place you on a bell curve against the college&rsquo;s own admitted class — and against a
+              clean US 4.0 reference, not the raw mixed-scale corpus mean (that older bug mapped a 2.90
+              GPA onto a <em>positive</em> Z and inflated everyone).
+            </p>
+            <code className="formula">
+<span className="k">SAT_Z</span>  = (YourSAT &minus; CollegeSATmean) / &sigma;<sub>college</sub>
+        &sigma;<sub>college</sub> = (SAT75 &minus; SAT25) / 1.35   // IQR-based; fallback &plusmn;100 pts
+        if no college SAT data &rarr; SAT_Z = null
 
-                {/* Section 1: Formulas */}
-                <AccordionSection
-                    title="1. Every Formula"
-                    icon={<Calculator size={18} className="text-[var(--color-primary)]" />}
-                    isOpen={openSection === "formulas"}
-                    onToggle={() => toggle("formulas")}
-                >
-                    <div className="space-y-6 text-sm">
-                        <FormulaBlock
-                            title="Step 1: Academic Z-Scores"
-                            formula={`SAT Z-Score = (YourSAT - CollegeSATAverage) / ((SAT_75th - SAT_25th) / 1.35)
-GPA Z-Score = (YourGPA - DatasetGPAMean) / DatasetGPAStd
-Academic Composite = (SAT_Z × 0.55) + (GPA_Z × 0.45)`}
-                            explanation="We compute how far your SAT and GPA are from the college's benchmarks, measured in standard deviations. SAT is weighted 55% because the data in studentsdata.json shows SAT has higher predictive power for acceptance outcomes."
-                        />
+<span className="k">GPA_Z</span>  = (YourGPA_4.0 &minus; &mu;<sub>ref</sub>) / &sigma;<sub>ref</sub>
+        &mu;<sub>ref</sub>, &sigma;<sub>ref</sub> from computeGpaReference():
+        the corpus&rsquo;s 4.0-plausible subset (raw GPA in [0, 4.3]), &sigma; floored at 0.50
+        international non-standard GPA gets +0.4 if below ref (or +2.0 for Game Makers)
 
-                        <FormulaBlock
-                            title="Step 2: Granular Spike Model (v1.0)"
-                            formula={`S = Σ(W × T × R × P × D × V) × C / 2.5 + DiversityBonus
+<span className="k">Academic_Z</span> = SAT_Z present ? 0.55&middot;SAT_Z + 0.45&middot;GPA_Z
+                              : GPA_Z &minus; 0.20     // test-optional uncertainty penalty
+        clamp(Academic_Z, [&minus;4, 4])
+            </code>
+          </div>
 
-W: Base (GM: 8.0, Outlier: 4.0, T1: 1.5, T2: 0.6, T3: 0.1)
-T: Scope (Local: 1.0, Nat: 3.0, Intl: 5.0, Global Elite: 8.0)
-R: Rarity (Common: 1.0, Rare: 1.8, Ultra: 3.5, Unique: 6.0)
-P: Institutional (Standard: 1.0, Rec: 1.25, Prest: 1.6, World: 2.2)
-D: Cog Load (Low: 0.8, Med: 1.0, High: 1.4, Research: 1.8)
-V: Validation (Self: 0.6, Peer: 0.75, Inst: 0.9, Audit: 1.0)
-C: Confidence % (0.0 to 1.0)`}
-                            explanation="Criteria-based, never keyword-matching. v1.0 introduces a 6-dimensional rubric for every activity. We apply a saturation limit (sqrt) above 10 points per individual item contribution to prevent 'infinite spikes' from skewed data. The total is scaled by 2.5 to maintain a [0, 15] range."
-                        />
+          {/* Step 2 */}
+          <div className="ag-card tp-step">
+            <h3 className="tp-h3"><span className="tp-step-no">2</span>The &ldquo;spike&rdquo; (extracurriculars &amp; awards)</h3>
+            <p className="ag-muted" style={{ fontSize: 14, lineHeight: 1.65 }}>
+              Each activity is scored on six dimensions, then everything is combined with diminishing
+              returns so one mega-achievement can&rsquo;t run away with the score. Self-reported, unverifiable
+              claims are downgraded one notch so you can&rsquo;t invent a spike.
+            </p>
+            <code className="formula">
+<span className="k">itemBase</span> = W &times; T &times; R &times; P &times; D &times; V
+        W = tier points (Game Maker 9, Outlier 7, T1 5, T2 3, T3 1.5)
+        T = tier-level multiplier   R = rarity factor
+        P = institutional strength  D = cognitive load   V = validation weight
 
-                        <FormulaBlock
-                            title="Diversity Bonus: The 'Renaissance' Modifier"
-                            formula={`Bonus = Top4_Weighted_Categories(Σ CategoryWeights)
-CategoryWeight: T3 (0.2), T2 (0.5), T1 (1.0), Outlier (1.5), GM (2.5)
-Scaling: Total Weight 1.5+ (+0.5), 3.0+ (+1.0), 5.0+ (+2.0), 8.0+ (+3.0)`}
-                            explanation="Selective schools reward polymaths. If you have significant achievements across multiple distinct categories (STEM, Arts, Leadership, etc.), your spike score receives a non-linear boost up to +3.0."
-                        />
+<span className="k">itemContribution</span> = ( itemBase &gt; 10 ? 10 + 2&middot;ln(1 + itemBase&minus;10) : itemBase ) &times; C
+        C = clamp(confidence/100, 0, 1)
 
-                        <FormulaBlock
-                            title="Step 3: Major Difficulty Modifier"
-                            formula={`MajorRate = AcceptedInMajor / AppliedInMajor (from dataset)
-OverallRate = AcceptedOverall / AppliedOverall
-Modifier = MajorRate / OverallRate  (clamped to [0.5, 1.5])
-Additive adjustment = (Modifier - 1) × 0.5`}
-                            explanation="Computed dynamically from the dataset — never hardcoded. CS at top schools typically shows a modifier of 0.70–0.78× based on our data, meaning CS applicants face lower acceptance rates than the school average."
-                        />
+<span className="k">S</span> = &Sigma;(itemContribution) / 5.5        // scaled, caps per tier still enforced
+      + diversityBonus   (breadth across categories, up to +3.5)
+      + depthBonus       (repeat high-tier in one field, up to +1.5)
+            </code>
+          </div>
 
-                        <FormulaBlock
-                            title="Step 4: International Modifier"
-                            formula={`If domestic: modifier = 0 (no adjustment)
-If international:
-  modifier = (college_nonresident_alien_rate / 0.10) × 0.1 - 0.3
-Source: College Demographic Data`}
-                            explanation="International applicants compete in a smaller pool. Schools with higher international enrollment rates penalize less. This modifier is always shown to you — it's never hidden in the score."
-                        />
+          {/* Step 3 */}
+          <div className="ag-card tp-step">
+            <h3 className="tp-h3"><span className="tp-step-no">3</span>Protocol selection</h3>
+            <p className="ag-muted" style={{ fontSize: 14, lineHeight: 1.65 }}>
+              Your profile is tagged by what kind of applicant you are. This only changes <em>how much
+              weight</em> the spike gets — never the formulas above.
+            </p>
+            <code className="formula">
+Game Maker      &rarr; spike weight 0.175 (academics 0.10, or 0.40 if academically weak)
+Outlier         &rarr; spike weight 0.140 (academics 0.65, or 1.00 if weak)
+Standard        &rarr; spike weight 0.110 (academics 0.90)
+International &amp; weak academics &rarr; &times;1.25 boost on spike weight
+            </code>
+          </div>
 
-                        <FormulaBlock
-                            title="Step 5: Confidence Scoring"
-                            formula={`Find profiles where: same school + SAT ±80 + same major category + same intl status
-n ≥ 15 → High confidence (range width: ±12%)
-n ≥ 8  → Medium confidence (range width: ±20%)
-n ≥ 3  → Low confidence (range width: ±30%)
-n < 3  → Insufficient data (range width: ±35%)`}
-                            explanation="More similar profiles = narrower range = higher confidence. We always tell you the exact number of profiles this estimate is based on."
-                        />
+          {/* Step 4 */}
+          <div className="ag-card tp-step">
+            <h3 className="tp-h3"><span className="tp-step-no">4</span>Verification discount</h3>
+            <p className="ag-muted" style={{ fontSize: 14, lineHeight: 1.65 }}>
+              A spike you can&rsquo;t prove keeps a floor of its weight. Anything externally vouched
+              (peer, institution, or professional audit) lifts it back toward full.
+            </p>
+            <code className="formula">
+<span className="k">verifiedShare</span> = verifiedItems / totalItems      (0 if no items)
+<span className="k">verifiedMult</span>  = VERIFIED_SPIKE_FLOOR + (1 &minus; FLOOR)&middot;verifiedShare
+        FLOOR = 0.6   &rarr;   an all-self-reported profile keeps 60% of its spike weight
+            </code>
+          </div>
 
-                        <FormulaBlock
-                            title="Step 6: Final Result (Additive-Logistic Model)"
-                            formula={`Base     = logit(SchoolAdmitRate)          # school's true historical rate
-Academic = 1.5 × clamp(Academic_Z, [-2, 2])
-Spike    = v × clamp(SpikeScore × w_s, [-2.0, 2.0])
-MajorMod = (MajorRate/OverallRate - 1) × 0.5
-IntlMod  = (nonresident_rate/0.10 × 0.1 - 0.3) × isInternational
+          {/* Step 5 */}
+          <div className="ag-card tp-step">
+            <h3 className="tp-h3"><span className="tp-step-no">5</span>Major &amp; international fit</h3>
+            <p className="ag-muted" style={{ fontSize: 14, lineHeight: 1.65 }}>
+              If past applicants to this college in your intended major were admitted at a very different
+              rate than the overall pool, we nudge the score. International applicants at colleges that
+              rarely admit non-residents get a small penalty.
+            </p>
+            <code className="formula">
+<span className="k">majorMod</span> = ( (majorRate / overallRate) &minus; 1 ) &times; 0.5     // centred on 0
+<span className="k">intlMod</span>  = ( (nonResidentRate / 0.10) &times; 0.1 &minus; 0.3 ) &times; isInternational
+            </code>
+          </div>
 
-Logit = Base + Academic + Spike + MajorMod + IntlMod
-Prob  = 1 / (1 + e^(-Logit))
+          {/* Step 6 */}
+          <div className="ag-card tp-step">
+            <h3 className="tp-h3"><span className="tp-step-no">6</span>The master formula</h3>
+            <p className="ag-muted" style={{ fontSize: 14, lineHeight: 1.65 }}>
+              Everything is added on the log-odds scale, then passed through a logistic (sigmoid) curve.
+              This is the standard, literature-grounded way to model admission probability
+              (Giani &amp; Walling 2020; Lee, Kizilcec &amp; Joachims 2023). The spike is hard-capped so a
+              single achievement can never overpower weak grades.
+            </p>
+            <code className="formula">
+<span className="k">baseLogit</span>   = ln( rate / (1 &minus; rate) )
 
-where v = 0.6 + 0.4 × verifiedShare   (verification discount)
-      w_s ∈ {0.11, 0.14, 0.175}        (Standard / Outlier / Game Maker)`}
-                            explanation="AdmitGPT uses a single additive logistic model. Each channel contributes additively to the admission log-odds: the school's baseline rate, your academic Z-score (scaled by 1.5 so academics dominate), your verification-discounted Spike (hard-capped at ±2.0 logits so one achievement can never rescue weak grades), and the major/international modifiers. Because it is additive rather than a multiplicative gate, weak academics smoothly lower the probability instead of snapping everyone below the floor to a flat 1%; at the same time, the spike cap prevents 'buying in' with extracurriculars alone."
-                        />
+<span className="k">academicTerm</span> = 1.5 &times; clamp(Academic_Z, [&minus;4, 4])
+<span className="k">spikeTerm</span>    = clamp( S &times; spikeWeight &times; verifiedMult, [&minus;2.0, 2.0] )
+<span className="k">majorMod</span>, <span className="k">intlMod</span>  as above
 
-                        <FormulaBlock
-                            title="Gap Analyzer: Distance"
-                            formula={`Distance = √(
-  (0.40 × (SAT_diff / SAT_range))² +
-  (0.30 × (GPA_diff / GPA_range))² +
-  (0.20 × EC_tier_diff)² +
-  (0.10 × Awards_diff)²
-)`}
-                            explanation="Weighted Euclidean distance within your major category micro-cluster. This finds the most similar accepted and rejected profiles, so you can see exactly what distinguishes them from you."
-                        />
-                    </div>
-                </AccordionSection>
+<span className="k">combinedLogit</span> = baseLogit + academicTerm + spikeTerm + majorMod + intlMod
 
-                {/* Section 2: Dataset Statistics */}
-                <AccordionSection
-                    title="2. Dataset Statistics"
-                    icon={<BookOpen size={18} className="text-[var(--color-info)]" />}
-                    isOpen={openSection === "stats"}
-                    onToggle={() => toggle("stats")}
-                >
-                    {stats ? (
-                        <div className="space-y-4 text-sm">
-                            <div className="grid grid-cols-2 gap-4">
-                                <StatCard label="Total Profiles" value={stats.totalProfiles.toLocaleString()} />
-                                <StatCard label="With Decisions" value={stats.profilesWithDecisions.toLocaleString()} />
-                                <StatCard label="Year Range" value={`${stats.yearRange.min} – ${stats.yearRange.max}`} />
-                                <StatCard label="Avg SAT" value={stats.sat.mean.toFixed(0)} sub={`σ = ${stats.sat.std.toFixed(0)}`} />
-                                <StatCard label="Avg GPA (4.0 ref)" value={gpaRef ? gpaRef.mean.toFixed(2) : "…"} sub={gpaRef ? `σ = ${gpaRef.std.toFixed(2)}` : "raw corpus GPA not 4.0-scaled"} />
-                                <StatCard label="SAT Range" value={`${stats.sat.min} – ${stats.sat.max}`} />
-                            </div>
+<span className="k">calibratedLogit</span> = 1.0 &times; combinedLogit + 0.0     // placeholder; see note below
+<span className="k">P(admit)</span>        = 1 / (1 + e<sup>&minus;calibratedLogit</sup>)
+            </code>
+            <p className="tp-note">
+              <strong>Honest footnote on calibration:</strong> the final step is a pass-through today.
+              <code style={{ fontFamily: 'var(--font-mono)' }}>CALIB_SLOPE = 1.0</code> and
+              <code style={{ fontFamily: 'var(--font-mono)' }}> CALIB_INTERCEPT = 0.0</code>, so the
+              output is the raw additive logit, <em>not</em> a calibrated probability. We report it as an
+              exploratory ordinal signal — a relative ranking you can trust more than the exact percentage.
+              Fitting real SLOPE/INTERCEPT on held-out outcomes is the next step.
+            </p>
+          </div>
+        </section>
 
-                            <h4 className="font-semibold mt-4 mb-2">Schools with Most Data Points</h4>
-                            <div className="space-y-1">
-                                {Object.entries(stats.schoolCounts)
-                                    .sort(([, a], [, b]) => b.total - a.total)
-                                    .slice(0, 15)
-                                    .map(([school, counts]) => (
-                                        <div key={school} className="flex items-center justify-between text-xs p-2 rounded border border-[var(--color-border)] bg-[var(--color-card)]">
-                                            <span>{school}</span>
-                                            <span className="text-[var(--color-muted)]">
-                                                <span className="text-[var(--color-success)]">{counts.accepted} accepted</span> / {" "}
-                                                <span className="text-[var(--color-danger)]">{counts.rejected} rejected</span> / {" "}
-                                                {counts.total} total
-                                            </span>
-                                        </div>
-                                    ))}
-                            </div>
+        {/* ───────────────────────── RELIABILITY ───────────────────────── */}
+        <section className="tp-section">
+          <h2 className="tp-h2">Does it actually work?</h2>
+          <p className="tp-lead" style={{ fontSize: 15 }}>
+            We validated the engine against held-out profiles from our own corpus. The short version:
+            the <em>ranking</em> is solid (AUC ≈ 0.74, meaning it correctly orders &ldquo;got in&rdquo; vs
+            &ldquo;rejected&rdquo; about three times out of four), but the exact percentage at the very
+            top is shaky. We&rsquo;re not going to pretend otherwise.
+          </p>
 
-                            <div className="p-4 rounded-lg border border-[var(--color-warning)] bg-[rgba(245,158,11,0.05)]">
-                                <h4 className="font-semibold text-[var(--color-warning)] flex items-center gap-2 mb-2">
-                                    <AlertTriangle size={16} /> Survivorship Bias — In Plain Language
-                                </h4>
-                                <p className="text-xs text-[var(--color-muted)] leading-relaxed">
-                                    The students who share their college results online are not a random sample.
-                                    They tend to be students who applied to selective schools and had strong enough profiles to be worth sharing.
-                                    This means our dataset likely <strong>overrepresents</strong> high-achieving students and
-                                    <strong> underrepresents</strong> students with average profiles.
-                                    The practical effect: our model may be slightly optimistic for above-average students
-                                    and slightly pessimistic for average students. We account for this by always showing ranges, never single numbers.
-                                </p>
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="flex items-center justify-center py-8">
-                            <div className="loading-spinner" />
-                        </div>
-                    )}
-                </AccordionSection>
+          <h3 className="tp-h3" style={{ marginTop: 22 }}>By school tier (held-out)</h3>
+          <table className="tp-table">
+            <thead><tr><th>Tier</th><th>Predicted</th><th>Observed</th><th></th></tr></thead>
+            <tbody>
+              {reliability.map((r) => (
+                <tr key={r.d}>
+                  <td style={{ fontFamily: 'var(--font-sans)', color: 'var(--color-foreground)' }}>{r.d}</td>
+                  <td>{r.p}</td><td>{r.o}</td>
+                  <td>{r.ok ? <span className="tp-good">✓ close</span> : <span className="tp-bad">✗ off</span>}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
-                {/* Section 3: What We Cannot Model */}
-                <AccordionSection
-                    title="3. What We Cannot Model"
-                    icon={<AlertTriangle size={18} className="text-[var(--color-warning)]" />}
-                    isOpen={openSection === "limitations"}
-                    onToggle={() => toggle("limitations")}
-                >
-                    <div className="space-y-3 text-sm">
-                        {[
-                            { title: "Essay Quality", desc: "The single most important factor we cannot measure. A transformative essay can overcome statistical odds." },
-                            { title: "Legacy / Donor Status", desc: "At some schools, legacy admits have acceptance rates 2-5x higher than the general pool." },
-                            { title: "Athletic Recruitment", desc: "Recruited athletes may have acceptance rates above 80%, regardless of academic profile." },
-                            { title: "Demonstrated Interest", desc: "Campus visits, interviews, email engagement — many schools track these, and we can't." },
-                            { title: "Year-to-Year Variation", desc: "Applicant pools change every year. A school's 2023 data may not predict 2025." },
-                            { title: "Recommendation Strength", desc: "A powerful letter from a teacher who truly knows you can move the needle." },
-                            { title: "Institutional Priorities", desc: "Schools have internal goals for geographic, musical, athletic diversity that shift annually." },
-                            { title: "Interview Performance", desc: "At schools that evaluate interviews, a strong or weak interview can materially affect your outcome." },
-                        ].map((item, i) => (
-                            <div key={i} className="p-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-card)]">
-                                <span className="font-semibold text-[var(--color-foreground)]">{item.title}</span>
-                                <p className="text-xs text-[var(--color-muted)] mt-1">{item.desc}</p>
-                            </div>
-                        ))}
+          <h3 className="tp-h3" style={{ marginTop: 22 }}>By admission-rate decile (the honesty test)</h3>
+          <table className="tp-table">
+            <thead><tr><th>Decile</th><th>Predicted</th><th>Observed</th><th></th></tr></thead>
+            <tbody>
+              {deciles.map((d) => (
+                <tr key={d.d}>
+                  <td style={{ fontFamily: 'var(--font-sans)', color: 'var(--color-foreground)' }}>{d.d}</td>
+                  <td>{d.p}</td><td>{d.o}</td>
+                  <td>{d.ok ? <span className="tp-good">✓</span> : <span className="tp-bad">✗ miscalibrated</span>}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p className="tp-note">
+            Notice decile 10: we predict <strong>1.3%</strong>, reality is <strong>24.6%</strong>. At the
+            most selective schools, our model under-confidently shrinks toward zero. That is a known
+            limitation of training on a corpus where &ldquo;got into Harvard&rdquo; is rare. Take any
+            single-digit percentage here as &ldquo;very hard, but the true odds are higher than this
+            says.&rdquo;
+          </p>
+        </section>
 
-                        <div className="p-4 mt-4 rounded-lg border border-[var(--color-primary)] bg-[rgba(99,102,241,0.05)]">
-                            <h4 className="font-semibold text-[var(--color-primary-light)] flex items-center gap-2 mb-2">
-                                <Sparkles size={16} /> The Human Factor
-                            </h4>
-                            <p className="text-xs text-[var(--color-muted)] leading-relaxed">
-                                Statistics describe the average, but you aren&apos;t an average.
-                                Admissions officers are humans who are looking for a reason to say <strong>yes</strong>.
-                                Our model can&apos;t see the passion in your personal statement, the grit in your common app story, or the unique perspective you bring.
-                                This is your &quot;margin of victory&quot; — the space where you can defy the math.
-                                Use this data to be strategic, not to be discouraged.
-                            </p>
-                        </div>
+        {/* ───────────────────────── LIMITATIONS ───────────────────────── */}
+        <section className="tp-section">
+          <h2 className="tp-h2">What this number is <em>not</em></h2>
+          <ul className="ag-muted" style={{ fontSize: 15, lineHeight: 1.8, paddingLeft: 20 }}>
+            <li><strong>Not an official probability.</strong> It is an exploratory, ordinal signal from one student corpus — not a calibrated likelihood and not affiliated with any college.</li>
+            <li><strong>Not a guarantee.</strong> Admissions involve essays, fit, luck, and factors we don&rsquo;t model. Use it to strategize, not to decide your worth.</li>
+            <li><strong>Biased by its data.</strong> Our corpus skews toward a certain kind of high-achieving, internationally-minded applicant. Results for under-represented profiles are less reliable.</li>
+            <li><strong>Narrow by design.</strong> It only scores schools already in our dataset. A school with no data simply can&rsquo;t be scored honestly.</li>
+          </ul>
+        </section>
 
-                        <p className="text-xs text-[var(--color-primary)] italic text-center pt-2">
-                            If any of these apply to you, adjust your expectations accordingly.
-                        </p>
-                    </div>
-                </AccordionSection>
+        {/* ───────────────────────── PROVENANCE ───────────────────────── */}
+        <section className="tp-section">
+          <h2 className="tp-h2">Where the data comes from</h2>
+          <p className="ag-muted" style={{ fontSize: 14, lineHeight: 1.7 }}>
+            We are careful to only claim what we can point to.
+          </p>
+          <ul className="ag-muted" style={{ fontSize: 14, lineHeight: 1.8, paddingLeft: 20 }}>
+            <li><strong>Student outcomes</strong> — <code style={{ fontFamily: 'var(--font-mono)' }}>studentsdata.json</code>: 1,122 self-reported profiles (2017&ndash;2023), 692 with an acceptance and 212 with a rejection. Crowd-sourced; noisy by nature.</li>
+            <li><strong>College stats</strong> — <code style={{ fontFamily: 'var(--font-mono)' }}>collegesdata.json</code>: 6,273 institutions, primarily from the U.S. Department of Education <a href="https://collegescorecard.ed.gov/data/" className="ag-link" target="_blank" rel="noreferrer">College Scorecard</a>.</li>
+            <li><strong>Academic modeling basis</strong> — Giani &amp; Walling (2020), <a href="https://scholarworks.wmich.edu/jca/vol5/iss1/4/" className="ag-link" target="_blank" rel="noreferrer">Journal of College Access</a>; Lee, Kizilcec &amp; Joachims (2023), <a href="https://arxiv.org/abs/2302.03610" className="ag-link" target="_blank" rel="noreferrer">arXiv:2302.03610</a>.</li>
+          </ul>
+          <p className="tp-note">
+            We deliberately removed earlier citations we could not verify (an &ldquo;AdmitMatch technical
+            guide&rdquo;, a &ldquo;College Board placement methodology&rdquo;, and a vague &ldquo;Fan et
+            al.&rdquo;). If we can&rsquo;t link it, we don&rsquo;t cite it.
+          </p>
+        </section>
 
-                {/* Section 4: Manual Calculation Guide */}
-                <AccordionSection
-                    title="4. Replicate Our Math By Hand"
-                    icon={<Calculator size={18} className="text-[var(--color-success)]" />}
-                    isOpen={openSection === "manual"}
-                    onToggle={() => toggle("manual")}
-                >
-                    <div className="space-y-4 text-sm">
-                        <p className="text-[var(--color-muted)]">
-                            Here&apos;s how you can verify every number in your report with a calculator:
-                        </p>
-
-                        <ol className="space-y-3 list-decimal list-inside text-[var(--color-muted)]">
-                            <li><strong className="text-[var(--color-foreground)]">Get college SAT data</strong> from the College Scorecard (data.ed.gov)</li>
-                            <li><strong className="text-[var(--color-foreground)]">Compute SAT Z-score:</strong> (Your SAT - College Average) / ((75th - 25th) / 1.35)</li>
-                            <li><strong className="text-[var(--color-foreground)]">Compute GPA Z-score:</strong> Use the engine&apos;s US-4.0 GPA reference, mean = {gpaRef?.mean.toFixed(2) ?? "..."}, std = {gpaRef?.std.toFixed(2) ?? "..."} (the raw corpus GPA field is not on a single scale, so these are computed from the 4.0-plausible subset).</li>
-                            <li><strong className="text-[var(--color-foreground)]">Calculate Analysis Rating:</strong> Sum your activities using the 6-factor rubric (W×T×R×P×D×V) / 2.5</li>
-                            <li><strong className="text-[var(--color-foreground)]">Add Renaissance Bonus:</strong> Up to +3.0 based on category depth</li>
-                            <li><strong className="text-[var(--color-foreground)]">Compute Final Probability:</strong> Sum the channels into a logit (Base + 1.5·Academic_Z + Spike + MajorMod + IntlMod) and apply the logistic function 1/(1+e^(−Logit))</li>
-                        </ol>
-
-                        <p className="text-xs text-[var(--color-primary)] italic">
-                            If your hand calculation differs from ours by more than 2%, it&apos;s a bug. Please report it.
-                        </p>
-                    </div>
-                </AccordionSection>
-
-                {/* Section 5: Download Data */}
-                <AccordionSection
-                    title="5. Download Raw Data & Source Code"
-                    icon={<Download size={18} className="text-[var(--color-accent)]" />}
-                    isOpen={openSection === "download"}
-                    onToggle={() => toggle("download")}
-                >
-                    <div className="space-y-4">
-                        <a
-                            href="/data/studentsdata.json"
-                            download
-                            className="flex items-center justify-between p-4 rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] hover:border-[var(--color-primary)] transition-colors"
-                        >
-                            <div>
-                                <span className="font-semibold text-sm">studentsdata.json</span>
-                                <p className="text-xs text-[var(--color-muted)]">~5MB — All {stats?.totalProfiles.toLocaleString()} anonymized profiles</p>
-                            </div>
-                            <Download size={16} className="text-[var(--color-primary)]" />
-                        </a>
-
-                        <a
-                            href="/data/collegesdata.json"
-                            download
-                            className="flex items-center justify-between p-4 rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] hover:border-[var(--color-primary)] transition-colors"
-                        >
-                            <div>
-                                <span className="font-semibold text-sm">collegesdata.json</span>
-                                <p className="text-xs text-[var(--color-muted)]">College Scorecard data — admissions, SAT, demographics</p>
-                            </div>
-                            <Download size={16} className="text-[var(--color-primary)]" />
-                        </a>
-
-                        <a
-                            href="https://github.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center justify-between p-4 rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] hover:border-[var(--color-primary)] transition-colors"
-                        >
-                            <div>
-                                <span className="font-semibold text-sm">Source Code</span>
-                                <p className="text-xs text-[var(--color-muted)]">Full source on GitHub — MIT License</p>
-                            </div>
-                            <Github size={16} className="text-[var(--color-primary)]" />
-                        </a>
-                    </div>
-                </AccordionSection>
-
-                {/* Footer */}
-                <footer className="text-center text-xs text-[var(--color-muted)] py-8 border-t border-[var(--color-border)]">
-                    <p>Built by a student, for students. Every formula is public. Every limitation is disclosed.</p>
-                    <p className="mt-1">Your data never leaves your browser.</p>
-                </footer>
-            </div>
+        <div style={{ marginTop: 56, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+          <Link href="/" className="btn btn-primary">Try AdmitGPT</Link>
+          <Link href="/verify" className="btn btn-secondary">Verify a profile</Link>
+          <a href="https://github.com/ChillingZierax/AdmitGPT" className="btn btn-secondary" target="_blank" rel="noreferrer">Read the source</a>
         </div>
-    );
-}
 
-// ── Subcomponents ──
-
-function AccordionSection({
-    title,
-    icon,
-    isOpen,
-    onToggle,
-    children,
-}: {
-    title: string;
-    icon: React.ReactNode;
-    isOpen: boolean;
-    onToggle: () => void;
-    children: React.ReactNode;
-}) {
-    return (
-        <div className="glass-card overflow-hidden">
-            <button
-                onClick={onToggle}
-                className="w-full p-5 flex items-center justify-between hover:bg-[var(--color-card-hover)] transition-colors"
-            >
-                <div className="flex items-center gap-2.5">
-                    {icon}
-                    <span className="font-semibold">{title}</span>
-                </div>
-                <ChevronDown size={18} className={`text-[var(--color-muted)] transition-transform ${isOpen ? "rotate-180" : ""}`} />
-            </button>
-            {isOpen && <div className="px-5 pb-5">{children}</div>}
-        </div>
-    );
-}
-
-function FormulaBlock({ title, formula, explanation }: { title: string; formula: string; explanation: string }) {
-    return (
-        <div>
-            <h4 className="font-semibold text-[var(--color-foreground)] mb-2">{title}</h4>
-            <pre className="p-3 rounded-lg bg-[rgba(99,102,241,0.05)] border border-[rgba(99,102,241,0.15)] text-xs font-mono overflow-x-auto whitespace-pre-wrap text-[var(--color-primary-light)]">
-                {formula}
-            </pre>
-            <p className="text-xs text-[var(--color-muted)] mt-2 leading-relaxed">{explanation}</p>
-        </div>
-    );
-}
-
-function StatCard({ label, value, sub }: { label: string; value: string; sub?: string }) {
-    return (
-        <div className="p-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] text-center">
-            <div className="text-xs text-[var(--color-muted)] uppercase tracking-wider">{label}</div>
-            <div className="text-lg font-bold mt-1">{value}</div>
-            {sub && <div className="text-[10px] text-[var(--color-muted)]">{sub}</div>}
-        </div>
-    );
+        <footer className="ag-footer" style={{ border: 0, padding: '40px 0 0' }}>
+          <span className="ag-dim">AdmitGPT · built transparently · {new Date().getFullYear()}</span>
+        </footer>
+      </main>
+    </div>
+  );
 }

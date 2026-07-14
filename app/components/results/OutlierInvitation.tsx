@@ -54,7 +54,7 @@ export function OutlierInvitation({ spikeScore, classification }: { spikeScore: 
   };
 
   return (
-    <div id="personal-invitation" className="glass-card p-8 animate-fade-in-up border-l-4 border-l-[var(--color-accent)] scroll-mt-8 shadow-2xl relative">
+    <div id="personal-invitation" className="ag-card p-8 animate-fade-in-up border-l-4 border-l-[var(--color-accent)] scroll-mt-8 shadow-2xl relative">
       <div className="flex items-center gap-3 mb-4">
         <Heart size={24} className="text-[var(--color-accent)]" />
         <h3 className="text-xl font-black font-sans text-white tracking-tight">Private Invitation</h3>

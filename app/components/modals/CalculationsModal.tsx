@@ -15,7 +15,7 @@ export function CalculationsModal({ result, onClose }: { result: EngineResult; o
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black bg-opacity-80 backdrop-blur-sm animate-fade-in">
-      <div className="glass-card w-full max-w-lg p-8 relative border-[var(--color-primary)] overflow-hidden">
+      <div className="ag-card w-full max-w-lg p-8 relative border-[var(--color-primary)] overflow-hidden">
         <div className="absolute top-0 right-0 p-4">
           <button onClick={onClose} className="text-[var(--color-muted)] hover:text-[var(--color-foreground)] transition-colors">
             <X size={24} />

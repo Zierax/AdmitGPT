@@ -25,7 +25,7 @@ export function SchoolResultCard({
   const highPct = (result.high * 100).toFixed(0);
 
   return (
-    <div className="glass-card overflow-hidden animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
+    <div className="ag-card overflow-hidden animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
       {/* Header */}
       <div
         className="p-6 cursor-pointer hover:bg-[var(--color-card-hover)] transition-colors"

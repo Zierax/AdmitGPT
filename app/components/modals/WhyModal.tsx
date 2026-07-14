@@ -6,7 +6,7 @@ import { X } from "lucide-react";
 export function WhyModal({ onClose }: { onClose: () => void }) {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-[var(--color-background)] bg-opacity-90 backdrop-blur-md animate-fade-in shadow-[inset_0_0_100px_rgba(191,255,0,0.1)]">
-      <div className="glass-card max-w-4xl w-full p-0 relative animate-scale-in border border-[var(--color-primary)] overflow-hidden">
+      <div className="ag-card max-w-4xl w-full p-0 relative animate-scale-in border border-[var(--color-primary)] overflow-hidden">
         <button onClick={onClose} className="absolute top-6 right-6 z-50 text-[var(--color-muted)] hover:text-[var(--color-foreground)] transition-colors">
           <X size={24} />
         </button>

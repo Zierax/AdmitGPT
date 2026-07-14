@@ -3,13 +3,13 @@
 import Image from "next/image";
 import Header from "@/app/components/Header";
 import { CONTACT_EMAIL, GITHUB_URL } from "@/lib/siteConfig";
-import { Sparkles, ArrowRight, Mail } from "lucide-react";
+import { Sparkles, ArrowRight, Mail, Shield, Github, Eye } from "lucide-react";
 
 export function LandingPage({
   onStart,
   isLoading,
   loadingMessage,
-  onShowWhy
+  onShowWhy,
 }: {
   onStart: () => void;
   isLoading: boolean;
@@ -17,47 +17,48 @@ export function LandingPage({
   onShowWhy: () => void;
 }) {
   return (
-    <div className="min-h-screen flex flex-col bg-[#05050a]">
+    <div className="min-h-screen flex flex-col">
       <Header />
 
-      {/* Hero */}
-      <main className="flex-1 flex items-center justify-center px-6 py-12">
-        <div className="max-w-4xl w-full">
-          <section className="relative py-20 px-8 rounded-[2rem] overflow-hidden glass-card border-none shadow-[0_0_100px_rgba(191,255,0,0.03)] bg-black/40 backdrop-blur-3xl">
-            <div className="absolute inset-0 bg-gradient-to-br from-[rgba(191,255,0,0.05)] via-transparent to-transparent pointer-events-none" />
+      <main className="flex-1 flex items-center justify-center px-6 py-16">
+        <div className="ag-container">
+          <section className="relative overflow-hidden ag-card animate-fade-in-up" style={{ padding: "clamp(32px, 6vw, 72px)" }}>
+            <div
+              className="pointer-events-none absolute inset-0 opacity-60"
+              style={{
+                background:
+                  "radial-gradient(800px 400px at 50% -10%, var(--color-primary-glow), transparent 60%)",
+              }}
+            />
 
-            <div className="max-w-3xl mx-auto text-center relative z-10">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgba(191,255,0,0.05)] border border-[rgba(191,255,0,0.1)] text-[var(--color-primary)] text-xs font-bold uppercase tracking-widest mb-8 animate-fade-in">
+            <div className="relative z-10 mx-auto max-w-3xl text-center">
+              <div className="ag-eyebrow mb-8 justify-center">
                 <Sparkles size={14} /> Intelligence for Education
               </div>
 
-              {/* Logo container - Soft frame */}
-              <div className="mx-auto mb-8 w-32 h-32 relative p-1 group">
-                <div className="absolute inset-0 bg-gradient-to-tr from-[var(--color-primary)] to-transparent opacity-20 rounded-3xl group-hover:opacity-40 transition-opacity" />
-                <div className="relative w-full h-full bg-black overflow-hidden border border-white/10 rounded-2xl shadow-2xl">
-                  <Image
-                    src="/assets/AdmitGPT.png"
-                    alt="AdmitGPT Logo"
-                    fill
-                    className="object-cover"
-                  />
+              <div className="mx-auto mb-10 w-28 h-28 relative">
+                <div className="absolute inset-0 rounded-[34px] bg-gradient-to-tr from-[var(--color-primary)] to-transparent opacity-20 transition-opacity duration-500 hover:opacity-40" />
+                <div className="relative h-full w-full overflow-hidden rounded-[28px] border border-white/10 bg-black shadow-2xl">
+                  <Image src="/assets/AdmitGPT.png" alt="AdmitGPT Logo" fill className="object-cover" priority />
                 </div>
               </div>
 
-              <h1 className="text-6xl md:text-7xl font-black tracking-tighter leading-[0.9] mb-8 animate-fade-in-up uppercase">
-                ADMIT<span className="text-[var(--color-primary)]">GPT</span>
+              <h1 className="ag-display uppercase mb-8">
+                Admit<span className="ag-glow">GPT</span>
               </h1>
 
-              <p className="text-lg md:text-xl text-[var(--color-muted)] leading-relaxed mb-12 max-w-2xl mx-auto animate-fade-in-up [animation-delay:100ms] font-medium">
+              <p className="ag-lead mx-auto mb-12">
                 The world&apos;s first transparent, additive-logistic admissions engine.
-                Designed by students who believe mathematical truth should be free.
+                Built by a student who believes mathematical truth should be free &mdash;
+                not sold by consultants for thousands.
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-6 animate-fade-in-up [animation-delay:200ms]">
+              <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <button
                   onClick={onStart}
                   disabled={isLoading}
-                  className="btn-primary !px-12 !py-5 !text-lg !rounded-2xl w-full sm:w-auto shadow-2xl shadow-[var(--color-primary-glow)] group/btn"
+                  className="btn btn-primary group/btn w-full sm:w-auto"
+                  style={{ padding: "18px 40px", fontSize: "17px" }}
                 >
                   {isLoading ? (
                     <>
@@ -67,48 +68,64 @@ export function LandingPage({
                   ) : (
                     <>
                       <span>Start Free Analysis</span>
-                      <ArrowRight size={20} className="ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                      <ArrowRight size={20} className="ml-1 transition-transform group-hover/btn:translate-x-1" />
                     </>
                   )}
                 </button>
 
-                <button
-                  onClick={onShowWhy}
-                  className="btn-secondary !px-12 !py-5 !text-lg !rounded-2xl w-full sm:w-auto hover:border-[var(--color-primary)]/30"
-                >
+                <button onClick={onShowWhy} className="btn btn-secondary w-full sm:w-auto">
                   Our Philosophy
                 </button>
               </div>
 
-              <div className="mt-16 pt-8 border-t border-white/5 flex flex-wrap justify-center gap-8 opacity-50 grayscale hover:grayscale-0 transition-all">
-                <div className="flex flex-col items-center">
-                  <span className="text-2xl font-black text-white">1,164+</span>
-                  <span className="text-[10px] uppercase tracking-widest font-bold">Verified Profiles</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <span className="text-2xl font-black text-white">100%</span>
-                  <span className="text-[10px] uppercase tracking-widest font-bold">Client-Side Logic</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <span className="text-2xl font-black text-white">0</span>
-                  <span className="text-[10px] uppercase tracking-widest font-bold">Data Tracking</span>
-                </div>
+              <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 border-t border-[var(--color-border)] pt-10 sm:grid-cols-3">
+                {[
+                  ["1,122+", "Historical profiles"],
+                  ["100%", "Client-side logic"],
+                  ["Zero", "Data tracking"],
+                ].map(([stat, label]) => (
+                  <div key={label} className="flex flex-col items-center">
+                    <span className="text-3xl font-black text-white">{stat}</span>
+                    <span className="mt-1 text-[11px] uppercase tracking-widest font-bold text-[var(--color-muted)]">
+                      {label}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
+          </section>
+
+          <section className="ag-grid mt-8 md:grid-cols-3">
+            {[
+              [Shield, "Radically transparent", "Every weight, formula, and limitation lives in open source. No black box, no hidden multipliers."],
+              [Eye, "Honest about odds", "We show the audit range and the math behind it &mdash; including the parts that work against you."],
+              [Github, "Yours to verify", "The full engine, calibration scripts, and dataset ship together. Run it, audit it, trust it."],
+            ].map(([Icon, title, body]) => (
+              <div key={title as string} className="ag-card-flat">
+                <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--color-primary-glow)] text-[var(--color-primary)]">
+                  {(Icon as any)({ size: 20 })}
+                </div>
+                <h3 className="text-lg font-bold text-white mb-2">{title as string}</h3>
+                <p className="text-sm text-[var(--color-muted)] leading-relaxed">{body as string}</p>
+              </div>
+            ))}
           </section>
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="px-6 py-6 border-t border-[var(--color-border)] text-center text-xs text-[var(--color-muted)] bg-[#030307]">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          <p>© 2026 AdmitGPT. Built for the Transparency Movement.</p>
-          <div className="flex gap-4">
-            <a href="/transparency" className="hover:text-[var(--color-foreground)] transition-colors">Transparency Report</a>
-            <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-[var(--color-foreground)] transition-colors flex items-center gap-1">
-              <Mail size={12} /> Contact Us
+      <footer className="border-t border-[var(--color-border)] bg-[#050609] px-6 py-8">
+        <div className="ag-container flex flex-col items-center justify-between gap-4 md:flex-row">
+          <p className="text-xs text-[var(--color-muted)]">&copy; 2026 AdmitGPT. Built for the Transparency Movement.</p>
+          <div className="flex items-center gap-6 text-xs">
+            <a href="/transparency" className="text-[var(--color-muted)] transition-colors hover:text-[var(--color-foreground)]">
+              Transparency Report
             </a>
-            <a href={GITHUB_URL} className="hover:text-[var(--color-foreground)] transition-colors">Source Code</a>
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-[var(--color-muted)] transition-colors hover:text-[var(--color-foreground)] flex items-center gap-1">
+              <Mail size={12} /> Contact
+            </a>
+            <a href={GITHUB_URL} className="text-[var(--color-muted)] transition-colors hover:text-[var(--color-foreground)]">
+              Source Code
+            </a>
           </div>
         </div>
       </footer>

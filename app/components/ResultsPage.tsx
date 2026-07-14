@@ -183,7 +183,7 @@ export function ResultsPage({
 
           // RENDER ELITE OUTLIER CERTIFICATE (The "Special Thing")
           return (
-            <div className={`relative group p-1 border border-white/10 rounded-xl overflow-hidden glass-card animate-fade-in-up shadow-[0_20px_50px_rgba(0,0,0,0.5)]`}>
+            <div className={`relative group p-1 border border-white/10 rounded-xl overflow-hidden ag-card animate-fade-in-up shadow-[0_20px_50px_rgba(0,0,0,0.5)]`}>
               {/* Technical scan-line animation overlay */}
               <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[var(--color-primary)] to-transparent opacity-20 animate-scan z-10" />
               <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 pointer-events-none" />
@@ -316,7 +316,7 @@ export function ResultsPage({
 
         {/* Portfolio Chance Summary */}
         {portfolioResult && (
-          <div className="glass-card p-8 animate-fade-in-up border-l-4 border-l-[var(--color-primary)]">
+          <div className="ag-card p-8 animate-fade-in-up border-l-4 border-l-[var(--color-primary)]">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-2xl font-bold flex items-center gap-2 font-sans tracking-tight">
                 <Target size={24} className="text-[var(--color-primary)]" />
@@ -375,7 +375,7 @@ export function ResultsPage({
         ))}
 
         {/* What you can improve (aggregate) */}
-        <div className="glass-card p-6 animate-fade-in-up" style={{ animationDelay: `${results.length * 100 + 200}ms` }}>
+        <div className="ag-card p-6 animate-fade-in-up" style={{ animationDelay: `${results.length * 100 + 200}ms` }}>
           <h3 className="text-lg font-bold flex items-center gap-2 mb-4">
             <TrendingUp size={18} className="text-[var(--color-success)]" />
             What You Can Improve — Ranked by Impact
@@ -424,7 +424,7 @@ export function ResultsPage({
 
         {/* University Suggestions */}
         {suggestions && (
-          <div className="glass-card p-6 animate-fade-in-up">
+          <div className="ag-card p-6 animate-fade-in-up">
             <h3 className="text-lg font-bold flex items-center gap-2 mb-6">
               <Sparkles size={18} className="text-[var(--color-primary)]" />
               Suggested Universities For You

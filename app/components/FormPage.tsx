@@ -39,48 +39,45 @@ export function FormPage({
   setShowSchoolDropdown,
   onSubmit,
   onBack,
-  isScanning,
-  setIsScanning,
-  scanningStatus,
-  setScanningStatus,
 }: FormPageProps) {
   const totalSteps = 5;
   const stepNames = ["Demographics", "Academics", "Activities", "Awards", "Schools"];
+  const descriptions = [
+    "Tell us about yourself — this helps us compare you to similar applicants.",
+    "Your academic profile is the foundation of the analysis.",
+    "List up to 10 extracurriculars with their impact tier.",
+    "List up to 5 awards or honors.",
+    "Select the schools you want to analyze.",
+  ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#05050a]">
+    <div className="flex min-h-screen flex-col">
       <Header showBack onBack={onBack} />
 
-      <div className="flex-1 max-w-2xl mx-auto w-full px-6 py-8">
+      <div className="mx-auto w-full max-w-2xl flex-1 px-6 py-10">
         {/* Step indicator */}
-        <div className="step-indicator mb-8">
+        <div className="mb-10 flex items-center">
           {Array.from({ length: totalSteps }, (_, i) => (
-            <div key={i} className="flex items-center flex-1">
+            <div key={i} className="flex flex-1 items-center">
               <button
                 onClick={() => setStep(i + 1)}
                 className={`step-dot ${step === i + 1 ? "active" : ""} ${step > i + 1 ? "completed" : ""}`}
                 title={stepNames[i]}
+                aria-label={stepNames[i]}
               >
                 {step > i + 1 ? <Check size={14} /> : i + 1}
               </button>
-              {i < totalSteps - 1 && <div className={`step-line ${step > i + 1 ? "completed" : ""}`} />}
+              {i < totalSteps - 1 && (
+                <div className={`step-line ${step > i + 1 ? "completed" : ""}`} />
+              )}
             </div>
           ))}
         </div>
 
-        <h2 className="text-2xl font-bold mb-1 flex items-center justify-between">
-          <span>{stepNames[step - 1]}</span>
-        </h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">{stepNames[step - 1]}</h2>
+        <p className="mb-8 text-sm text-[var(--color-muted)]">{descriptions[step - 1]}</p>
 
-        <p className="text-sm text-[var(--color-muted)] mb-6">
-          {step === 1 && "Tell us about yourself — this helps us compare you to similar applicants."}
-          {step === 2 && "Your academic profile is the foundation of the analysis."}
-          {step === 3 && "List up to 10 extracurriculars with their impact tier."}
-          {step === 4 && "List up to 5 awards or honors."}
-          {step === 5 && "Select the schools you want to analyze."}
-        </p>
-
-        <div className="glass-card !p-8 mb-10 shadow-xl border-white/5 bg-black/40 backdrop-blur-3xl rounded-2xl">
+        <div className="ag-card mb-10">
           {step === 1 && <Step1Demographics profile={profile} setProfile={setProfile} />}
           {step === 2 && <Step2Academics profile={profile} setProfile={setProfile} />}
           {step === 3 && <Step3Extracurriculars profile={profile} setProfile={setProfile} />}
@@ -99,58 +96,56 @@ export function FormPage({
         </div>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center gap-6">
+        <div className="flex items-center justify-between gap-4">
           <button
             onClick={() => step > 1 && setStep(step - 1)}
-            className="btn-secondary !rounded-xl flex-1 md:flex-none justify-center"
+            className="btn btn-secondary flex-1 justify-center md:flex-none"
             disabled={step === 1}
-            style={{ opacity: step === 1 ? 0 ? 1 : 0.3 : 1 }}
           >
             <ArrowLeft size={16} /> Previous
           </button>
+
           {step < totalSteps ? (
-            <button onClick={() => {
-              // Validate current step before proceeding
-              if (step === 3) {
-                // Check for missing EC titles
-                const missingTitles = profile.extracurriculars.filter(ec => !ec.title.trim());
-                if (missingTitles.length > 0) {
-                  alert(`Please add titles for ${missingTitles.length} extracurricular activity(ies) before proceeding.`);
-                  return;
+            <button
+              onClick={() => {
+                if (step === 3) {
+                  const missing = profile.extracurriculars.filter((ec) => !ec.title.trim());
+                  if (missing.length > 0) {
+                    alert(`Please add titles for ${missing.length} extracurricular activit(ies) before proceeding.`);
+                    return;
+                  }
                 }
-              }
-              if (step === 4) {
-                // Check for missing award titles
-                const missingTitles = profile.awards.filter(award => !award.title.trim());
-                if (missingTitles.length > 0) {
-                  alert(`Please add titles for ${missingTitles.length} award(s) before proceeding.`);
-                  return;
+                if (step === 4) {
+                  const missing = profile.awards.filter((a) => !a.title.trim());
+                  if (missing.length > 0) {
+                    alert(`Please add titles for ${missing.length} award(s) before proceeding.`);
+                    return;
+                  }
                 }
-              }
-              setStep(step + 1);
-            }} className="btn-primary !rounded-xl flex-1 md:flex-none justify-center shadow-lg shadow-[var(--color-primary-glow)]">
+                setStep(step + 1);
+              }}
+              className="btn btn-primary flex-1 justify-center md:flex-none"
+            >
               Next Step <ArrowRight size={16} />
             </button>
           ) : (
             <button
               onClick={() => {
-                // Final validation before analysis
-                const missingECTitles = profile.extracurriculars.filter(ec => !ec.title.trim());
-                const missingAwardTitles = profile.awards.filter(award => !award.title.trim());
-
-                if (missingECTitles.length > 0 || missingAwardTitles.length > 0) {
-                  alert(`Please complete all titles:\n• ${missingECTitles.length} missing extracurricular title(s)\n• ${missingAwardTitles.length} missing award title(s)`);
+                const missingEC = profile.extracurriculars.filter((ec) => !ec.title.trim());
+                const missingAwards = profile.awards.filter((a) => !a.title.trim());
+                if (missingEC.length > 0 || missingAwards.length > 0) {
+                  alert(
+                    `Please complete all titles:\n• ${missingEC.length} missing extracurricular title(s)\n• ${missingAwards.length} missing award title(s)`
+                  );
                   return;
                 }
-
                 if (profile.targetSchools.length === 0) {
-                  alert('Please add at least one school to analyze.');
+                  alert("Please add at least one school to analyze.");
                   return;
                 }
-
                 onSubmit();
               }}
-              className="btn-primary !rounded-xl flex-1 md:flex-none justify-center shadow-xl shadow-[var(--color-primary-glow)]"
+              className="btn btn-primary flex-1 justify-center md:flex-none"
               disabled={profile.targetSchools.length === 0}
             >
               <Sparkles size={16} /> Run Final Audit
