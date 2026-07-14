@@ -1066,9 +1066,12 @@ export function calculateAdmissionProbability(
     // 3. Single additive logit → probability
     const combinedLogit = baseLogit + academicTerm + spikeTerm + majorMod + intlMod;
 
-    // 4. Logistic (Platt) calibration — see CALIB_SLOPE / CALIB_INTERCEPT in
-    // shared.ts. Corrects the raw logit's systematic over-confidence so the
-    // output is a calibrated probability, not just a rank score.
+    // 4. Optional Platt (logistic) calibration — see CALIB_SLOPE / CALIB_INTERCEPT
+    // in shared.ts. These are currently placeholders (SLOPE=1.0, INTERCEPT=0.0),
+    // i.e. a pass-through: the output is the raw additive logit, NOT a calibrated
+    // probability. The paper reports it as an exploratory ordinal signal, not a
+    // calibrated likelihood. Fit SLOPE/INTERCEPT on held-out logits vs outcomes
+    // (see scripts/calib_fit.ts) to enable true calibration.
     const calibratedLogit = CALIB_SLOPE * combinedLogit + CALIB_INTERCEPT;
     const rawPointEstimate = sigmoid(calibratedLogit);
 
