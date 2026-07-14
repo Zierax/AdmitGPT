@@ -13,7 +13,8 @@ The `UserProfile` interface encapsulates the entire raw state of an applicant's 
 | `intendedMajor` | `string` | The selected major applied directly by the user. |
 | `majorCategory` | `MajorCategory` | Categorization class mapping directly against major modifications. |
 | `sat` / `act` | `number \| null` | Corresponding verified scores. ACT auto-converts structurally using concordances. |
-| `unweightedGPA` | `number \| null` | Base raw unweighted GPA scale. |
+| `unweightedGPA` | `number \| null` | Base raw GPA. Interpreted under `gpaScale` (defaults to US-4.0) and bridged to a US-4.0 equivalent via `convertToUS4` before z-scoring. |
+| `gpaScale` | `GpaScale` | Native GPA scale of the applicant (`US_4.0`, `CGPA_10`, `CGPA_5`, `IB_7`, `UK_Percentage`, `Canada_4.3`, `Australia_7`, `Germany_5`, `Percentage_100`). Enables international transcript reconciliation. |
 | `numberOfAPCourses` | `number` | Total number of AP classes validating local rigor. |
 | `extracurriculars` | `UserEC[]` | A structural array comprising `{ title, description, tier }`. |
 | `awards` | `UserAward[]` | A structural array tracking achievements logically. |
@@ -42,9 +43,9 @@ The absolute computed boundary state describing an applicant's evaluation agains
 | `confidenceLevel` | `enum` | Ranges from `'high'` corresponding to dataset volume to `'insufficient'`. |
 | `confidenceLabel` | `string` | Granular trace descriptions explaining probability deviations. |
 | `sampleN` | `number` | Total historical students falling inside the cluster threshold. |
-| `rawScore` | `number` | Unfiltered aggregated linear combination Logit result. |
+| `rawScore` | `number` | Logit form of the final point estimate (computed as $\log(p/(1-p))$), used for ranking/export. |
 | `satZ` / `gpaZ` | `number` | Native feature Z-scores explicit evaluations against isolated bounds. |
-| `spikeScore` | `number` | Aggregated non-academic multiplier. |
+| `spikeScore` | `number` | Aggregated non-academic signal (log-saturated, typically 0–13). Enters the engine as a capped, verification-discounted additive logit contribution — not a multiplicative gate. |
 | `protocolTriggered`| `enum` | States if specific anomaly overrides (e.g. `OUTLIER`) acted structurally. |
 | `disclaimer` | `string \| undefined` | Explicit edge-case evaluation string actively attached when profiles generate unrealistic statistical assumptions (e.g. extremely high spike variance triggering structural ceiling warnings). |
 
@@ -54,7 +55,7 @@ Provides context regarding the spatial clustering mechanism locating equivalent 
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
-| `clusterSize` | `number` | Total applicant cluster matched logically via Euclidean spatial mapping. |
+| `clusterSize` | `number` | Total applicant cluster matched via the composite-score distance used for nearest-peer clustering. |
 | `nearestAccepted`| `object` | Exposes the lowest delta distance peer structurally validated as admitted. |
 | `nearestRejected`| `object` | Comparative rejection peer matching vector structures closely. |
 | `improvementImpact`| `object[]` | Simulated improvement boundaries modeling attribute shifts. |
@@ -62,7 +63,7 @@ Provides context regarding the spatial clustering mechanism locating equivalent 
 ## 5. CollegeData & AI Analysis Output Models
 
 - **`CollegeData`**: Unchanged mapping containing raw admissions percentiles mapping dynamically loaded datasets containing thresholds, acceptance percentages, tuition matrices, degrees scaling, and SAT standard deviations directly dictating output bounds.
-- **`AIAnalysis` / `AIConfig`**: External machine-interpretable outputs explicitly enabling local APIs (Gemini, ChatGPT) to structurally override and interpret logical evaluations through API keys stored entirely client-side. Allows processing the JSON structured outputs dumped via the PDF machine-readable generator matrix.
+- **`AIAnalysis` / `AIConfig`**: External machine-interpretable outputs enabling cloud APIs (e.g., Gemini, OpenAI, Groq) to interpret the evaluation; calls are made directly from the browser with a user-supplied API key, so no data is sent to AdmitGPT servers. The signed JSON block exported by the PDF generator is the input handed to the user's chosen LLM.
 
 
 Source:- 

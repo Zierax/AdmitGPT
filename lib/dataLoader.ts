@@ -4,6 +4,9 @@
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 import { StudentProfile, CollegeData, DatasetStats, MajorCategory } from './types';
+import { actToSATConcordance as actToSAT, findCollege, normalizeSchoolName } from './shared';
+
+export { actToSAT, findCollege, normalizeSchoolName };
 
 let studentsCache: StudentProfile[] | null = null;
 let collegesCache: CollegeData[] | null = null;
@@ -108,16 +111,7 @@ export function computeDatasetStats(students: StudentProfile[]): DatasetStats {
     return statsCache;
 }
 
-// ACT to SAT concordance table (College Board)
-export function actToSAT(act: number): number | null {
-    const table: Record<number, number> = {
-        36: 1590, 35: 1560, 34: 1530, 33: 1500, 32: 1470, 31: 1440,
-        30: 1410, 29: 1380, 28: 1350, 27: 1320, 26: 1290, 25: 1260,
-        24: 1230, 23: 1200, 22: 1170, 21: 1140, 20: 1110, 19: 1080,
-        18: 1050, 17: 1010, 16: 970, 15: 930, 14: 890, 13: 850, 12: 810,
-    };
-    return table[act] ?? null;
-}
+
 
 // Map intended major to category
 export function classifyMajor(major: string): MajorCategory {
@@ -144,16 +138,6 @@ export function getMajorCategoryLabel(cat: MajorCategory): string {
         Other: 'Other / Undecided',
     };
     return labels[cat];
-}
-
-export function findCollege(colleges: CollegeData[], name: string): CollegeData | undefined {
-    const normalizedName = name.toLowerCase().trim();
-    return colleges.find(c => {
-        const schoolName = c['school.name'];
-        if (!schoolName) return false;
-        const collegeName = schoolName.toLowerCase().trim();
-        return collegeName === normalizedName || collegeName.includes(normalizedName) || normalizedName.includes(collegeName);
-    });
 }
 
 export function getCollegeNames(colleges: CollegeData[]): string[] {

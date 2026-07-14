@@ -3,10 +3,12 @@
 import { useState, useEffect } from "react";
 import { ArrowLeft, Eye, BookOpen, Download, Github, Calculator, AlertTriangle, ChevronDown, ExternalLink, Sparkles } from "lucide-react";
 import { loadStudentsData, loadCollegesData, computeDatasetStats } from "@/lib/dataLoader";
+import { computeGpaReference } from "@/lib/shared";
 import type { DatasetStats } from "@/lib/types";
 
 export default function TransparencyPage() {
     const [stats, setStats] = useState<DatasetStats | null>(null);
+    const [gpaRef, setGpaRef] = useState<{ mean: number; std: number } | null>(null);
     const [openSection, setOpenSection] = useState<string | null>("formulas");
 
     useEffect(() => {
@@ -14,6 +16,9 @@ export default function TransparencyPage() {
             const students = await loadStudentsData();
             const st = computeDatasetStats(students);
             setStats(st);
+            // The clean US-4.0 GPA reference used by the engine (the raw corpus GPA
+            // mean is not on a single scale and must not be shown as "the" mean).
+            setGpaRef(computeGpaReference(students));
         }
         load();
     }, []);
@@ -111,12 +116,19 @@ n < 3  → Insufficient data (range width: ±35%)`}
                         />
 
                         <FormulaBlock
-                            title="Step 6: Final Result (Gated Multiplicative Model)"
-                            formula={`Academic_Gate = 1 / (1 + e^-(5.0 * (Academic_Z + 1.2)))
-Impact = Impact(SpikeRating, MajorMod, IntlMod, Region)
+                            title="Step 6: Final Result (Additive-Logistic Model)"
+                            formula={`Base     = logit(SchoolAdmitRate)          # school's true historical rate
+Academic = 1.5 × clamp(Academic_Z, [-2, 2])
+Spike    = v × clamp(SpikeScore × w_s, [-2.0, 2.0])
+MajorMod = (MajorRate/OverallRate - 1) × 0.5
+IntlMod  = (nonresident_rate/0.10 × 0.1 - 0.3) × isInternational
 
-Final_Prob = Academic_Gate * Impact`}
-                            explanation="AdmitGPT v1.0 uses a Gated Multiplicative Model. The 'Academic Gate' is a steep curve—if your academics are more than 2.0σ below the mean, the gate closes and your extracurricular 'Impact' is heavily reduced. This prevents unrealistic 'outlier' results for low-academic applicants at elite schools. You cannot 'buy' your way into a school with ECs if you don't meet the academic floor."
+Logit = Base + Academic + Spike + MajorMod + IntlMod
+Prob  = 1 / (1 + e^(-Logit))
+
+where v = 0.6 + 0.4 × verifiedShare   (verification discount)
+      w_s ∈ {0.11, 0.14, 0.175}        (Standard / Outlier / Game Maker)`}
+                            explanation="AdmitGPT uses a single additive logistic model. Each channel contributes additively to the admission log-odds: the school's baseline rate, your academic Z-score (scaled by 1.5 so academics dominate), your verification-discounted Spike (hard-capped at ±2.0 logits so one achievement can never rescue weak grades), and the major/international modifiers. Because it is additive rather than a multiplicative gate, weak academics smoothly lower the probability instead of snapping everyone below the floor to a flat 1%; at the same time, the spike cap prevents 'buying in' with extracurriculars alone."
                         />
 
                         <FormulaBlock
@@ -146,7 +158,7 @@ Final_Prob = Academic_Gate * Impact`}
                                 <StatCard label="With Decisions" value={stats.profilesWithDecisions.toLocaleString()} />
                                 <StatCard label="Year Range" value={`${stats.yearRange.min} – ${stats.yearRange.max}`} />
                                 <StatCard label="Avg SAT" value={stats.sat.mean.toFixed(0)} sub={`σ = ${stats.sat.std.toFixed(0)}`} />
-                                <StatCard label="Avg GPA (UW)" value={stats.gpa.mean.toFixed(2)} sub={`σ = ${stats.gpa.std.toFixed(2)}`} />
+                                <StatCard label="Avg GPA (4.0 ref)" value={gpaRef ? gpaRef.mean.toFixed(2) : "…"} sub={gpaRef ? `σ = ${gpaRef.std.toFixed(2)}` : "raw corpus GPA not 4.0-scaled"} />
                                 <StatCard label="SAT Range" value={`${stats.sat.min} – ${stats.sat.max}`} />
                             </div>
 
@@ -246,10 +258,10 @@ Final_Prob = Academic_Gate * Impact`}
                         <ol className="space-y-3 list-decimal list-inside text-[var(--color-muted)]">
                             <li><strong className="text-[var(--color-foreground)]">Get college SAT data</strong> from the College Scorecard (data.ed.gov)</li>
                             <li><strong className="text-[var(--color-foreground)]">Compute SAT Z-score:</strong> (Your SAT - College Average) / ((75th - 25th) / 1.35)</li>
-                            <li><strong className="text-[var(--color-foreground)]">Compute GPA Z-score:</strong> Use dataset mean = {stats?.gpa.mean.toFixed(2) ?? "..."}, std = {stats?.gpa.std.toFixed(2) ?? "..."}</li>
+                            <li><strong className="text-[var(--color-foreground)]">Compute GPA Z-score:</strong> Use the engine&apos;s US-4.0 GPA reference, mean = {gpaRef?.mean.toFixed(2) ?? "..."}, std = {gpaRef?.std.toFixed(2) ?? "..."} (the raw corpus GPA field is not on a single scale, so these are computed from the 4.0-plausible subset).</li>
                             <li><strong className="text-[var(--color-foreground)]">Calculate Analysis Rating:</strong> Sum your activities using the 6-factor rubric (W×T×R×P×D×V) / 2.5</li>
                             <li><strong className="text-[var(--color-foreground)]">Add Renaissance Bonus:</strong> Up to +3.0 based on category depth</li>
-                            <li><strong className="text-[var(--color-foreground)]">Compute Final Probability:</strong> Multiply your Academic Gate by your calculated Impact</li>
+                            <li><strong className="text-[var(--color-foreground)]">Compute Final Probability:</strong> Sum the channels into a logit (Base + 1.5·Academic_Z + Spike + MajorMod + IntlMod) and apply the logistic function 1/(1+e^(−Logit))</li>
                         </ol>
 
                         <p className="text-xs text-[var(--color-primary)] italic">

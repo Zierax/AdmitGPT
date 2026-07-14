@@ -47,3 +47,7 @@ next-env.d.ts
 
 # publication (private/unpublished assets)
 /publication/
+
+# autonomous review workspace
+/_review/
+_review/CHANGELOG_AGENT.md

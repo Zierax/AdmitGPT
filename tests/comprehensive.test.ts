@@ -121,7 +121,7 @@ describe('Engine v1.0: Comprehensive Logic Tests', () => {
     expect(result.disclaimer).toBeDefined();
   });
 
-  it('enforces Gated Multiplicative Model (Hard Academic Gates)', () => {
+  it('keeps weak academics low even with an extreme spike (additive-logit model)', () => {
     const weakAcademics: UserProfile = {
       ...baseProfile,
       sat: 800, // Very low
@@ -144,8 +144,10 @@ describe('Engine v1.0: Comprehensive Logic Tests', () => {
 
     const gatedResult = calculateAdmissionProbability(weakAcademics, 'Elite University', ivyCollege, [], dummyStats);
 
-    // High spike but low academics should be gated hard (< 5%)
-    expect(gatedResult.pointEstimate).toBeLessThan(0.05);
+    // High spike but low academics should stay low: academics enter the logit
+    // smoothly and dominate, so the probability is small (no hard 5% cliff, but
+    // still clearly gated by weak academics).
+    expect(gatedResult.pointEstimate).toBeLessThan(0.2);
   });
 
   it('verifies Diversity "Renaissance" Bonus logic', () => {

@@ -14,6 +14,7 @@ import {
     CognitiveLoad,
 } from './types';
 import { classifyMajor, findCollege } from './dataLoader';
+import { actToSATConcordance, normalizeSchoolName, convertToUS4, computeGpaReference, INTERNATIONAL_SPIKE_BOOST, ACADEMIC_LOGIT_COEF, SPIKE_CAP, VERIFIED_SPIKE_FLOOR, CALIB_SLOPE, CALIB_INTERCEPT } from './shared';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SECTION 8 — PERFORMANCE: Memoized Sigmoid
@@ -194,8 +195,29 @@ function computeDepthBonus(items: { category: ActivityCategory; tier: ECTier }[]
  * With tier caps still enforced to prevent inflation.
  */
 export function computeSpikeScore(extracurriculars: UserEC[], awards: UserAward[]): number {
+    // Anti-gaming: an unverified (Self_Reported) claim may not assert the very
+    // top scope / rarity / institutional strength, because nobody can check it.
+    // Such claims are downgraded one notch so over-claiming cannot manufacture a
+    // spike. Verified claims (Peer_Vouched / Institutional / Professional_Audit)
+    // keep their full value; honest self-reported mid-tier claims are untouched.
+    const sanitizeClaim = (it: {
+        tier: ECTier; tierLevel?: TierLevel; rarity?: RarityLevel;
+        strength?: InstitutionalStrength; validation?: ExternalValidation;
+        load?: CognitiveLoad; confidence?: number;
+    }) => {
+        let tierLevel = it.tierLevel ?? 'Local';
+        let rarity = it.rarity ?? 'Common';
+        let strength = it.strength ?? 'Standard';
+        if (it.validation === 'Self_Reported') {
+            if (tierLevel === 'Global_Elite') tierLevel = 'International';
+            if (rarity === 'Unique') rarity = 'Ultra_Rare';
+            if (strength === 'World_Class') strength = 'Prestigious';
+        }
+        return { ...it, tierLevel, rarity, strength };
+    };
+
     const allItems = [
-        ...extracurriculars.map(e => ({
+        ...extracurriculars.map(e => sanitizeClaim({
             tier: e.tier,
             tierLevel: e.tierLevel,
             rarity: e.rarity,
@@ -204,7 +226,7 @@ export function computeSpikeScore(extracurriculars: UserEC[], awards: UserAward[
             load: e.cognitiveLoad,
             confidence: e.confidence
         })),
-        ...awards.map(a => ({
+        ...awards.map(a => sanitizeClaim({
             tier: a.tier,
             tierLevel: a.tierLevel,
             rarity: a.rarity,
@@ -477,21 +499,6 @@ function isGameChangerAchievement(title: string, description: string): boolean {
 // SECTION 6 — ACT → SAT CONCORDANCE
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const ACT_TO_SAT_TABLE: Record<number, number> = {
-    36: 1590, 35: 1540, 34: 1500, 33: 1460, 32: 1430,
-    31: 1400, 30: 1370, 29: 1340, 28: 1310, 27: 1280,
-    26: 1240, 25: 1210, 24: 1180, 23: 1140, 22: 1110,
-    21: 1080, 20: 1040, 19: 1010, 18: 970, 17: 930,
-};
-
-const ACT_FLOOR_SCORE = 880;
-
-function actToSATConcordance(act: number): number {
-    if (act >= 36) return ACT_TO_SAT_TABLE[36];
-    if (act <= 16) return ACT_FLOOR_SCORE;
-    return ACT_TO_SAT_TABLE[act] ?? ACT_FLOOR_SCORE;
-}
-
 // ═══════════════════════════════════════════════════════════════════════════════
 // SECTION 9 — TIER CLASSIFICATION GUARD
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -533,7 +540,7 @@ function sanitizeTier(label: string, tier: ECTier): ECTier {
 // ACADEMIC Z-SCORE CALCULATIONS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function computeSATZScore(userSAT: number, college: CollegeData): number {
+function computeSATZScore(userSAT: number, college: CollegeData): number | null {
     const sat25Math = college['admissions.sat_scores.25th_percentile.math'];
     const sat75Math = college['admissions.sat_scores.75th_percentile.math'];
     const sat25Read = college['admissions.sat_scores.25th_percentile.critical_reading'];
@@ -548,7 +555,10 @@ function computeSATZScore(userSAT: number, college: CollegeData): number {
             ? sat25Math + sat75Math   // sum of two section midpoints ≈ combined mean
             : null);
 
-    if (!collegeSATAvg) return 0;
+    // No college SAT data → we cannot place the applicant, so return null. The
+    // caller then falls back to a GPA-only academic Z (with a small penalty)
+    // instead of silently treating a missing score as exactly average.
+    if (!collegeSATAvg) return null;
 
     // Combined 25th/75th for IQR-based std estimate.
     // FIX: fallback was ±40 → std ≈ 29 (impossibly narrow). ±100 → std ≈ 148,
@@ -569,12 +579,7 @@ function computeSATZScore(userSAT: number, college: CollegeData): number {
     return (userSAT - collegeSATAvg) / stdEstimate;
 }
 
-function computeGPAZScore(userGPA: number, stats: DatasetStats): number {
-    if (stats.gpa.std === 0) return 0;
-    return (userGPA - stats.gpa.mean) / stats.gpa.std;
-}
-
-/** 
+/**
  * Academic_Z = (SAT_Z × 0.55) + (GPA_Z × 0.45) 
  * If SAT is missing (test-optional), GPA carries 100% of the weight with a small structural penalty.
  */
@@ -600,8 +605,12 @@ function applyRegionalNormalization(
             // Zero-Knowledge Override: top percentile assumed for Game Makers
             return 2.0;
         }
-        // Rigor Compensation Bonus for national curriculum deflation
-        return gpaZ + 0.4;
+        // Rigor Compensation Bonus for national curriculum deflation. Only
+        // applied when the GPA already falls below the reference (the deflation
+        // case it is meant to correct); a GPA already at/above the reference
+        // needs no uplift, otherwise a weak GPA is over-corrected above a
+        // stronger one.
+        return gpaZ < 0 ? gpaZ + 0.4 : gpaZ;
     }
     return gpaZ;
 }
@@ -609,13 +618,6 @@ function applyRegionalNormalization(
 // ═══════════════════════════════════════════════════════════════════════════════
 // MODIFIER CALCULATIONS
 // ═══════════════════════════════════════════════════════════════════════════════
-
-function normalizeSchoolName(name: string | null | undefined): string {
-    if (!name) return '';
-    return name.toLowerCase().trim()
-        .replace(/[^a-z0-9\s]/g, '')
-        .replace(/\s+/g, ' ');
-}
 
 function computeMajorModifier(
     majorCategory: MajorCategory,
@@ -858,17 +860,28 @@ function determineProtocol(
     gameMakerCount: number,
     outlierCount: number,
     spikeScore: number,
-    academicZ: number
+    academicZ: number,
+    isInternational: boolean
 ): {
     protocol: ProtocolType;
     weights: WeightConfig;
     adjustedSpikeScore: number;
     confidenceLabel: string;
 } {
-    // BUG FIX: Hard Academic Gate
-    // Academic baseline cannot be circumvented trivially. 
-    // If Z < -1.5, you are academically excluded from elite tiers.
+    // Academic-weak detection: below Z = -1.5 the applicant is statistically
+    // excluded from elite tiers, so the protocol keeps academics dominant.
     const isAcademicallyWeak = academicZ < -1.5;
+
+    // International applicants are on non-standard GPA scales; lean on the spike
+    // (verified achievement) more and on the incomparable transcript less — BUT
+    // only when academics are already weak (academicZ < 0), i.e. exactly when the
+    // non-standard transcript is unreliable. When academics are strong the boost
+    // is withheld so we don't over-state a candidate whose transcript already
+    // speaks for itself. Conservative 1.25 multiplier (down from 1.5).
+    const intlBoost = (isInternational && academicZ < 0) ? INTERNATIONAL_SPIKE_BOOST : 1;
+    const spikeWeight = 0.175 * intlBoost;
+    const spWeight = 0.14 * intlBoost;
+    const stdSpikeWeight = 0.11 * intlBoost;
 
     // SECTION 4 — GAME MAKER SHORT-CIRCUIT
     if (gameMakerCount >= 1) {
@@ -878,8 +891,9 @@ function determineProtocol(
 
         return {
             protocol: 'GAME_MAKER',
-            // Spike Weight scaled to 0.35 Logit modifier so the real spike magnitude drives the uplift.
-            weights: { academicWeight: acWeight, spikeWeight: 0.35 },
+            // Spike Weight scaled to 0.175 Logit modifier (halved for a more
+            // balanced academic/spike trade-off; see tuning pass).
+            weights: { academicWeight: acWeight, spikeWeight },
             adjustedSpikeScore: spikeScore,
             confidenceLabel: 'GLOBAL_ASSET_DETECTED',
         };
@@ -887,14 +901,12 @@ function determineProtocol(
 
     // SECTION 3 — OUTLIER PROTOCOL
     if (outlierCount >= 1) {
-        // BUG FIX: Outlier Protocol invalidated as a "Cheat Code"
-        // If academically weak, Outlier protocol doesn't reduce academic penalty. 
-        // It maintains full 1.0 weight on academics so it acts as a hard gate.
+        // Outlier Protocol must not act as a "Cheat Code": when academically weak
+        // it keeps full academic weight so weak grades are not masked by the spike.
         const acWeight = isAcademicallyWeak ? 1.0 : 0.65;
 
-        // Spike multiplier removed. Flat weight scaled to realistic logit space.
-        const spWeight = 0.28;
-
+        // Spike multiplier removed. Flat weight scaled to realistic logit space
+        // (halved to 0.14 for a more balanced trade-off; see tuning pass).
         return {
             protocol: 'OUTLIER',
             weights: { academicWeight: acWeight, spikeWeight: spWeight },
@@ -905,72 +917,11 @@ function determineProtocol(
 
     return {
         protocol: 'STANDARD',
-        // Spike scaled to logit parameter ~0.22 => max +3.3 logit
-        weights: { academicWeight: 0.90, spikeWeight: 0.22 },
+        // Spike scaled to logit parameter ~0.11 (halved for balance; see tuning pass)
+        weights: { academicWeight: 0.90, spikeWeight: stdSpikeWeight },
         adjustedSpikeScore: spikeScore,
         confidenceLabel: '',
     };
-}
-
-/**
- * Apply Outlier Protocol probability floor and range adjustments.
- * SECTION 3B: floor applied BEFORE range width calculation.
- */
-function applyOutlierAdjustments(
-    pointEstimate: number,
-    baseRangeWidth: number,
-    admissionRate: number,
-): { pointEstimate: number; rangeWidth: number; low: number; high: number } {
-    // SECTION 3B: floor first
-    const flooredPoint = Math.max(pointEstimate, 0.18);
-
-    // SECTION 3C: school-aware range width
-    const rangeWidth = admissionRate > 0.30
-        ? baseRangeWidth * 1.1
-        : baseRangeWidth * 1.4;
-
-    const low = Math.max(flooredPoint - rangeWidth, 0.15);
-    const high = Math.min(flooredPoint + rangeWidth, 0.95);
-
-    return { pointEstimate: flooredPoint, rangeWidth, low, high };
-}
-
-/**
- * Apply GAME_MAKER protocol final probability adjustments.
- *
- * FIX (root cause of "99% at MIT" bug): the original implementation used a flat
- * 85–98% clamp for EVERY school regardless of selectivity. A student with SAT 1200
- * and GPA 2.30 was returned 98% at MIT because the school's admission rate was
- * never consulted. This function now derives floor and ceiling from the school's
- * admission rate so that elite schools (< 10%) have meaningfully lower bounds than
- * open schools (> 50%), while still reflecting the substantial uplift a
- * GAME_MAKER achievement provides.
- *
- * School tier → [floor, ceiling]:
- *   Elite     (< 10%):  [0.45, 0.75]
- *   Selective (10–25%): [0.60, 0.85]
- *   Moderate  (25–50%): [0.72, 0.92]
- *   Open      (> 50%):  [0.82, 0.98]
- */
-function applyGameMakerAdjustments(
-    rawPoint: number,
-    admissionRate: number,
-): { pointEstimate: number; low: number; high: number } {
-    let floor: number;
-    let ceiling: number;
-
-    if (admissionRate < 0.10) {
-        floor = 0.45; ceiling = 0.75;
-    } else if (admissionRate < 0.25) {
-        floor = 0.60; ceiling = 0.85;
-    } else if (admissionRate < 0.50) {
-        floor = 0.72; ceiling = 0.92;
-    } else {
-        floor = 0.82; ceiling = 0.98;
-    }
-
-    const pointEstimate = Math.max(floor, Math.min(ceiling, rawPoint));
-    return { pointEstimate, low: floor, high: ceiling };
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -1020,8 +971,13 @@ export function calculateAdmissionProbability(
 
     const userGPA = profile.unweightedGPA;
 
-    // EDGE CASE: Clamp GPA to valid range
-    const clampedGPA = userGPA ? Math.max(0, Math.min(4.0, userGPA)) : null;
+    // Scale-aware GPA. A 4.0-scale applicant GPA is mapped onto the corpus GPA
+    // scale before z-scoring (see lib/shared.ts → toCorpusGpa). International /
+    // non-standard transcripts are first converted from their native scale to a
+    // US-4.0 equivalent (convertToUS4) so they are not silently mis-scaled.
+    const gpa4 = (userGPA != null && profile.gpaScale && profile.gpaScale !== 'US_4.0')
+        ? convertToUS4(userGPA, profile.gpaScale)
+        : userGPA;
 
     // ── Sanitize and count tiers ──
     const sanitizedECs = profile.extracurriculars.map(ec => ({
@@ -1038,13 +994,25 @@ export function calculateAdmissionProbability(
     // ── Spike score ──
     const spikeScore = computeSpikeScore(sanitizedECs, sanitizedAwards);
 
-    // ── Academic Z-scores ──
-    let gpaZ = clampedGPA != null ? computeGPAZScore(clampedGPA, stats) : 0;
+    // Verification path: discount the spike when it is unverified. A self-reported
+    // only profile keeps VERIFIED_SPIKE_FLOOR of its spike weight; externally
+    // verified items (Peer_Vouched / Institutional / Professional_Audit) lift it
+    // back toward 1.0. This is the anti-gaming counterweight to the claim cap in
+    // computeSpikeScore: over-claiming is both capped and discounted.
+    const verifiedItems =
+        sanitizedECs.filter(e => e.externalValidation !== 'Self_Reported').length +
+        sanitizedAwards.filter(a => a.externalValidation !== 'Self_Reported').length;
+    const totalItems = sanitizedECs.length + sanitizedAwards.length;
+    const verifiedShare = totalItems === 0 ? 1 : verifiedItems / totalItems;
+    const verifiedMult = VERIFIED_SPIKE_FLOOR + (1 - VERIFIED_SPIKE_FLOOR) * verifiedShare;
 
-    // EDGE CASE: Handle invalid stats
-    if (!stats || !stats.gpa || stats.gpa.std === 0) {
-        gpaZ = 0;
-    }
+    // ── Academic Z-scores ──
+    // z against a clean US-4.0 reference (computeGpaReference) built from the
+    // corpus's 4.0-plausible subset — NOT the raw mixed-scale corpus mean, which
+    // previously mapped a 2.90 GPA onto a positive Z and inflated probabilities.
+    const gpaRef = computeGpaReference(students);
+    let gpaZ = gpa4 != null ? (gpa4 - gpaRef.mean) / gpaRef.std : 0;
+    gpaZ = Math.max(-4, Math.min(4, gpaZ));
 
     gpaZ = applyRegionalNormalization(gpaZ, profile, tierCounts.gameMakerCount);
 
@@ -1059,7 +1027,8 @@ export function calculateAdmissionProbability(
         tierCounts.gameMakerCount,
         tierCounts.outlierCount,
         spikeScore,
-        clampedAcademicZ // Ensure hard gate parameter is passed
+        clampedAcademicZ, // passed for protocol selection + intl boost logic
+        profile.isInternational
     );
 
     // ── Modifiers ──
@@ -1067,38 +1036,44 @@ export function calculateAdmissionProbability(
     const majorMod = (majorModRaw - 1) * 0.5; // centre around 0
     const intlMod = computeIntlModifier(profile.isInternational, college);
 
-    // ── Master Formula (GATED MULTIPLICATIVE ARCHITECTURE) ──
+    // ── Master Formula (ADDITIVE LOGIT / LOGISTIC-REGRESSION ARCHITECTURE) ──
+    // Grounded in the standard admissions-probability literature: a single
+    // logistic model where each factor contributes an additive term to the
+    // log-odds (Giani & Walling 2020; Lee, Kizilcec & Joachims 2023,
+    // arXiv:2302.03610). Academic strength,
+    // the EC spike, major fit and international context are all features in one
+    // logit — the model is compensatory and calibrated across the full [0,1]
+    // range. This replaces the old multiplicative gate × impact, which excluded
+    // academics from the logit and quantized every academically-weak applicant to
+    // 0.01, producing no gradient at the low end (the "small numbers don't work"
+    // failure).
     const baseRate = college['admissions.admission_rate.overall'] ?? 0.5;
     const baseLogit = Math.log(baseRate / (1 - baseRate));
 
-    // 1. Gate Function (Hard Filter)
-    let gateScore: number;
-    if (clampedAcademicZ < -2) {
-        gateScore = 0.01;
-    } else if (clampedAcademicZ < -1) {
-        gateScore = 0.05;
-    } else if (clampedAcademicZ < 0) {
-        gateScore = 0.15;
-    } else {
-        gateScore = sigmoid(clampedAcademicZ);
-    }
+    // Academic term — smooth, no hard cliff. A large coefficient (ACADEMIC_LOGIT_COEF)
+    // keeps academics dominant (a weak transcript cannot be fully offset by a spike)
+    // without the artificial 0.01/0.05/0.15 bands of the old gate.
+    const academicTerm = ACADEMIC_LOGIT_COEF * clampedAcademicZ;
 
-    // 2. Impact Function (Independent Amplifier)
-    // College selectivity (baseLogit) acts as friction against the impact
-    const impactWeightedSum = baseLogit
-        + (protocolConfig.adjustedSpikeScore * protocolConfig.weights.spikeWeight)
-        + majorMod
-        + intlMod;
+    let spikeTerm = protocolConfig.adjustedSpikeScore * protocolConfig.weights.spikeWeight * verifiedMult;
+    // Hard cap the spike's logit contribution (SPIKE_CAP, shared.ts) so a single
+    // extreme achievement can never overpower weak academics. The additive logit
+    // is retained (smooth gradient, no gate cliff), but the spike can move the
+    // logit by at most ±SPIKE_CAP. This is the core fix for the "weak academic +
+    // huge spike = 0.98" regression.
+    spikeTerm = Math.max(-SPIKE_CAP, Math.min(SPIKE_CAP, spikeTerm));
 
-    // Clamp Impact strictly to [0, 0.8] to prevent it exceeding gate dominance
-    const rawImpactScore = sigmoid(impactWeightedSum);
-    const impactScore = Math.max(0, Math.min(0.8, rawImpactScore));
+    // 3. Single additive logit → probability
+    const combinedLogit = baseLogit + academicTerm + spikeTerm + majorMod + intlMod;
 
-    // 3. Final Multiplicative Probability
-    const rawPointEstimate = gateScore * impactScore;
+    // 4. Logistic (Platt) calibration — see CALIB_SLOPE / CALIB_INTERCEPT in
+    // shared.ts. Corrects the raw logit's systematic over-confidence so the
+    // output is a calibrated probability, not just a rank score.
+    const calibratedLogit = CALIB_SLOPE * combinedLogit + CALIB_INTERCEPT;
+    const rawPointEstimate = sigmoid(calibratedLogit);
 
     // Compute deterministic proxy rawScore to satisfy JSON export contract constraints
-    const proxyRawScore = Math.max(-10, Math.log(rawPointEstimate / (1 - rawPointEstimate + 0.000001)));
+    const proxyRawScore = Math.max(-10, Math.min(10, Math.log(rawPointEstimate / (1 - rawPointEstimate + 0.000001))));
     const rawScore = proxyRawScore;
 
     // ── Confidence ──
@@ -1110,8 +1085,9 @@ export function calculateAdmissionProbability(
     let high: number;
     let confidenceLabel: string;
 
-    // Use pure Gate * Impact model. Static floors from older architectures are removed 
-    // to strictly enforce the Academic Gate dominance limits.
+    // Protocol-specific confidence-band widening (Game Maker / Outlier get broader
+    // ranges). The point estimate itself is the single additive-logit result above;
+    // these branches only adjust the displayed uncertainty interval.
     if (protocolConfig.protocol === 'GAME_MAKER') {
         const rangeWidth = confidence.rangeWidth * 1.5; // Wider confidence range handles volatility
         low = Math.max(0.01, pointEstimate - rangeWidth);

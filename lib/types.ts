@@ -144,6 +144,25 @@ export type ActivityCategory =
 
 export type ECTier = -1 | 0 | 1 | 2 | 3; // -1 = Game Maker, 0 = Outlier
 
+/**
+ * Native GPA scale the applicant reports on. The engine z-scores GPA against a
+ * US-4.0-reference corpus, so any non-4.0 input must be converted to a US-4.0
+ * equivalent first (see `convertToUS4` in lib/shared.ts). Omitting this field
+ * (or leaving it `US_4.0`) preserves the original behaviour. This is the math
+ * fix for international / non-standard transcripts that were previously fed
+ * straight through `toCorpusGpa` and silently mis-scaled.
+ */
+export type GpaScale =
+    | 'US_4.0'
+    | 'Percentage_100'   // 0-100 percentage scale
+    | 'CGPA_5'           // 0-5 CGPA
+    | 'CGPA_10'          // 0-10 CGPA (e.g. India)
+    | 'IB_7'             // IB 1-7 (diploma / subject average)
+    | 'UK_Percentage'    // 0-100 percentage scale (UK)
+    | 'Canada_4.3'       // 4.3-scale
+    | 'Australia_7'      // 7-point scale
+    | 'Germany_5';       // 1.0 (best) - 5.0 (fail), inverted
+
 export interface UserEC {
     title: string;
     description: string;
@@ -226,6 +245,8 @@ export interface UserProfile {
     /** User preferred test type to use for calculations */
     preferredTestType: 'SAT' | 'ACT' | 'None';
     unweightedGPA: number | null;
+    /** Native GPA scale of `unweightedGPA`; converted to US-4.0 before z-scoring. */
+    gpaScale?: GpaScale;
     weightedGPA: number | null;
     numberOfAPCourses: number;
     numberOfIBCourses: number;

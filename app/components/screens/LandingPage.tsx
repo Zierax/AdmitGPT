@@ -49,7 +49,7 @@ export function LandingPage({
               </h1>
 
               <p className="text-lg md:text-xl text-[var(--color-muted)] leading-relaxed mb-12 max-w-2xl mx-auto animate-fade-in-up [animation-delay:100ms] font-medium">
-                The world&apos;s first transparent, multiplicative admissions engine.
+                The world&apos;s first transparent, additive-logistic admissions engine.
                 Designed by students who believe mathematical truth should be free.
               </p>
 

@@ -157,58 +157,31 @@ describe('Engine: calculateAdmissionProbability', () => {
     expect(Number.isNaN(result.pointEstimate)).toBe(false);
   });
 
-  it('strictly gates weak academics regardless of high impact (Gated Multiplicative Model)', () => {
+  it('keeps weak academics low even with an extreme spike (additive-logit model)', () => {
     const weakAcademicProfile: UserProfile = {
       ...baseProfile,
       sat: 400, // Z-score ≈ -4
       unweightedGPA: 1.5, // Z-score ≈ -4
       extracurriculars: [
-        { 
-          title: 'Nobel Prize Winner', 
-          description: 'Solved world peace', 
-          tier: -1,
-          category: 'Other',
-          tierLevel: 'Global_Elite',
-          rarity: 'Unique',
-          externalValidation: 'Professional_Audit',
-          institutionalStrength: 'World_Class',
-          cognitiveLoad: 'Research_Level',
-          confidence: 100
-        },
-        { 
-          title: 'Olympic Gold', 
-          description: '', 
-          tier: -1,
-          category: 'Athletics',
-          tierLevel: 'Global_Elite',
-          rarity: 'Unique',
-          externalValidation: 'Professional_Audit',
-          institutionalStrength: 'World_Class',
-          cognitiveLoad: 'High',
-          confidence: 100
-        }
+        { title: 'Nobel Prize Winner', description: 'Solved world peace', tier: -1, category: 'Other', tierLevel: 'Global_Elite', rarity: 'Unique', externalValidation: 'Professional_Audit', institutionalStrength: 'World_Class', cognitiveLoad: 'Research_Level', confidence: 100 },
+        { title: 'Olympic Gold', description: '', tier: -1, category: 'Athletics', tierLevel: 'Global_Elite', rarity: 'Unique', externalValidation: 'Professional_Audit', institutionalStrength: 'World_Class', cognitiveLoad: 'High', confidence: 100 }
       ],
       awards: [
-        { 
-          title: 'Fields Medal', 
-          description: '', 
-          tier: -1,
-          category: 'Mathematics',
-          tierLevel: 'Global_Elite',
-          rarity: 'Unique',
-          externalValidation: 'Professional_Audit',
-          institutionalStrength: 'World_Class',
-          cognitiveLoad: 'Research_Level',
-          confidence: 100
-        }
+        { title: 'Fields Medal', description: '', tier: -1, category: 'Mathematics', tierLevel: 'Global_Elite', rarity: 'Unique', externalValidation: 'Professional_Audit', institutionalStrength: 'World_Class', cognitiveLoad: 'Research_Level', confidence: 100 }
       ]
     };
 
     const result = calculateAdmissionProbability(weakAcademicProfile, 'Test University', dummyCollege, [], dummyStats);
-    
-    // Even with ridiculously high spike features, the hard Gate(Academic Z < -2) = 0.01.
-    // Impact is clamped to max 0.8.
-    // Final P = Gate * Impact ≈ 0.008.
-    expect(result.pointEstimate).toBeLessThanOrEqual(0.05);
+
+    // Academic strength enters the logit smoothly (no hard 0.01–0.05 cliff), but
+    // with ACADEMIC_LOGIT_COEF large, near-zero academics still keep the
+    // probability low even for historically unprecedented achievements.
+    expect(result.pointEstimate).toBeLessThan(0.2);
+
+    // Academics dominate: a strong-academic twin of the same applicant scores far
+    // higher, confirming the model rewards academics rather than spike-gating.
+    const strongTwin: UserProfile = { ...weakAcademicProfile, sat: 1580, unweightedGPA: 4.0 };
+    const strongResult = calculateAdmissionProbability(strongTwin, 'Test University', dummyCollege, [], dummyStats);
+    expect(strongResult.pointEstimate).toBeGreaterThan(result.pointEstimate + 0.4);
   });
 });
