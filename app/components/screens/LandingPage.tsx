@@ -103,7 +103,7 @@ export function LandingPage({
             ].map(([Icon, title, body]) => (
               <div key={title as string} className="ag-card-flat">
                 <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--color-primary-glow)] text-[var(--color-primary)]">
-                  {(Icon as any)({ size: 20 })}
+                  <Icon size={20} />
                 </div>
                 <h3 className="text-lg font-bold text-white mb-2">{title as string}</h3>
                 <p className="text-sm text-[var(--color-muted)] leading-relaxed">{body as string}</p>
