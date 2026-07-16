@@ -13,10 +13,34 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: `${SITE_ORIGIN}/transparency`,
+      url: `${SITE_ORIGIN}/guide`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${SITE_ORIGIN}/guide/ivy-league-chances`,
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.8,
+    },
+    {
+      url: `${SITE_ORIGIN}/guide/test-optional-admissions`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_ORIGIN}/guide/evaluate-extracurriculars`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_ORIGIN}/transparency`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.7,
     },
   ];
 }
