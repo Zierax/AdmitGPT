@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import { SITE_ORIGIN, GITHUB_URL } from "@/lib/siteConfig";
 import "./globals.css";
 
-const siteUrl = "https://admitgpt.pages.dev";
+const siteUrl = SITE_ORIGIN;
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#08090c",
+  colorScheme: "dark",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -105,7 +107,6 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-    nocache: true,
     googleBot: {
       index: true,
       follow: true,
@@ -114,11 +115,111 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  verification: {
-    google: "YOUR_GOOGLE_SEARCH_CONSOLE_ID",
-    yandex: "YOUR_YANDEX_ID",
-    yahoo: "YOUR_YAHOO_ID",
-  },
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } }
+    : {}),
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      url: siteUrl,
+      name: "AdmitGPT",
+      description:
+        "Free, open-source AI college admissions probability calculator.",
+      publisher: { "@id": `${siteUrl}/#organization` },
+      potentialAction: [
+        {
+          "@type": "SearchAction",
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate: `${siteUrl}/?school={search_term_string}`,
+          },
+          "query-input": "required name=search_term_string",
+        },
+      ],
+      inLanguage: "en-US",
+    },
+    {
+      "@type": "Organization",
+      "@id": `${siteUrl}/#organization`,
+      name: "AdmitGPT",
+      url: siteUrl,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteUrl}/assets/AdmitGPT.png`,
+        width: 512,
+        height: 512,
+      },
+      sameAs: [GITHUB_URL, "https://instagram.com/z14d.d"],
+    },
+    {
+      "@type": "WebApplication",
+      "@id": `${siteUrl}/#webapp`,
+      name: "AdmitGPT — College Admissions Chance Calculator",
+      url: siteUrl,
+      applicationCategory: "EducationalApplication",
+      operatingSystem: "Any (Web Browser)",
+      browserRequirements: "Requires JavaScript. Runs entirely client-side.",
+      description:
+        "Predict Ivy League, MIT, and Stanford acceptance chances from SAT, ACT, GPA, and extracurriculars using a transparent, open-source additive-logistic model. 100% free.",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      featureList: [
+        "College admission probability calculator",
+        "SAT / ACT / GPA-based prediction",
+        "Extracurricular spike scoring",
+        "Ivy League and top-university chance estimates",
+        "Fully transparent open-source math",
+      ],
+      isAccessibleForFree: true,
+      author: { "@id": `${siteUrl}/#organization` },
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${siteUrl}/#faq`,
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "Is AdmitGPT really free?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes. AdmitGPT is 100% free and open-source. There are no hidden fees, no paywalls, and no account required. The entire admissions model runs in your browser.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How does AdmitGPT calculate my admission chances?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "AdmitGPT uses a transparent additive-logistic model that combines your academic strength (SAT/ACT/GPA z-scores), extracurricular spike, intended major fit, and international context into a single probability for each college. Every formula and weight is published openly.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can AdmitGPT predict Ivy League acceptance chances?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes. AdmitGPT estimates admission probability for top-tier US universities including the Ivy League, MIT, and Stanford. It reports results as an honest, exploratory ordinal signal rather than a guaranteed probability, and openly documents its calibration limits.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Does AdmitGPT store or sell my data?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No. AdmitGPT performs all calculations client-side in your browser. Your profile is never uploaded, stored, or sold.",
+          },
+        },
+      ],
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -138,6 +239,10 @@ export default function RootLayout({
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
           rel="stylesheet"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body className="antialiased">

@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
@@ -21,11 +20,6 @@ export default function TransparencyPage() {
 
   return (
     <div className="app-bg" style={{ minHeight: '100vh' }}>
-      <Head>
-        <title>Transparency — AdmitGPT</title>
-        <meta name="description" content="The exact math behind AdmitGPT, written plainly. No black boxes." />
-      </Head>
-
       <main className="tp-wrap">
         <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <span className="tp-eyebrow">Transparency Report</span>
