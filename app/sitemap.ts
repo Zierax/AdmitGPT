@@ -25,6 +25,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${SITE_ORIGIN}/guide/how-to-get-into-ivy-league`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_ORIGIN}/guide/early-decision-vs-early-action`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_ORIGIN}/guide/what-gpa-do-you-need-for-college`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_ORIGIN}/guide/good-sat-score-for-ivy-league`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_ORIGIN}/guide/international-student-admissions`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${SITE_ORIGIN}/guide/test-optional-admissions`,
       lastModified: now,
       changeFrequency: "monthly",
@@ -34,6 +64,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${SITE_ORIGIN}/guide/evaluate-extracurriculars`,
       lastModified: now,
       changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_ORIGIN}/faq`,
+      lastModified: now,
+      changeFrequency: "weekly",
       priority: 0.8,
     },
     {

@@ -217,6 +217,70 @@ const jsonLd = {
             text: "No. AdmitGPT performs all calculations client-side in your browser. Your profile is never uploaded, stored, or sold.",
           },
         },
+        {
+          "@type": "Question",
+          name: "What GPA do I need for Harvard or Ivy League schools?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "The median admitted GPA at Harvard and most Ivy League schools is approximately 3.95 unweighted. A GPA below 3.7 places you below the 25th percentile. Weighted GPAs above 4.0 are common among admitted students taking 8+ AP or IB courses. AdmitGPT normalizes your GPA against each school's own distribution for an accurate comparison.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What is a good SAT score for Ivy League admission?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "The middle 50% SAT range across Ivy League schools is approximately 1460–1570. Harvard's range is 1490–1580. Scoring above 1550 places you at or above the 75th percentile at most Ivies. All Ivy League schools require test scores as of the 2025–26 cycle.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Does Early Decision really increase your chances?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes. Early Decision acceptance rates are typically 2–4x higher than Regular Decision at selective schools. For example, Dartmouth admits approximately 19% of ED applicants vs 4.5% for RD. However, ED is binding — you must enroll if admitted, so run net price estimates first. Non-binding Early Action offers a smaller boost (1.2–1.8x) with full flexibility.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Should I apply test-optional if my SAT score is low?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "If your SAT is below a school's 25th percentile and the school offers test-optional admission, applying without scores is generally better. At test-required schools (all Ivies, MIT, Georgetown, etc.), you must submit regardless. At test-optional schools, a strong score (above the school's median) still helps admission and merit scholarships.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can international students get financial aid at US colleges?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Only a handful of US schools are need-blind for international students: Harvard, Yale, Princeton, MIT, Dartmouth, Brown, Amherst, Bowdoin, and a few others. At these schools, financial need does not affect admission. At all other US universities, international students are evaluated on a need-aware basis — requesting aid can reduce your chances.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How many colleges should I apply to?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "A balanced college list typically includes 8–12 schools: 2–4 safety schools (admission rate over 50% for your profile), 3–5 target schools (20–50% chance), and 2–3 reach schools (under 20% chance). Applying to more than 15 schools rarely improves outcomes and adds significant essay workload.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How accurate are college admission chances calculators?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No calculator can predict individual outcomes with certainty. AdmitGPT provides directional estimates based on historical data and is transparent about its limits. At schools below 10% admission rate, the model under-predicts systematically (predicted ~1.3% vs observed ~24.6% in the hardest decile). The ordinal ranking is reliable (AUC ~0.74).",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What extracurriculars impress admissions officers most?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Admissions officers value depth over breadth. A single national-level achievement matters more than ten school-club memberships. AdmitGPT scores extracurriculars across six dimensions: tier (local to international), level, rarity, institutional strength, cognitive load, and validation. The spike contribution is capped at ±2.0 logit so no single activity can overpower academics.",
+          },
+        },
       ],
     },
   ],
