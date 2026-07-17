@@ -85,6 +85,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${SITE_ORIGIN}/guide/college-application-deadlines-2026`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_ORIGIN}/guide/college-application-checklist`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_ORIGIN}/guide/college-interview-tips`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_ORIGIN}/guide/community-college-vs-university`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_ORIGIN}/guide/harvard-vs-stanford-vs-mit`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${SITE_ORIGIN}/guide/test-optional-admissions`,
       lastModified: now,
       changeFrequency: "monthly",

@@ -64,6 +64,36 @@ const guides = [
     tags: "US News rankings, college rankings, how colleges are ranked, ranking flaws",
   },
   {
+    slug: "college-application-deadlines-2026",
+    title: "College Application Deadlines 2026–2027",
+    desc: "Every key deadline for the 2026–27 cycle: ED, EA, RD, FAFSA, CSS Profile, and scholarship deadlines — organized month by month.",
+    tags: "college deadlines, application timeline, ED EA RD deadlines, FAFSA due date",
+  },
+  {
+    slug: "college-application-checklist",
+    title: "College Application Checklist",
+    desc: "Everything you need to apply: Common App, essays, recommendations, test scores, activities, financial aid — with HowTo structured data for featured snippets.",
+    tags: "college checklists, application requirements, how to apply to college, admission steps",
+  },
+  {
+    slug: "college-interview-tips",
+    title: "College Interview Tips",
+    desc: "How much interviews matter, common questions, what to ask, what to wear, and how to make a strong impression without memorizing scripts.",
+    tags: "college interview, admissions interview, interview questions, interview preparation",
+  },
+  {
+    slug: "community-college-vs-university",
+    title: "Community College vs University",
+    desc: "Cost comparison, transfer pathways, graduation rates, and ROI of starting at a community college vs a four-year university — with honest data.",
+    tags: "community college, transfer to university, college cost comparison, education ROI",
+  },
+  {
+    slug: "harvard-vs-stanford-vs-mit",
+    title: "Harvard vs Stanford vs MIT",
+    desc: "Side-by-side comparison of admission rates, GPA and SAT ranges, campus culture, financial aid, and career outcomes at the three most selective US universities.",
+    tags: "Harvard Stanford MIT, top university comparison, Ivy League vs Stanford, school fit",
+  },
+  {
     slug: "international-student-admissions",
     title: "International Student US College Admissions",
     desc: "Need-blind vs need-aware financial aid, testing requirements, regional context adjustments, and how the AdmitGPT engine adapts for international applicants.",

@@ -112,6 +112,25 @@ export function HomeSEO() {
           where to invest your energy. No consultant can give you a more honest answer than the
           data itself.
         </p>
+
+        <h3
+          style={{
+            fontSize: 18,
+            fontWeight: 600,
+            color: "var(--color-foreground)",
+            marginTop: 36,
+            marginBottom: 14,
+          }}
+        >
+          College application deadlines and planning
+        </h3>
+        <ul style={{ fontSize: 14, lineHeight: 2, paddingLeft: 20, listStyle: "none" }}>
+          <li>→ <Link href="/guide/college-application-deadlines-2026" style={{ color: "var(--color-primary)" }}>College Application Deadlines 2026–2027</Link></li>
+          <li>→ <Link href="/guide/college-application-checklist" style={{ color: "var(--color-primary)" }}>College Application Checklist</Link></li>
+          <li>→ <Link href="/guide/college-interview-tips" style={{ color: "var(--color-primary)" }}>College Interview Tips</Link></li>
+          <li>→ <Link href="/guide/community-college-vs-university" style={{ color: "var(--color-primary)" }}>Community College vs University</Link></li>
+          <li>→ <Link href="/guide/harvard-vs-stanford-vs-mit" style={{ color: "var(--color-primary)" }}>Harvard vs Stanford vs MIT Comparison</Link></li>
+        </ul>
       </div>
     </section>
   );
