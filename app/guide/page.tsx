@@ -34,6 +34,36 @@ const guides = [
     tags: "SAT Ivy League, Harvard SAT score, test optional strategy",
   },
   {
+    slug: "college-application-essay-tips",
+    title: "College Application Essay Tips",
+    desc: "How to write a standout Common App personal statement, nail your supplemental essays, and avoid the mistakes that sink otherwise strong applications.",
+    tags: "college essay tips, Common App essay, supplemental essays, essay strategy",
+  },
+  {
+    slug: "financial-aid-explained",
+    title: "College Financial Aid Explained",
+    desc: "FAFSA and CSS Profile, need-blind vs need-aware policies, merit scholarships, and how financial aid affects your admissions chances.",
+    tags: "financial aid, FAFSA, CSS Profile, need-blind, scholarships",
+  },
+  {
+    slug: "college-acceptance-rates-2026",
+    title: "College Acceptance Rates 2026",
+    desc: "Updated acceptance rates for Ivy League, top 50, liberal arts, and state flagships — and how the AdmitGPT engine uses them to calculate your odds.",
+    tags: "college acceptance rates, Harvard acceptance rate, Ivy League selectivity",
+  },
+  {
+    slug: "how-to-choose-a-college",
+    title: "How to Choose a College",
+    desc: "Build a balanced college list with reach, target, and safety schools — and use admission probability data to find where you have the best odds.",
+    tags: "choose a college, college list, reach target safety, college selection",
+  },
+  {
+    slug: "college-rankings-explained",
+    title: "College Rankings Explained",
+    desc: "A critical look at US News, Forbes, and other ranking systems — what they actually measure, their limitations, and why your personal odds matter more.",
+    tags: "US News rankings, college rankings, how colleges are ranked, ranking flaws",
+  },
+  {
     slug: "international-student-admissions",
     title: "International Student US College Admissions",
     desc: "Need-blind vs need-aware financial aid, testing requirements, regional context adjustments, and how the AdmitGPT engine adapts for international applicants.",

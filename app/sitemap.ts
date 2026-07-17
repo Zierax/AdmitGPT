@@ -55,6 +55,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${SITE_ORIGIN}/guide/college-application-essay-tips`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_ORIGIN}/guide/financial-aid-explained`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_ORIGIN}/guide/college-acceptance-rates-2026`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_ORIGIN}/guide/how-to-choose-a-college`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_ORIGIN}/guide/college-rankings-explained`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${SITE_ORIGIN}/guide/test-optional-admissions`,
       lastModified: now,
       changeFrequency: "monthly",

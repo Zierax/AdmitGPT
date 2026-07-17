@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { RelatedGuides } from "@/app/components/RelatedGuides";
 import { SITE_ORIGIN } from "@/lib/siteConfig";
 
 export const metadata: Metadata = {
@@ -121,6 +122,7 @@ export default function GpaCollegeGuide() {
               Back to Guides
             </Link>
           </div>
+          <RelatedGuides current="/guide/what-gpa-do-you-need-for-college" />
         </section>
       </main>
     </div>
