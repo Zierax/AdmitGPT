@@ -50,3 +50,5 @@ next-env.d.ts
 
 # autonomous review workspace (any location)
 _review/
+# raw College Scorecard source (large; regenerate via scripts/build_colleges.mjs)
+Most-Recent-Cohorts-Institution.csv
