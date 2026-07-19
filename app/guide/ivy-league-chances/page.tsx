@@ -32,15 +32,40 @@ export default function IvyLeagueGuide() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Home", item: SITE_ORIGIN },
-              { "@type": "ListItem", position: 2, name: "Guides", item: SITE_ORIGIN + "/guide" },
-              { "@type": "ListItem", position: 3, name: "Ivy League Chances", item: SITE_ORIGIN + "/guide/ivy-league-chances" },
-            ],
-          }),
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Home", item: SITE_ORIGIN },
+                { "@type": "ListItem", position: 2, name: "Guides", item: SITE_ORIGIN + "/guide" },
+                { "@type": "ListItem", position: 3, name: "Ivy League Chances", item: SITE_ORIGIN + "/guide/ivy-league-chances" },
+              ],
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "ScholarlyArticle",
+              headline: "Your Ivy League Admission Chances",
+              description:
+                "Data-backed analysis of Harvard, Yale, Princeton and Ivy League admission odds from the open-source AdmitGPT additive-logistic engine.",
+              inLanguage: "en-US",
+              datePublished: "2025-08-01",
+              dateModified: "2026-01-01",
+              author: { "@type": "Organization", name: "AdmitGPT", url: SITE_ORIGIN },
+              publisher: {
+                "@type": "Organization",
+                name: "AdmitGPT",
+                logo: { "@type": "ImageObject", url: `${SITE_ORIGIN}/assets/AdmitGPT.png` },
+              },
+              mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_ORIGIN}/guide/ivy-league-chances` },
+              isPartOf: { "@type": "WebSite", "@id": `${SITE_ORIGIN}/#website` },
+              about: { "@type": "Thing", name: "Ivy League Admissions" },
+              citation: [
+                { "@type": "ScholarlyArticle", name: "Giani & Walling (2020), admissions modeling" },
+                { "@type": "ScholarlyArticle", name: "Lee, Kizilcec & Joachims (2023), admissions research" },
+              ],
+            },
+          ]),
         }}
       />
       <main className="tp-wrap">
