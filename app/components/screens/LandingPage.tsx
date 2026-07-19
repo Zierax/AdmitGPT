@@ -73,12 +73,12 @@ export function LandingPage({
               </div>
 
               <h1 className="ag-display mb-6">
-                Know your real{" "}
-                <span className="ag-mark">admission odds</span> — before you apply.
+                See your real college{" "}
+                <span className="ag-mark">odds</span>.
               </h1>
 
               <p className="ag-lead mb-9" style={{ color: "var(--color-foreground-dim)", maxWidth: "52ch" }}>
-                AdmitGPT shows your actual college acceptance chances from your GPA,
+                AdmitGPT shows your actual acceptance chances from your GPA,
                 test scores, and extracurriculars — for every school on your list.
                 Honest math, private by design, and free. Built by a student who was
                 tired of the guessing game.

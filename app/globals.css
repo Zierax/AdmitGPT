@@ -11,13 +11,16 @@
      Text/Accent: pure white
      Lines:       medium matte gray
      Pop accent:  electric neon lime green (shards + antenna dot) */
-  --color-background: #161616;   /* off-black canvas */
+   --color-background: #161616;   /* off-black canvas */
   --color-surface: #202020;      /* panel */
   --color-surface-2: #2a2a2a;    /* deeper panel */
   --color-card: #242424;         /* card stock — clearly lighter than bg so it reads */
   --color-card-hover: #2e2e2e;
   --color-border: #3a3a3a;       /* soft line */
   --color-border-strong: #555555; /* medium matte gray framing line */
+
+  /* Depth: a slightly lifted near-black for the page field so it isn't dead flat */
+  --color-bg-grad: radial-gradient(120% 80% at 50% -10%, #1f1f1f 0%, #161616 55%, #101010 100%);
 
   --color-foreground: #FFFFFF;   /* pure white text */
   --color-foreground-dim: #c8c8c8;
@@ -107,7 +110,9 @@
   body {
     background-color: var(--color-background);
     background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"),
+      var(--color-bg-grad);
+    background-attachment: fixed, fixed;
     color: var(--color-foreground);
     font-family: var(--font-sans);
     min-height: 100vh;
@@ -216,15 +221,15 @@
   .ag-mark::after {
     content: "";
     position: absolute;
-    left: -0.1em; right: -0.1em; bottom: 0.08em;
-    height: 0.62em;
+    left: -0.08em; right: -0.08em; bottom: 0.1em;
+    height: 0.52em;
     background: var(--color-primary);
-    opacity: 0.92;
-    transform: skewX(-7deg);
+    opacity: 0.85;
+    transform: skewX(-6deg);
     z-index: -1;
   }
   .ag-display .ag-mark::after, .ag-h1 .ag-mark::after, .ag-h2 .ag-mark::after {
-    bottom: 0.05em; height: 0.32em;
+    bottom: 0.04em; height: 0.3em;
   }
 
   /* ---- Cards (flat, paper-like, hairline border) ---- */
@@ -676,11 +681,13 @@
 
   /* Sticker card — flat hard shadow, slight tilt, the zine workhorse */
   .ag-sticker-card {
-    background: var(--color-card);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0) 40%),
+      var(--color-card);
     border: 2px solid var(--color-border-strong);
     border-radius: 16px 20px 14px 22px / 20px 14px 22px 16px;
     padding: 26px;
-    box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255,255,255,0.05);
+    box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255,255,255,0.06);
     transition: transform .25s cubic-bezier(.2,1.4,.4,1), box-shadow .25s ease;
   }
   .ag-sticker-card:hover {
@@ -712,7 +719,7 @@
     position: relative;
     padding: 10px;
     transform: rotate(-1deg);
-    background: #010100; /* matches the logo's own near-black field → melts into the page */
+    background: var(--color-background); /* matches the page field → logo melts into the page */
     border: 2px solid var(--color-border-strong);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-card);
