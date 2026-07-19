@@ -44,11 +44,12 @@
   --color-accent-tint: rgba(0, 254, 0, 0.12);
 
   /* ---- FONTS: distinct zine feel without web fonts ----
-     Display = chunky rounded-grotesk / comic-ish system stack (hand-made vibe).
-     Body    = humanist sans (clean, readable).
-     Mono    = typewriter for data/odds. */
-  --font-display: 'Trebuchet MS', 'Comic Sans MS', 'Chalkboard SE', 'Marker Felt', 'Segoe Print', system-ui, sans-serif;
-  --font-sans: 'Avenir Next', 'Segoe UI', 'Helvetica Neue', system-ui, sans-serif;
+      Display = hand-drawn / comic stack (Chalkboard SE on mac, Segoe Print on
+      Windows, Comic Sans as last resort). Reads as intentional zine, not cheap.
+      Body    = humanist sans (clean, readable).
+      Mono    = typewriter for data/odds. */
+  --font-display: 'Chalkboard SE', 'Segoe Print', 'Comic Sans MS', 'Trebuchet MS', 'Marker Felt', system-ui, sans-serif;
+  --font-sans: 'Avenir Next', 'Segoe UI', 'Helvetica Neue', system-ui, -apple-system, sans-serif;
   --font-serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
   --font-mono: 'Courier New', 'Courier', ui-monospace, monospace;
 
@@ -709,17 +710,18 @@
      echo the logo's pop accent, so the chrome is built from the mascot. */
   .ag-mascot-merge {
     position: relative;
-    padding: 14px;
+    padding: 10px;
     transform: rotate(-1deg);
-    background: transparent; /* img uses screen blend → logo field drops out, character merges into page */
-    border-radius: 4px;
+    background: #010100; /* matches the logo's own near-black field → melts into the page */
+    border: 2px solid var(--color-border-strong);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
   }
   .ag-mascot-img {
     display: block;
     width: 100%;
     height: auto;
-    mix-blend-mode: screen; /* logo's near-black field drops out → character merges into the page */
-    filter: drop-shadow(0 0 1px rgba(0,0,0,0.6));
+    border-radius: calc(var(--radius-lg) - 6px);
   }
   /* matte-gray framing brackets (logo's gray line vocabulary) */
   .ag-mascot-merge::before,
@@ -828,12 +830,12 @@
   .btn-zine:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 0 rgba(0,254,0,0.4); }
   .btn-zine:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: var(--shadow-primary); }
   .btn-zine.secondary {
-    background: var(--color-surface);
+    background: var(--color-card);
     color: var(--color-foreground);
-    border-color: var(--color-border-strong);
+    border-color: var(--color-foreground-dim);
     box-shadow: var(--shadow-scrap);
   }
-  .btn-zine.secondary:hover { background: var(--color-surface-2); box-shadow: 5px 5px 0 0 var(--color-border-strong); }
+  .btn-zine.secondary:hover { background: var(--color-surface-2); border-color: var(--color-foreground); box-shadow: 5px 5px 0 0 var(--color-border-strong); }
 
   /* Hand-drawn section head: sketchy underline + serif title */
   .ag-zine-section { margin: 56px 0 40px; position: relative; }

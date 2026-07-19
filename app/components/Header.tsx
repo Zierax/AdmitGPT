@@ -37,19 +37,19 @@ export default function Header({
               className="group flex items-center gap-3"
               aria-label="AdmitGPT home"
             >
-              <div className="relative h-10 w-10 overflow-hidden transition-transform group-hover:scale-105">
+              <div className="relative h-11 w-11 shrink-0 transition-transform group-hover:scale-105">
                 <Image src="/assets/AdmitGPT.png" alt="AdmitGPT" fill className="object-contain" />
                 <span className="pointer-events-none absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" style={{ boxShadow: "0 0 0 2px var(--color-primary), 0 0 12px rgba(0,254,0,0.5)" }} />
               </div>
-              <span className="text-lg uppercase tracking-tighter ag-wordmark">
+              <span className="text-xl uppercase tracking-tighter ag-wordmark">
                 Admit<span className="accent">GPT</span>
               </span>
             </button>
 
             <button
               onClick={() => setIsWhyOpen(!isWhyOpen)}
-              className={`hidden text-[11px] font-bold uppercase tracking-widest transition-colors md:flex md:items-center md:gap-2 ${
-                isWhyOpen ? "text-[var(--color-primary)]" : "text-[var(--color-muted)] hover:text-[var(--color-foreground)]"
+              className={`hidden text-xs font-semibold uppercase tracking-wide transition-colors md:flex md:items-center md:gap-2 ${
+                isWhyOpen ? "text-[var(--color-primary)]" : "text-[var(--color-foreground-dim)] hover:text-[var(--color-foreground)]"
               }`}
             >
               Philosophy
