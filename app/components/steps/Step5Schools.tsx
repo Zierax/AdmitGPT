@@ -66,7 +66,7 @@ export function Step5Schools({
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted)]" />
           <input
             type="text"
-            className="input-field pl-9"
+            className="ag-input pl-9"
             placeholder="Search for a college..."
             value={schoolSearch}
             onChange={(e) => {
@@ -77,7 +77,7 @@ export function Step5Schools({
           />
         </div>
         {showSchoolDropdown && filtered.length > 0 && (
-          <div className="absolute z-50 w-full mt-1 py-1 rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] shadow-xl max-h-48 overflow-y-auto">
+          <div className="absolute z-50 w-full mt-1 py-1 rounded-lg border-2 border-[var(--color-border-strong)] bg-[var(--color-card)] max-h-48 overflow-y-auto" style={{ boxShadow: "var(--shadow-card)" }}>
             {filtered.map((name) => (
               <button
                 key={name}

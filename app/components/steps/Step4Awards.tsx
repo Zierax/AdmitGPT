@@ -51,30 +51,30 @@ export function Step4Awards({
           Awards measure <span className="text-[var(--color-foreground)]">external recognition and validation</span> of your achievements. Unlike activities (which measure what you <em>do</em>), awards measure how the <em>world</em> responded. Be honest — inflated tiers reduce model accuracy.
         </p>
         <div className="space-y-3 text-xs text-[var(--color-muted)]">
-          <div className="p-2 rounded border border-[rgba(255,255,255,0.05)] bg-[rgba(255,255,255,0.02)]">
+          <div className="p-2 rounded border-2 border-[var(--color-border)] bg-[var(--color-surface)]">
             <p className="mb-1"><span className="tier-badge tier-gm border-[var(--color-accent)] !text-[var(--color-accent)]">GAME MAKER</span> <span className="text-[var(--color-accent)] font-bold">Once-in-a-generation</span></p>
             <p className="text-[10px] pl-2 border-l border-[var(--color-accent)] ml-1">Examples: Nobel Prize, Fields Medal, Pulitzer Prize, Olympic Gold, MacArthur Fellowship, ISEF Gordon E. Moore Award ($75k grand prize).</p>
           </div>
-          <div className="p-2 rounded border border-[rgba(255,255,255,0.05)] bg-[rgba(255,255,255,0.02)]">
+          <div className="p-2 rounded border-2 border-[var(--color-border)] bg-[var(--color-surface)]">
             <p className="mb-1"><span className="tier-badge tier-0">OUTLIER</span> <span className="text-[var(--color-primary)] font-bold">International elite</span></p>
             <p className="text-[10px] pl-2 border-l border-[var(--color-primary)] ml-1">Examples: International Olympiad Gold/Silver (IMO, IPhO, IOI), ISEF Top 3 Category, Regeneron STS Top 10, Intel ISEF Best of Category, Davidson Fellow, Presidential Scholar.</p>
           </div>
-          <div className="p-2 rounded border border-[rgba(255,255,255,0.05)] bg-[rgba(255,255,255,0.02)]">
+          <div className="p-2 rounded border-2 border-[var(--color-border)] bg-[var(--color-surface)]">
             <p className="mb-1"><span className="tier-badge tier-1">TIER 1</span> <span className="text-[var(--color-info)] font-bold">National recognition</span></p>
             <p className="text-[10px] pl-2 border-l border-[var(--color-info)] ml-1">Examples: USAMO Qualifier, National Merit Finalist, Regeneron STS Semifinalist, US Presidential Scholars nominee, National AP Scholar, Scholastic Art & Writing Gold Key (National), USABO/USACO Gold.</p>
           </div>
-          <div className="p-2 rounded border border-[rgba(255,255,255,0.05)] bg-[rgba(255,255,255,0.02)]">
+          <div className="p-2 rounded border-2 border-[var(--color-border)] bg-[var(--color-surface)]">
             <p className="mb-1"><span className="tier-badge tier-2">TIER 2</span> <span className="text-[var(--color-warning)] font-bold">State/Regional recognition</span></p>
             <p className="text-[10px] pl-2 border-l border-[var(--color-warning)] ml-1">Examples: AMC 10/12 Honor Roll, State Science Fair Top 3, AP Scholar with Distinction, Regional Scholastic Art Award, All-State Band/Orchestra, State Math League champion, Eagle Scout/Gold Award.</p>
           </div>
-          <div className="p-2 rounded border border-[rgba(255,255,255,0.05)] bg-[rgba(255,255,255,0.02)]">
+          <div className="p-2 rounded border-2 border-[var(--color-border)] bg-[var(--color-surface)]">
             <p className="mb-1"><span className="tier-badge tier-3">TIER 3</span> <span className="text-[var(--color-muted)] font-bold">School/Local recognition</span></p>
             <p className="text-[10px] pl-2 border-l border-[var(--color-border)] ml-1">Examples: Honor Roll, AP Scholar (base level), School subject award, Local essay contest winner, Principal's Award, School MVP, Certificate of Achievement.</p>
           </div>
         </div>
       </div>
 
-      <div className="p-4 rounded-lg border border-[var(--color-primary)] bg-[var(--color-primary-glow)]">
+      <div className="p-4 rounded-lg border border-[var(--color-primary)] bg-[var(--color-primary-faint)]">
         <p className="text-sm font-bold text-[var(--color-primary)] mb-1">Quality over Quantity</p>
         <p className="text-xs text-[var(--color-muted)]">
           While you can add unlimited awards, the algorithm values impact. We recommend focusing on your <span className="text-[var(--color-foreground)] font-medium">top 5 to 10</span> most significant achievements. Adding many Tier 3 awards does not significantly improve your profile score.
@@ -88,14 +88,14 @@ export function Step4Awards({
               <div className="flex-1 space-y-3">
                 <input
                   type="text"
-                  className="input-field"
+                  className="ag-input"
                   placeholder="Award name (e.g., USAMO Qualifier, Regeneron STS Semifinalist)"
                   value={award.title}
                   onChange={(e) => updateAward(i, { title: e.target.value })}
                 />
                 <input
                   type="text"
-                  className="input-field"
+                  className="ag-input"
                   placeholder="Brief description (metrics, impact, context)"
                   value={award.description}
                   onChange={(e) => updateAward(i, { description: e.target.value })}
@@ -118,7 +118,7 @@ export function Step4Awards({
                   <div>
                     <label className="text-[10px] text-[var(--color-muted)] uppercase tracking-widest block mb-1">Category</label>
                     <select
-                      className="input-field !py-1 !text-xs"
+                      className="ag-input !py-1 !text-xs"
                       value={award.category}
                       onChange={(e) => updateAward(i, { category: e.target.value as ActivityCategory })}
                     >
@@ -135,7 +135,7 @@ export function Step4Awards({
                   <div>
                     <label className="text-[10px] text-[var(--color-muted)] uppercase tracking-widest block mb-1">Scope</label>
                     <select
-                      className="input-field !py-1 !text-xs"
+                      className="ag-input !py-1 !text-xs"
                       value={award.tierLevel}
                       onChange={(e) => updateAward(i, { tierLevel: e.target.value as any })}
                     >
@@ -148,7 +148,7 @@ export function Step4Awards({
                   <div>
                     <label className="text-[10px] text-[var(--color-muted)] uppercase tracking-widest block mb-1">Validation</label>
                     <select
-                      className="input-field !py-1 !text-xs"
+                      className="ag-input !py-1 !text-xs"
                       value={award.externalValidation}
                       onChange={(e) => updateAward(i, { externalValidation: e.target.value as any })}
                     >
@@ -161,7 +161,7 @@ export function Step4Awards({
                   <div>
                     <label className="text-[10px] text-[var(--color-muted)] uppercase tracking-widest block mb-1">Rarity</label>
                     <select
-                      className="input-field !py-1 !text-xs"
+                      className="ag-input !py-1 !text-xs"
                       value={award.rarity}
                       onChange={(e) => updateAward(i, { rarity: e.target.value as any })}
                     >
@@ -177,7 +177,7 @@ export function Step4Awards({
                   <div className="col-span-1">
                     <label className="text-[10px] text-[var(--color-muted)] uppercase tracking-widest block mb-1">Inst. Strength</label>
                     <select
-                      className="input-field !py-1 !text-xs"
+                      className="ag-input !py-1 !text-xs"
                       value={award.institutionalStrength}
                       onChange={(e) => updateAward(i, { institutionalStrength: e.target.value as any })}
                     >
@@ -190,7 +190,7 @@ export function Step4Awards({
                   <div className="col-span-1">
                     <label className="text-[10px] text-[var(--color-muted)] uppercase tracking-widest block mb-1">Cognitive Load</label>
                     <select
-                      className="input-field !py-1 !text-xs"
+                      className="ag-input !py-1 !text-xs"
                       value={award.cognitiveLoad}
                       onChange={(e) => updateAward(i, { cognitiveLoad: e.target.value as any })}
                     >
@@ -218,7 +218,7 @@ export function Step4Awards({
                 </div>
 
                 {award.tier === -1 && (
-                  <div className="p-3 mt-2 border-l-2 border-[var(--color-accent)] bg-[rgba(255,255,255,0.05)] text-[10px] text-[var(--color-accent)] font-sans animate-slide-in">
+                  <div className="p-3 mt-2 border-l-2 border-[var(--color-accent)] bg-[var(--color-accent-tint)] text-[10px] text-[var(--color-accent)] font-sans animate-slide-in">
                     <div className="flex items-center gap-1 font-bold mb-1 uppercase">
                       <Zap size={12} /> HIGH_IMPACT_REPORT — GAME MAKER AWARD
                     </div>
@@ -233,7 +233,7 @@ export function Step4Awards({
           </div>
         ))}
 
-        <button onClick={addAward} className="btn-secondary w-full border-dashed border-2 hover:border-[var(--color-primary)]">
+        <button onClick={addAward} className="btn-zine secondary w-full border-dashed border-2 hover:border-[var(--color-primary)]">
           <Plus size={16} /> Add Award ({profile.awards.length})
         </button>
       </div>
@@ -246,7 +246,7 @@ export function Step4Awards({
           The mathematical engine does not analyze text. This content is for the <span className="text-[var(--color-foreground)] font-medium">holistic report</span> used by the AI/PDF generation to provide qualitative feedback.
         </p>
         <textarea
-          className="input-field min-h-[150px] resize-none font-sans text-sm leading-relaxed"
+          className="ag-input min-h-[150px] resize-none font-sans text-sm leading-relaxed"
           placeholder="Paste your Common App essay or a summary here..."
           value={profile.essay || ""}
           onChange={(e) => setProfile({ ...profile, essay: e.target.value })}

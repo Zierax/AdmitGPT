@@ -27,7 +27,7 @@ export function CalculationsModal({ result, onClose }: { result: EngineResult; o
         </h3>
 
         <div className="space-y-6 font-sans text-sm">
-          <div className="p-4 rounded-lg bg-[rgba(0,0,0,0.3)] border border-[var(--color-border)]">
+          <div className="p-4 rounded-lg bg-[var(--color-surface-2)] border border-[var(--color-border)]">
             <p className="text-[var(--color-muted)] mb-2 uppercase text-[10px] tracking-widest font-bold">Base Equation</p>
             <p className="text-[var(--color-foreground)] break-all font-mono">
               P(x) = Sigmoid({result.rawScore.toFixed(3)})

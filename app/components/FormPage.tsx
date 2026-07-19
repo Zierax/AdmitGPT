@@ -56,28 +56,44 @@ export function FormPage({
 
       <div className="mx-auto w-full max-w-2xl flex-1 px-6 py-10">
         {/* Step indicator */}
-        <div className="mb-10 flex items-center">
-          {Array.from({ length: totalSteps }, (_, i) => (
-            <div key={i} className="flex flex-1 items-center">
-              <button
-                onClick={() => setStep(i + 1)}
-                className={`step-dot ${step === i + 1 ? "active" : ""} ${step > i + 1 ? "completed" : ""}`}
-                title={stepNames[i]}
-                aria-label={stepNames[i]}
-              >
-                {step > i + 1 ? <Check size={14} /> : i + 1}
-              </button>
-              {i < totalSteps - 1 && (
-                <div className={`step-line ${step > i + 1 ? "completed" : ""}`} />
-              )}
-            </div>
-          ))}
+        <div className="mb-12">
+          <div className="mb-4 flex items-center justify-between">
+            <span className="ag-data">
+              Step {step} / {totalSteps}
+            </span>
+            <span className="ag-data" style={{ color: "var(--color-primary)" }}>
+              {Math.round((step / totalSteps) * 100)}% done
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            {Array.from({ length: totalSteps }, (_, i) => (
+              <div key={i} className="flex flex-1 items-center">
+                <button
+                  onClick={() => setStep(i + 1)}
+                  className={`step-dot ${step === i + 1 ? "active" : ""} ${step > i + 1 ? "completed" : ""}`}
+                  title={stepNames[i]}
+                  aria-label={stepNames[i]}
+                  aria-current={step === i + 1 ? "step" : undefined}
+                >
+                  {step > i + 1 ? <Check size={14} /> : i + 1}
+                </button>
+                {i < totalSteps - 1 && (
+                  <div className={`step-line ${step > i + 1 ? "completed" : ""}`} />
+                )}
+              </div>
+            ))}
+          </div>
         </div>
 
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">{stepNames[step - 1]}</h2>
-        <p className="mb-8 text-sm text-[var(--color-muted)]">{descriptions[step - 1]}</p>
+        <div className="mb-8">
+          <div className="ag-section-label" style={{ marginBottom: 14 }}>
+            <span className="num">0{step}</span>
+            <span className="txt">{stepNames[step - 1]}</span>
+          </div>
+          <p className="text-[var(--text-body)] text-[var(--color-foreground-dim)] leading-relaxed max-w-xl">{descriptions[step - 1]}</p>
+        </div>
 
-        <div className="ag-card mb-10">
+        <div className="ag-sticker-card mb-10">
           {step === 1 && <Step1Demographics profile={profile} setProfile={setProfile} />}
           {step === 2 && <Step2Academics profile={profile} setProfile={setProfile} />}
           {step === 3 && <Step3Extracurriculars profile={profile} setProfile={setProfile} />}
@@ -95,11 +111,11 @@ export function FormPage({
           )}
         </div>
 
-        {/* Navigation */}
+          {/* Navigation */}
         <div className="flex items-center justify-between gap-4">
           <button
             onClick={() => step > 1 && setStep(step - 1)}
-            className="btn btn-secondary flex-1 justify-center md:flex-none"
+            className="btn-zine secondary flex-1 justify-center md:flex-none"
             disabled={step === 1}
           >
             <ArrowLeft size={16} /> Previous
@@ -124,7 +140,7 @@ export function FormPage({
                 }
                 setStep(step + 1);
               }}
-              className="btn btn-primary flex-1 justify-center md:flex-none"
+              className="btn-zine flex-1 justify-center md:flex-none"
             >
               Next Step <ArrowRight size={16} />
             </button>
@@ -145,7 +161,7 @@ export function FormPage({
                 }
                 onSubmit();
               }}
-              className="btn btn-primary flex-1 justify-center md:flex-none"
+              className="btn-zine flex-1 justify-center md:flex-none"
               disabled={profile.targetSchools.length === 0}
             >
               <Sparkles size={16} /> Run Final Audit

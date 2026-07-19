@@ -16,7 +16,7 @@ export function Step1Demographics({
         <label className="block text-sm font-medium mb-2">Student Name (For Certificate)</label>
         <input
           type="text"
-          className="input-field"
+          className="ag-input"
           placeholder="Enter your full name"
           value={profile.name || ""}
           onChange={(e) => setProfile({ ...profile, name: e.target.value })}
@@ -28,20 +28,20 @@ export function Step1Demographics({
           <button
             onClick={() => setProfile({ ...profile, isInternational: false })}
             className={`flex-1 py-3.5 rounded-xl border text-sm font-bold transition-all ${!profile.isInternational
-              ? "border-[var(--color-primary)] bg-[rgba(191,255,0,0.05)] text-[var(--color-primary)] shadow-lg shadow-[rgba(191,255,0,0.05)]"
-              : "border-white/5 bg-white/5 text-[var(--color-muted)] hover:border-white/20"
-              }`}
-          >
-            US / Permanent Resident
+              ? "border-[var(--color-primary)] bg-[var(--color-primary-faint)] text-[var(--color-primary)]"
+                : "border-2 border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-muted)] hover:border-[var(--color-primary)]"
+                }`}
+            >
+              US / Permanent Resident
           </button>
           <button
             onClick={() => setProfile({ ...profile, isInternational: true })}
             className={`flex-1 py-3.5 rounded-xl border text-sm font-bold transition-all ${profile.isInternational
-              ? "border-[var(--color-primary)] bg-[rgba(191,255,0,0.05)] text-[var(--color-primary)] shadow-lg shadow-[rgba(191,255,0,0.05)]"
-              : "border-white/5 bg-white/5 text-[var(--color-muted)] hover:border-white/20"
-              }`}
-          >
-            International Applicant
+              ? "border-[var(--color-primary)] bg-[var(--color-primary-faint)] text-[var(--color-primary)]"
+                : "border-2 border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-muted)] hover:border-[var(--color-primary)]"
+                }`}
+            >
+              International Applicant
           </button>
         </div>
       </div>
@@ -50,7 +50,7 @@ export function Step1Demographics({
         <div>
           <label className="block text-sm font-medium mb-2">School System</label>
           <select
-            className="input-field"
+            className="ag-input"
             value={profile.schoolSystem}
             onChange={(e) => setProfile({ ...profile, schoolSystem: e.target.value as any })}
           >
@@ -64,7 +64,7 @@ export function Step1Demographics({
           <label className="block text-sm font-medium mb-2">Intended Major</label>
           <input
             type="text"
-            className="input-field"
+            className="ag-input"
             placeholder="e.g., Computer Science"
             value={profile.intendedMajor}
             onChange={(e) => {
@@ -84,7 +84,7 @@ export function Step1Demographics({
       <div>
         <label className="block text-sm font-medium mb-2">Gender</label>
         <select
-          className="input-field"
+          className="ag-input"
           value={profile.gender}
           onChange={(e) => setProfile({ ...profile, gender: e.target.value })}
         >
@@ -101,7 +101,7 @@ export function Step1Demographics({
           <label className="block text-sm font-medium mb-2">State of Residence</label>
           <input
             type="text"
-            className="input-field"
+            className="ag-input"
             placeholder="e.g., California, New York"
             value={profile.state}
             onChange={(e) => setProfile({ ...profile, state: e.target.value })}

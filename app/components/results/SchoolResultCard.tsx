@@ -49,7 +49,7 @@ export function SchoolResultCard({
                   e.stopPropagation();
                   onShowCalculations();
                 }}
-                className="text-[10px] text-[var(--color-muted)] hover:text-[var(--color-primary)] transition-colors uppercase tracking-widest font-sans flex items-center gap-1 border border-white/5 px-2 py-0.5 rounded font-bold"
+                className="text-[10px] text-[var(--color-muted)] hover:text-[var(--color-primary)] transition-colors uppercase tracking-widest font-sans flex items-center gap-1 border border-[var(--color-border)] px-2 py-0.5 rounded font-bold"
               >
                 <Zap size={10} /> Audit Details
               </button>
@@ -63,15 +63,15 @@ export function SchoolResultCard({
 
         {/* Range bar */}
         <div className="mt-6 relative">
-          <div className="range-bar h-1.5 bg-[var(--color-border)]">
+          <div className="range-bar h-2 bg-[var(--color-surface-2)] border border-[var(--color-border)]">
             <div
-              className="absolute top-0 h-full rounded-full bg-[var(--color-primary)] opacity-60"
+              className="absolute top-0 h-full rounded-full bg-[var(--color-primary)]"
               style={{
                 left: `${result.low * 100}%`,
                 width: `${(result.high - result.low) * 100}%`,
               }}
             />
-            <div className="range-marker !w-4 !h-4 !bg-white !border-2 !border-[var(--color-primary)]" style={{ left: `${result.pointEstimate * 100}%` }} />
+            <div className="range-marker !w-4 !h-4 !bg-[var(--color-foreground)] !border-2 !border-[var(--color-primary)]" style={{ left: `${result.pointEstimate * 100}%` }} />
           </div>
           <div className="flex justify-between mt-2 text-[10px] text-[var(--color-muted)] font-sans uppercase tracking-widest font-bold">
             <span>Probability Range</span>
@@ -85,14 +85,14 @@ export function SchoolResultCard({
         <div className="px-6 pb-6 space-y-4 border-t border-[var(--color-border)] pt-4">
           {/* Competition Note */}
           {result.competitionNote && (
-            <div className="p-3 rounded-lg bg-[rgba(245,158,11,0.05)] border border-[rgba(245,158,11,0.2)]">
+            <div className="p-3 rounded-lg bg-[var(--color-warning-tint)] border border-[var(--color-warning)]/40">
               <p className="text-xs text-[var(--color-warning)]">{result.competitionNote}</p>
             </div>
           )}
 
           {/* Analysis Note */}
           {result.disclaimer && (
-            <div className="p-3 rounded-lg bg-[rgba(239,68,68,0.05)] border border-[rgba(239,68,68,0.2)] mt-2 shadow-sm">
+            <div className="p-3 rounded-lg bg-[var(--color-danger-tint)] border border-[var(--color-danger)]/40 mt-2">
               <div className="flex items-center gap-1.5 mb-1 text-[var(--color-danger)]">
                 <AlertTriangle size={14} />
                 <span className="text-xs font-bold font-sans tracking-widest uppercase">Strategic Note</span>
@@ -162,8 +162,8 @@ export function SchoolResultCard({
               )}
 
               {/* Encouragement */}
-              <div className="p-3 rounded-lg bg-[var(--color-primary-glow)] border border-[rgba(99,102,241,0.2)] mt-3">
-                <p className="text-xs text-[var(--color-primary-light)] leading-relaxed italic">{gap.encouragementMessage}</p>
+              <div className="p-3 rounded-lg bg-[var(--color-primary-faint)] border border-[var(--color-primary-line)] mt-3">
+                <p className="text-xs text-[var(--color-foreground-dim)] leading-relaxed italic">{gap.encouragementMessage}</p>
               </div>
             </div>
           )}

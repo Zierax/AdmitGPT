@@ -52,23 +52,23 @@ export function Step3Extracurriculars({
           Tiers reflect the <span className="text-[var(--color-foreground)]">scope, selectivity, and impact</span> of each activity. Self-classification is verified against our dataset&apos;s tier distribution. Overrating will skew your results and hurt accuracy.
         </p>
         <div className="space-y-3 text-xs text-[var(--color-muted)]">
-          <div className="p-2 rounded border border-[rgba(255,255,255,0.05)] bg-[rgba(255,255,255,0.02)]">
+          <div className="p-2 rounded border-2 border-[var(--color-border)] bg-[var(--color-surface)]">
             <p className="mb-1"><span className="tier-badge tier-gm border-[var(--color-accent)] !text-[var(--color-accent)]">GAME MAKER</span> <span className="text-[var(--color-accent)] font-bold">Global icon-level</span> — Reshapes an industry or culture.</p>
             <p className="text-[10px] pl-2 border-l border-[var(--color-accent)] ml-1">Examples: TIME 100 Most Influential, Forbes 30 Under 30, Olympic Medal, Fields Medal, Nobel Prize, founded a company valued $10M+, ISEF Grand Award Winner.</p>
           </div>
-          <div className="p-2 rounded border border-[rgba(255,255,255,0.05)] bg-[rgba(255,255,255,0.02)]">
+          <div className="p-2 rounded border-2 border-[var(--color-border)] bg-[var(--color-surface)]">
             <p className="mb-1"><span className="tier-badge tier-0">OUTLIER</span> <span className="text-[var(--color-primary)] font-bold">World-class</span> — Top 0.1% of peers globally in a domain.</p>
             <p className="text-[10px] pl-2 border-l border-[var(--color-primary)] ml-1">Examples: Published in Nature/IEEE/Science, Defcon/Black Hat speaker, CVE-assigned vulnerability discoverer, International Math/Science Olympiad Gold, ISEF Finalist, patent holder, YC-backed startup founder.</p>
           </div>
-          <div className="p-2 rounded border border-[rgba(255,255,255,0.05)] bg-[rgba(255,255,255,0.02)]">
+          <div className="p-2 rounded border-2 border-[var(--color-border)] bg-[var(--color-surface)]">
             <p className="mb-1"><span className="tier-badge tier-1">TIER 1</span> <span className="text-[var(--color-info)] font-bold">National recognition</span> — Top 1-5% nationally in a domain.</p>
             <p className="text-[10px] pl-2 border-l border-[var(--color-info)] ml-1">Examples: USAMO/USACO Platinum qualifier, national debate champion, RSI/MITES/SSP attendee, founded nonprofit with $10k+ revenue or 1000+ beneficiaries, Congressional Award Gold Medal, published in a peer-reviewed journal.</p>
           </div>
-          <div className="p-2 rounded border border-[rgba(255,255,255,0.05)] bg-[rgba(255,255,255,0.02)]">
+          <div className="p-2 rounded border-2 border-[var(--color-border)] bg-[var(--color-surface)]">
             <p className="mb-1"><span className="tier-badge tier-2">TIER 2</span> <span className="text-[var(--color-warning)] font-bold">State/Regional impact</span> — Significant leadership or recognition beyond school.</p>
             <p className="text-[10px] pl-2 border-l border-[var(--color-warning)] ml-1">Examples: State science fair winner, All-State athlete, Student Body President, Varsity Team Captain (competitive league), summer internship at recognized company, regional orchestra first chair, Model UN Best Delegate at major conference.</p>
           </div>
-          <div className="p-2 rounded border border-[rgba(255,255,255,0.05)] bg-[rgba(255,255,255,0.02)]">
+          <div className="p-2 rounded border-2 border-[var(--color-border)] bg-[var(--color-surface)]">
             <p className="mb-1"><span className="tier-badge tier-3">TIER 3</span> <span className="text-[var(--color-muted)] font-bold">School-level / Participation</span> — Active involvement without external recognition.</p>
             <p className="text-[10px] pl-2 border-l border-[var(--color-border)] ml-1">Examples: School club member/officer, local community volunteer (under 100 hours), JV athlete, personal coding projects (no users/traction), church youth group, part-time job, school newspaper contributor.</p>
           </div>
@@ -82,14 +82,14 @@ export function Step3Extracurriculars({
             <div className="flex-1 space-y-3">
               <input
                 type="text"
-                className="input-field"
+                className="ag-input"
                 placeholder="Activity title (e.g., Speaker at Black Hat 2025)"
                 value={ec.title}
                 onChange={(e) => updateEC(i, { title: e.target.value })}
               />
               <input
                 type="text"
-                className="input-field"
+                className="ag-input"
                 placeholder="Brief description (metrics, impact, stack)"
                 value={ec.description}
                 onChange={(e) => updateEC(i, { description: e.target.value })}
@@ -112,7 +112,7 @@ export function Step3Extracurriculars({
                 <div>
                   <label className="text-[10px] text-[var(--color-muted)] uppercase tracking-widest block mb-1">Category</label>
                   <select
-                    className="input-field !py-1 !text-xs"
+                    className="ag-input !py-1 !text-xs"
                     value={ec.category}
                     onChange={(e) => updateEC(i, { category: e.target.value as ActivityCategory })}
                   >
@@ -129,7 +129,7 @@ export function Step3Extracurriculars({
                 <div>
                   <label className="text-[10px] text-[var(--color-muted)] uppercase tracking-widest block mb-1">Scope (Tier Level)</label>
                   <select
-                    className="input-field !py-1 !text-xs"
+                    className="ag-input !py-1 !text-xs"
                     value={ec.tierLevel}
                     onChange={(e) => updateEC(i, { tierLevel: e.target.value as any })}
                   >
@@ -142,7 +142,7 @@ export function Step3Extracurriculars({
                 <div>
                   <label className="text-[10px] text-[var(--color-muted)] uppercase tracking-widest block mb-1">Validation</label>
                   <select
-                    className="input-field !py-1 !text-xs"
+                    className="ag-input !py-1 !text-xs"
                     value={ec.externalValidation}
                     onChange={(e) => updateEC(i, { externalValidation: e.target.value as any })}
                   >
@@ -155,7 +155,7 @@ export function Step3Extracurriculars({
                 <div>
                   <label className="text-[10px] text-[var(--color-muted)] uppercase tracking-widest block mb-1">Rarity</label>
                   <select
-                    className="input-field !py-1 !text-xs"
+                    className="ag-input !py-1 !text-xs"
                     value={ec.rarity}
                     onChange={(e) => updateEC(i, { rarity: e.target.value as any })}
                   >
@@ -171,7 +171,7 @@ export function Step3Extracurriculars({
                 <div className="col-span-1">
                   <label className="text-[10px] text-[var(--color-muted)] uppercase tracking-widest block mb-1">Inst. Strength</label>
                   <select
-                    className="input-field !py-1 !text-xs"
+                    className="ag-input !py-1 !text-xs"
                     value={ec.institutionalStrength}
                     onChange={(e) => updateEC(i, { institutionalStrength: e.target.value as any })}
                   >
@@ -184,7 +184,7 @@ export function Step3Extracurriculars({
                 <div className="col-span-1">
                   <label className="text-[10px] text-[var(--color-muted)] uppercase tracking-widest block mb-1">Cognitive Load</label>
                   <select
-                    className="input-field !py-1 !text-xs"
+                    className="ag-input !py-1 !text-xs"
                     value={ec.cognitiveLoad}
                     onChange={(e) => updateEC(i, { cognitiveLoad: e.target.value as any })}
                   >
@@ -213,7 +213,7 @@ export function Step3Extracurriculars({
 
               {/* Verification Tooltips */}
               {ec.tier === -1 && (
-                <div className="p-3 mt-2 border-l-2 border-[var(--color-accent)] bg-[rgba(255,255,255,0.05)] text-[10px] text-[var(--color-accent)] font-sans animate-slide-in">
+                <div className="p-3 mt-2 border-l-2 border-[var(--color-accent)] bg-[var(--color-accent-tint)] text-[10px] text-[var(--color-accent)] font-sans animate-slide-in">
                   <div className="flex items-center gap-1 font-bold mb-1 uppercase">
                     <Zap size={12} /> HIGH_IMPACT_REPORT
                   </div>
@@ -221,7 +221,7 @@ export function Step3Extracurriculars({
                 </div>
               )}
               {ec.tier === 0 && (
-                <div className="p-3 mt-2 border-l-2 border-[var(--color-primary)] bg-[rgba(191,255,0,0.05)] text-[10px] text-[var(--color-primary)] font-sans animate-slide-in">
+                <div className="p-3 mt-2 border-l-2 border-[var(--color-primary)] bg-[var(--color-primary-tint)] text-[10px] text-[var(--color-primary)] font-sans animate-slide-in">
                   <div className="flex items-center gap-1 font-bold mb-1 uppercase">
                     <Zap size={12} /> Elite Differentiation Active
                   </div>
@@ -242,7 +242,7 @@ export function Step3Extracurriculars({
       ))}
 
       {profile.extracurriculars.length < 10 && (
-        <button onClick={addEC} className="btn-secondary w-full border-dashed">
+        <button onClick={addEC} className="btn-zine secondary w-full border-dashed border-2">
           <Plus size={16} /> Add Activity ({profile.extracurriculars.length}/10)
         </button>
       )}

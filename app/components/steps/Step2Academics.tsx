@@ -16,7 +16,7 @@ export function Step2Academics({
           <label className="block text-sm font-medium mb-2">SAT Score</label>
           <input
             type="number"
-            className="input-field"
+            className="ag-input"
             placeholder="e.g., 1450"
             min={400}
             max={1600}
@@ -28,7 +28,7 @@ export function Step2Academics({
           <label className="block text-sm font-medium mb-2">ACT Score</label>
           <input
             type="number"
-            className="input-field"
+            className="ag-input"
             placeholder="e.g., 32"
             min={1}
             max={36}
@@ -43,7 +43,7 @@ export function Step2Academics({
           <label className="block text-sm font-medium mb-2">Unweighted GPA</label>
           <input
             type="number"
-            className="input-field"
+            className="ag-input"
             placeholder="e.g., 3.85"
             min={0}
             max={4}
@@ -56,7 +56,7 @@ export function Step2Academics({
           <label className="block text-sm font-medium mb-2">Weighted GPA (optional)</label>
           <input
             type="number"
-            className="input-field"
+            className="ag-input"
             placeholder="e.g., 4.6"
             min={0}
             max={5.5}
@@ -68,12 +68,12 @@ export function Step2Academics({
       </div>
 
       {profile.schoolSystem !== 'National_Non_Standard' ? (
-        <div className="grid grid-cols-3 gap-4 border border-white/5 p-5 rounded-2xl bg-white/5">
+        <div className="grid grid-cols-3 gap-4 border border-2 border-[var(--color-border)] p-5 rounded-2xl bg-[var(--color-surface)]">
           <div>
             <label className="block text-[10px] uppercase font-bold text-[var(--color-muted)] tracking-widest mb-2">AP Courses</label>
             <input
               type="number"
-              className="input-field !py-3"
+              className="ag-input !py-3"
               placeholder="0"
               min={0}
               max={20}
@@ -85,7 +85,7 @@ export function Step2Academics({
             <label className="block text-[10px] uppercase font-bold text-[var(--color-muted)] tracking-widest mb-2">IB Courses</label>
             <input
               type="number"
-              className="input-field !py-3"
+              className="ag-input !py-3"
               placeholder="0"
               min={0}
               max={20}
@@ -97,7 +97,7 @@ export function Step2Academics({
             <label className="block text-[10px] uppercase font-bold text-[var(--color-muted)] tracking-widest mb-2">Honors</label>
             <input
               type="number"
-              className="input-field !py-3"
+              className="ag-input !py-3"
               placeholder="0"
               min={0}
               max={30}
@@ -107,7 +107,7 @@ export function Step2Academics({
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-4 border border-[var(--color-primary)] border-opacity-30 p-4 rounded bg-[rgba(191,255,0,0.05)]">
+        <div className="grid grid-cols-1 gap-4 border border-[var(--color-primary)] border-opacity-30 p-4 rounded bg-[var(--color-primary-tint)]">
           <div className="text-[11px] text-[var(--color-primary)] font-sans uppercase tracking-wider mb-2 font-bold">
             Non-Standard International Curriculum (Egypt STEM / Similar)
           </div>
@@ -115,7 +115,7 @@ export function Step2Academics({
             <label className="block text-sm font-medium mb-2">Advanced Curriculum / Honors subjects</label>
             <input
               type="number"
-              className="input-field"
+              className="ag-input"
               placeholder="Total advanced subjects taken"
               min={0}
               max={30}
@@ -129,7 +129,7 @@ export function Step2Academics({
         </div>
       )}
 
-      <div className="p-3 rounded-lg bg-[var(--color-primary-glow)] border border-[var(--color-primary)] border-opacity-20">
+      <div className="p-3 rounded-lg bg-[var(--color-primary-faint)] border border-[var(--color-primary-line)]">
         <p className="text-xs text-[var(--color-muted)]">
           <strong className="text-[var(--color-primary)]">Note:</strong> If you have both SAT and ACT, we&apos;ll use the higher equivalent score.
           ACT is converted to SAT using the College Board concordance table.

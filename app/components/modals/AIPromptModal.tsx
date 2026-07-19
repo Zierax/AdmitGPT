@@ -27,10 +27,10 @@ export function AIPromptModal({ onClose, onDownload }: { onClose: () => void; on
         </h3>
 
         <p className="text-sm text-[var(--color-muted)] mb-6 tracking-wide">
-          The PDF you are about to download contains an exhaustive, machine-readable JSON data matrix and literal mathematical traces representing your exact location in our model. <strong className="text-white">To get the best possible strategic advice, feed the downloaded PDF directly into Claude or DeepSeek-R1 (with Thinking Mode).</strong>
+          The PDF you are about to download contains an exhaustive, machine-readable JSON data matrix and literal mathematical traces representing your exact location in our model. <strong className="text-[var(--color-foreground)]">To get the best possible strategic advice, feed the downloaded PDF directly into Claude or DeepSeek-R1 (with Thinking Mode).</strong>
         </p>
 
-        <div className="bg-[rgba(0,0,0,0.4)] border border-[rgba(255,255,255,0.1)] p-4 rounded-lg mb-6 relative group">
+        <div className="bg-[var(--color-surface-2)] border border-[var(--color-border)] p-4 rounded-lg mb-6 relative group">
           <p className="text-xs text-[var(--color-primary)] uppercase font-bold tracking-widest font-sans mb-2">Recommended Analysis Prompt:</p>
           <p className="text-sm font-sans text-[var(--color-foreground)] whitespace-pre-wrap">{promptText}</p>
 
@@ -39,7 +39,7 @@ export function AIPromptModal({ onClose, onDownload }: { onClose: () => void; on
               navigator.clipboard.writeText(promptText);
               alert("Prompt copied to clipboard!");
             }}
-            className="absolute top-4 right-4 text-xs bg-[var(--color-dark)] border border-[var(--color-border)] px-3 py-1 rounded text-[var(--color-muted)] hover:text-white hover:border-white transition-all opacity-50 group-hover:opacity-100"
+            className="absolute top-4 right-4 text-xs bg-[var(--color-surface-2)] border border-[var(--color-border)] px-3 py-1 rounded text-[var(--color-muted)] hover:text-[var(--color-foreground)] hover:border-[var(--color-border-strong)] transition-all opacity-50 group-hover:opacity-100"
           >
             Copy Prompt
           </button>
@@ -48,7 +48,7 @@ export function AIPromptModal({ onClose, onDownload }: { onClose: () => void; on
         <div className="flex gap-4">
           <button
             onClick={onDownload}
-            className="flex-1 btn-primary text-md py-4 bg-[var(--color-primary)] text-black hover:scale-105 active:scale-95 transition-all shadow-[0_0_15px_rgba(191,255,0,0.3)] flex items-center justify-center gap-2"
+            className="flex-1 btn-zine text-md py-4 flex items-center justify-center gap-2"
           >
             <Download size={20} />
             Generate & Download PDF
