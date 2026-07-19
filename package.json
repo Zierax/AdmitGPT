@@ -41,5 +41,8 @@
     "typescript": "^5",
     "vercel": "^39.4.2",
     "vitest": "^4.1.1"
+  },
+  "optionalDependencies": {
+    "lightningcss-win32-x64-msvc": "1.32.0"
   }
 }
