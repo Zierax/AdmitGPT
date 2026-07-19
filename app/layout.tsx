@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     template: "%s | AdmitGPT | Admissions Calculator",
   },
   description:
-    "AdmitGPT is the ultimate free, open-source AI college admissions probability calculator. Predict Ivy League, MIT, and Stanford acceptance chances based on SAT, ACT, GPA, and extracurriculars. No hidden fees, no black boxes.",
+    "AdmitGPT is a free, open-source college admissions chance calculator. See your real Ivy League, MIT, and Stanford acceptance odds from SAT, ACT, GPA, and extracurriculars — with every formula published and your data never leaving your browser.",
   applicationName: "AdmitGPT",
   keywords: [
     "college admissions",
@@ -157,6 +157,57 @@ const jsonLd = {
       sameAs: [GITHUB_URL, "https://instagram.com/z14d.d"],
     },
     {
+      "@type": "Dataset",
+      "@id": `${siteUrl}/#dataset`,
+      name: "AdmitGPT Admissions Probability Dataset",
+      description:
+        "Calibration dataset of 1,122+ self-reported student admission profiles (2024–2026) used to train and validate the AdmitGPT additive-logistic admissions engine (v1.0, ordinal AUC ~0.74).",
+      url: `${siteUrl}/transparency`,
+      sameAs: [GITHUB_URL],
+      identifier: {
+        "@type": "PropertyValue",
+        name: "Engine version",
+        value: "1.0",
+      },
+      creator: { "@id": `${siteUrl}/#organization` },
+      license: "https://opensource.org/licenses/MIT",
+      isAccessibleForFree: true,
+      temporalCoverage: "2024/2026",
+      variableMeasured: [
+        { "@type": "PropertyValue", name: "SAT score", unitText: "score" },
+        { "@type": "PropertyValue", name: "ACT score", unitText: "score" },
+        { "@type": "PropertyValue", name: "Unweighted GPA", unitText: "grade" },
+        { "@type": "PropertyValue", name: "Extracurricular spike score", unitText: "logit" },
+        { "@type": "PropertyValue", name: "Admission outcome", unitText: "boolean" },
+      ],
+      distribution: [
+        {
+          "@type": "DataDownload",
+          encodingFormat: "application/json",
+          contentUrl: `${siteUrl}/data/studentsdata.json`,
+        },
+        {
+          "@type": "DataDownload",
+          encodingFormat: "application/json",
+          contentUrl: `${siteUrl}/data/collegesdata.json`,
+        },
+      ],
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": `${siteUrl}/#engine`,
+      name: "AdmitGPT Engine",
+      description:
+        "Open-source additive-logistic college admissions probability engine. Ordinal AUC ~0.74. Runs 100% client-side.",
+      codeRepository: GITHUB_URL,
+      programmingLanguage: "TypeScript",
+      license: "https://opensource.org/licenses/MIT",
+      version: "1.0",
+      author: { "@id": `${siteUrl}/#organization` },
+      isAccessibleForFree: true,
+      runtimePlatform: "Web Browser (client-side)",
+    },
+    {
       "@type": "WebApplication",
       "@id": `${siteUrl}/#webapp`,
       name: "AdmitGPT — College Admissions Chance Calculator",
@@ -180,6 +231,10 @@ const jsonLd = {
       ],
       isAccessibleForFree: true,
       author: { "@id": `${siteUrl}/#organization` },
+      isBasedOn: [
+        { "@id": `${siteUrl}/#dataset` },
+        { "@id": `${siteUrl}/#engine` },
+      ],
     },
     {
       "@type": "FAQPage",

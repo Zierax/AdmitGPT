@@ -9,7 +9,7 @@ export function LoadingScreen({ message }: { message: string }) {
         <div className="loading-spinner mx-auto mb-8" />
         <h2 className="mb-3 text-xl font-bold tracking-tight">Analyzing Admission Patterns</h2>
         <p className="mb-8 text-sm text-[var(--color-muted)]">{message}</p>
-        <div className="ag-card-flat p-4 text-left">
+        <div className="ag-sticker-card p-4 text-left">
           <p className="flex items-center gap-2 text-xs text-[var(--color-muted)]">
             <Zap size={14} className="text-[var(--color-primary)]" />
             Analysis runs <span className="font-medium text-[var(--color-foreground)]">entirely in your browser</span> &mdash; nothing leaves this device.

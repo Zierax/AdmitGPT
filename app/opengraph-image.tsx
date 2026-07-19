@@ -43,23 +43,6 @@ export default async function Image() {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '-40px' }}>
-          <div style={{ display: 'flex', gap: '4px', marginBottom: '12px' }}>
-            <span
-              style={{
-                color: '#c6ff1a',
-                fontSize: '18px',
-                fontWeight: 700,
-                letterSpacing: '0.14em',
-                textTransform: 'uppercase',
-                backgroundColor: 'rgba(198,255,26,0.12)',
-                padding: '6px 14px',
-                borderRadius: '999px',
-                border: '1px solid rgba(198,255,26,0.22)',
-              }}
-            >
-              Featured on Product Hunt and HN
-            </span>
-          </div>
           <h1
             style={{
               fontSize: '72px',
@@ -73,7 +56,7 @@ export default async function Image() {
             College Admission Chances
           </h1>
           <p style={{ fontSize: '34px', color: '#aab1c4', fontWeight: 500, margin: '4px 0 0' }}>
-            Free &middot; Open-Source &middot; Built by a Student
+            Know your real odds &mdash; with the math shown
           </p>
         </div>
 
@@ -92,7 +75,7 @@ export default async function Image() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span style={{ color: '#c6ff1a', fontSize: '20px' }}>&#10038;</span>
             <span style={{ color: '#c6ff1a', fontSize: '20px', fontWeight: 700, letterSpacing: '0.01em' }}>
-              100% Client-Side &middot; Zero Data Storage
+              Transparent &middot; Open-Source &middot; Free
             </span>
           </div>
         </div>
