@@ -114,38 +114,47 @@ export function useAdmitEngine() {
   }, [aiConfig.provider]);
 
   const runAnalysis = useCallback(async () => {
-    if (!stats) return;
-
-    setLoadingMessage("Running mathematical engine...");
-
-    // Small delay for UX
-    await new Promise((r) => setTimeout(r, 500));
-
-    const results = await runEngine(profile, students, colleges, stats);
-    setEngineResults(results);
-
-    setLoadingMessage("Calculating portfolio probability...");
-    const portfolio = calculatePortfolioChance(results);
-    setPortfolioResult(portfolio);
-
-    setLoadingMessage("Finding university suggestions...");
-    const sugs = suggestUniversities(profile, colleges, students, stats);
-    setSuggestions(sugs);
-
-    setLoadingMessage("Analyzing gaps...");
-    await new Promise((r) => setTimeout(r, 300));
-
-    const gaps: GapAnalysis[] = [];
-    for (const result of results.slice(0, 5)) {
-      const college = findCollege(colleges, result.schoolName);
-      if (college) {
-        const gap = analyzeGaps(profile, result.schoolName, college, students, stats, result);
-        gaps.push(gap);
-      }
+    if (!stats) {
+      setLoadingMessage("Data failed to load. Please refresh the page.");
+      return;
     }
-    setGapAnalyses(gaps);
 
-    return { results, portfolio, sugs, gaps };
+    try {
+      setLoadingMessage("Running mathematical engine...");
+
+      // Small delay for UX
+      await new Promise((r) => setTimeout(r, 500));
+
+      const results = runEngine(profile, students, colleges, stats);
+      setEngineResults(results);
+
+      setLoadingMessage("Calculating portfolio probability...");
+      const portfolio = calculatePortfolioChance(results);
+      setPortfolioResult(portfolio);
+
+      setLoadingMessage("Finding university suggestions...");
+      const sugs = suggestUniversities(profile, colleges, students, stats);
+      setSuggestions(sugs);
+
+      setLoadingMessage("Analyzing gaps...");
+      await new Promise((r) => setTimeout(r, 300));
+
+      const gaps: GapAnalysis[] = [];
+      for (const result of results.slice(0, 5)) {
+        const college = findCollege(colleges, result.schoolName);
+        if (college) {
+          const gap = analyzeGaps(profile, result.schoolName, college, students, stats, result);
+          gaps.push(gap);
+        }
+      }
+      setGapAnalyses(gaps);
+
+      return { results, portfolio, sugs, gaps };
+    } catch (err) {
+      // Never leave the user stuck on the loading screen.
+      console.error("Analysis failed:", err);
+      return { results: [], portfolio: null, sugs: null, gaps: [] };
+    }
   }, [profile, students, colleges, stats]);
 
   const runAI = useCallback(async () => {

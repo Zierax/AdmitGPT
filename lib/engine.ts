@@ -945,6 +945,7 @@ export function calculateAdmissionProbability(
     college: CollegeData,
     students: StudentProfile[],
     stats: DatasetStats,
+    skipConfidence: boolean = false,
 ): EngineResult {
     // EDGE CASE: Invalid college data
     if (!college || !college['school.name']) {
@@ -1080,7 +1081,9 @@ export function calculateAdmissionProbability(
     const rawScore = proxyRawScore;
 
     // ── Confidence ──
-    const confidence = computeConfidence(profile, collegeName, students);
+    const confidence = skipConfidence
+        ? { n: 0, level: 'insufficient' as const, rangeWidth: 0.25, label: 'Suggestion estimate — see full result for confidence.' }
+        : computeConfidence(profile, collegeName, students);
 
     // ── Protocol-specific final adjustments ──
     let pointEstimate = Math.min(0.99, Math.max(0.01, rawPointEstimate));
@@ -1351,13 +1354,35 @@ export function suggestUniversities(
 
     const allResults: EngineResult[] = [];
 
-    for (const college of colleges) {
+    // PERFORMANCE FIX: running the full probability engine over all ~6k colleges
+    // (each doing several O(n) student filters in computeConfidence) took 30s+,
+    // appearing as an infinite loading screen. We only need the best 5 schools per
+    // bucket, so we deterministically sample a bounded subset of candidate colleges
+    // and run the heavy engine on just those. A simple string-hash gives a stable,
+    // reproducible sample so suggestions don't change between runs.
+    const SAMPLE_CAP = 200;
+    let sampled: CollegeData[];
+    if (colleges.length <= SAMPLE_CAP) {
+        sampled = colleges;
+    } else {
+        const hash = (s: string) => {
+            let h = 2166136261;
+            for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+            return (h >>> 0) / 4294967295;
+        };
+        sampled = colleges
+            .filter(c => c['school.name'] && c['admissions.admission_rate.overall'])
+            .sort((a, b) => hash(a['school.name']) - hash(b['school.name']))
+            .slice(0, SAMPLE_CAP);
+    }
+
+    for (const college of sampled) {
         const name = college['school.name'];
         if (!name || !college['admissions.admission_rate.overall']) continue;
         if (profile.targetSchools.includes(name)) continue;
 
         try {
-            const result = calculateAdmissionProbability(profile, name, college, students, stats);
+            const result = calculateAdmissionProbability(profile, name, college, students, stats, true);
             allResults.push(result);
         } catch {
             // Skip colleges that fail computation
