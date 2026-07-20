@@ -109,7 +109,7 @@ export default function ClientApp() {
     return (
       <LandingPage
         onStart={() => setView("form")}
-        isLoading={!engine.isDataLoaded}
+        isLoading={false}
         loadingMessage={engine.loadingMessage}
         onShowWhy={() => setShowWhyModal(true)}
       />

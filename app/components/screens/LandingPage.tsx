@@ -126,7 +126,7 @@ export function LandingPage({
 
             {/* Right: mascot merged into the page — same off-black field, gray brackets, lime shard echo */}
             <div className="lg:col-span-5">
-              <div className="ag-mascot-merge mx-auto max-w-md">
+              <div className="ag-mascot-merge mx-auto max-w-sm">
                 <Image
                   src="/assets/AdmitGPT.png"
                   alt="AdmitGPT"
@@ -134,7 +134,7 @@ export function LandingPage({
                   height={872}
                   className="ag-mascot-img"
                   priority
-                  sizes="(max-width: 1024px) 90vw, 38vw"
+                  sizes="(max-width: 1024px) 90vw, 34vw"
                 />
                 <span className="ag-mascot-shard ag-mascot-shard--1" />
                 <span className="ag-mascot-shard ag-mascot-shard--2" />

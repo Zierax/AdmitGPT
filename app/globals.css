@@ -412,9 +412,9 @@
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(11,12,10,0.82);
+    background: rgba(11,12,10,0.88);
     backdrop-filter: blur(14px) saturate(140%);
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 2px solid var(--color-primary-line);
   }
   .ag-wordmark {
     font-family: var(--font-serif);
@@ -786,7 +786,7 @@
   .ag-bubble {
     position: relative;
     background: var(--color-card);
-    border: 2px solid var(--color-foreground);
+    border: 2px solid var(--color-primary-line);
     border-radius: 18px;
     padding: 16px 18px;
     box-shadow: var(--shadow-scrap);
@@ -800,8 +800,8 @@
     left: 28px; bottom: -12px;
     width: 18px; height: 18px;
     background: var(--color-card);
-    border-right: 2px solid var(--color-foreground);
-    border-bottom: 2px solid var(--color-foreground);
+    border-right: 2px solid var(--color-primary-line);
+    border-bottom: 2px solid var(--color-primary-line);
     transform: rotate(45deg);
   }
   .ag-bubble b { color: var(--color-foreground); }
