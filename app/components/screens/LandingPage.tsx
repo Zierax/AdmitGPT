@@ -74,7 +74,7 @@ export function LandingPage({
 
               <h1 className="ag-display mb-6">
                 See your real college{" "}
-                <span className="ag-mark">odds</span>.
+                <span className="ag-underline">odds</span>.
               </h1>
 
               <p className="ag-lead mb-9" style={{ color: "var(--color-foreground-dim)", maxWidth: "52ch" }}>
@@ -136,9 +136,6 @@ export function LandingPage({
                   priority
                   sizes="(max-width: 1024px) 90vw, 34vw"
                 />
-                <span className="ag-mascot-shard ag-mascot-shard--1" />
-                <span className="ag-mascot-shard ag-mascot-shard--2" />
-                <span className="ag-mascot-shard ag-mascot-shard--3" />
               </div>
               <div className="ag-bubble mt-8 mx-auto max-w-sm">
                 <b>Hey, I&apos;m Admit.</b> Tell me your grades and activities — I&apos;ll show you
@@ -147,7 +144,7 @@ export function LandingPage({
             </div>
           </section>
 
-          <div className="ag-squiggle my-6" aria-hidden />
+          <div className="my-6" aria-hidden />
         </div>
 
         {/* ===== REAL ODDS — static, honest, the most useful thing on the page ===== */}
@@ -187,7 +184,7 @@ export function LandingPage({
 
             <div className="grid gap-5 md:grid-cols-3">
               {pillars.map((p, i) => (
-                <article key={p.title} className="ag-sticker-card" style={{ transform: `rotate(${i === 1 ? 0.8 : -0.8}deg)` }}>
+                <article key={p.title} className="ag-sticker-card">
                   <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--color-primary-faint)] text-[var(--color-primary)] border border-[var(--color-primary-line)]">
                     <p.Icon size={20} />
                   </div>
@@ -238,7 +235,7 @@ export function LandingPage({
           <section className="ag-sticker-card my-12 overflow-hidden p-10 text-center lg:p-16">
             <div className="mx-auto max-w-2xl">
               <h2 className="ag-h1 mb-4">
-                Stop wondering. <span className="ag-mark">Start knowing</span>.
+                Stop wondering. <span className="ag-underline">Start knowing</span>.
               </h2>
               <p className="ag-lead mx-auto mb-8" style={{ color: "var(--color-foreground-dim)" }}>
                 It takes about a minute. Answer a few questions about your grades and

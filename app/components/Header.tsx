@@ -140,7 +140,7 @@ export default function Header({
                 </div>
                 <h2 className="text-3xl font-black tracking-tighter text-[var(--color-foreground)] md:text-5xl">
                   No black boxes.<br />
-                  <span className="ag-mark">Zero secrets.</span>
+                  <span className="ag-underline">Zero secrets.</span>
                 </h2>
               </div>
 
