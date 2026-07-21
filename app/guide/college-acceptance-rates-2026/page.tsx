@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SITE_ORIGIN } from "@/lib/siteConfig";
+import { GuideByline } from "@/app/guide/GuideByline";
+import { GuideFAQ } from "@/app/guide/GuideFAQ";
+import { QuickAnswer } from "@/app/guide/QuickAnswer";
 import { RelatedGuides } from "@/app/components/RelatedGuides";
 
 export const metadata: Metadata = {
@@ -45,9 +48,40 @@ export default function AcceptanceRatesGuide() {
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: "College Acceptance Rates 2026 — Latest Admissions Data by University",
+            description: "Updated college acceptance rates for the 2025–26 admissions cycle: Ivy League, top 50 national universities, liberal arts colleges, and state flagships. See how acceptance rates have changed and what it means for your chances.",
+            inLanguage: "en-US",
+            datePublished: "2025-08-01",
+            dateModified: "2026-05-12",
+            author: { "@id": SITE_ORIGIN + "/#author" },
+            publisher: { "@id": SITE_ORIGIN + "/#organization" },
+            mainEntityOfPage: { "@type": "WebPage", "@id": SITE_ORIGIN + "/guide/college-acceptance-rates-2026" },
+            isPartOf: { "@type": "WebSite", "@id": SITE_ORIGIN + "/#website" },
+          }),
+        }}
+      />
       <main className="tp-wrap">
         <div className="tp-eyebrow">Knowledge Base / Acceptance Rates</div>
         <h1 className="tp-h1">College Acceptance Rates 2026</h1>
+        <GuideByline updated="2026-05-12" />
+        <QuickAnswer>
+          College acceptance rates for 2026 remain at historic lows at the most selective schools.
+          Estimated Ivy League rates for the most recent cycle are Harvard ~3.6%, Columbia ~4.3%,
+          Princeton ~4.4%, Yale ~4.6%, Brown ~5.2%, Penn ~5.5%, Dartmouth ~5.8%, and Cornell ~7.3%;
+          the effective rate for unhooked applicants is 2&ndash;3% at Harvard and Yale. Among top-20
+          universities, Stanford admits ~3.9% and MIT ~4.5%, while selective liberal arts colleges
+          such as Williams (~9&ndash;10%) and Amherst (~7&ndash;8%) are comparably tough. Public
+          flagships vary by residency &mdash; UCLA ~9%, Berkeley ~11%, Michigan ~18%, UT ~29% &mdash;
+          with out-of-state rates often far lower. These published rates blend athletes, legacies,
+          and development cases, so Early Decision (2&ndash;4x higher) and hooks dramatically
+          reshape your real odds versus the headline number.
+        </QuickAnswer>
         <p className="tp-lead">
           Acceptance rates are the most visible — and most misunderstood — number in college
           admissions. A school's published rate blends preferred applicants (athletes, legacies,
@@ -60,13 +94,30 @@ export default function AcceptanceRatesGuide() {
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
             Ivy League acceptance rates remain at historic lows. Estimated rates for the most recent
             cycle: Harvard ~3.6%, Columbia ~4.3%, Princeton ~4.4%, Yale ~4.6%, Brown ~5.2%, Penn
-            ~5.5%, Dartmouth ~5.8%, Cornell ~7.3%. These rates reflect the total applicant pool,
+            ~5.5%, Dartmouth ~5.8%, Cornell ~7.3% — see our full{" "}
+            <Link href="/guide/ivy-league-chances" style={{ color: "var(--color-primary)" }}>
+              Ivy League chances guide
+            </Link>
+            . These estimates draw on each school&rsquo;s{" "}
+            <a
+              href="https://commondataset.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "var(--color-primary)" }}
+            >
+              Common Data Set
+            </a>{" "}
+            admissions reporting. These rates reflect the total applicant pool,
             but the effective rate for unhooked applicants (no legacy, no athlete status) is
             substantially lower — estimated at 2–3% at Harvard and Yale.
           </p>
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
             What these numbers do not tell you: Early Decision acceptance rates are typically 2–4x
-            higher than Regular Decision rates. A recruited athlete at an Ivy has an approximately
+            higher than Regular Decision rates, as explained in our{" "}
+            <Link href="/guide/early-decision-vs-early-action" style={{ color: "var(--color-primary)" }}>
+              Early Decision vs Early Action guide
+            </Link>
+            . A recruited athlete at an Ivy has an approximately
             86% admission rate. Legacy applicants see 2–4x the base rate. The published number
             averages across all of these groups.
           </p>
@@ -121,7 +172,14 @@ export default function AcceptanceRatesGuide() {
               Back to Guides
             </Link>
           </div>
-          <RelatedGuides current="/guide/college-acceptance-rates-2026" />
+          <GuideFAQ
+            items={[
+              { q: "What is Harvard's acceptance rate for 2026?", a: "Estimated Harvard acceptance for the Class of 2029 is about 3.6%, with Columbia ~4.3%, Princeton ~4.4%, and Cornell the highest Ivy at ~7.3%. The effective rate for unhooked applicants (no legacy, no athlete) is 2–3% at Harvard and Yale." },
+              { q: "Why is the published acceptance rate misleading?", a: "Published rates blend preferred applicants — athletes, legacies, and development cases — with the general pool. A recruited Ivy athlete has an approximately 86% admission rate and legacies see 2–4x the base rate, so your real odds differ sharply from the headline number." },
+            ]}
+          />
+
+<RelatedGuides current="/guide/college-acceptance-rates-2026" />
         </section>
       </main>
     </div>

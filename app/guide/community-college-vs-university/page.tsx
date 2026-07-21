@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { RelatedGuides } from "@/app/components/RelatedGuides";
 import { SITE_ORIGIN } from "@/lib/siteConfig";
+import { GuideByline } from "@/app/guide/GuideByline";
+import { GuideFAQ } from "@/app/guide/GuideFAQ";
+import { QuickAnswer } from "@/app/guide/QuickAnswer";
 
 export const metadata: Metadata = {
   title: "Community College vs University — Which Path Is Right for You?",
@@ -45,9 +48,40 @@ export default function CommunityVsUniversity() {
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: "Community College vs University — Which Path Is Right for You?",
+            description: "Community college vs four-year university: cost comparison, transfer pathways, graduation rates, ROI, and how each option affects your ultimate bachelor's degree and career prospects. Data-backed decision guide.",
+            inLanguage: "en-US",
+            datePublished: "2025-08-01",
+            dateModified: "2026-03-16",
+            author: { "@id": SITE_ORIGIN + "/#author" },
+            publisher: { "@id": SITE_ORIGIN + "/#organization" },
+            mainEntityOfPage: { "@type": "WebPage", "@id": SITE_ORIGIN + "/guide/community-college-vs-university" },
+            isPartOf: { "@type": "WebSite", "@id": SITE_ORIGIN + "/#website" },
+          }),
+        }}
+      />
       <main className="tp-wrap">
         <div className="tp-eyebrow">Knowledge Base / College Options</div>
         <h1 className="tp-h1">Community College vs University</h1>
+        <GuideByline updated="2026-03-16" />
+        <QuickAnswer>
+          Community college and a four-year university can both lead to a bachelor&rsquo;s degree and
+          a strong career; the right choice depends on cost, completion risk, and fit. Tuition at
+          community colleges averages about $3,500&ndash;$5,000 per year versus $10,000&ndash;$40,000+
+          at universities, saving $20,000&ndash;$70,000 over two years &mdash; but lower sticker price
+          is not guaranteed savings if you never finish. The catch is completion: roughly 80% of
+          community college students intend to transfer, yet only ~14% earn a bachelor&rsquo;s within
+          six years (National Student Clearinghouse), and transfer admission at selective schools is
+          often 5&ndash;15%, similar to freshman rates. Community colleges offer smaller classes and
+          flexibility; universities offer research, housing, and networks. Success starting out
+          requires a clear articulation agreement and a transfer plan from day one.
+        </QuickAnswer>
         <p className="tp-lead">
           Deciding between community college and a four-year university is one of the most
           consequential — and most stigmatized — choices in American education. The data shows
@@ -72,7 +106,16 @@ export default function CommunityVsUniversity() {
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
             Approximately 80% of community college students intend to transfer to a four-year
             program, but only about 14% complete a bachelor's degree within six years (National
-            Student Clearinghouse). The transfer process can be complex: not all credits transfer,
+            Student Clearinghouse). The federal{" "}
+            <a
+              href="https://nces.ed.gov/ipeds"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "var(--color-primary)" }}
+            >
+              IPEDS
+            </a>{" "}
+            database tracks these completion and transfer outcomes across institutions. The transfer process can be complex: not all credits transfer,
             and articulation agreements vary by state and school. The most successful transfer
             students choose a community college with a strong articulation agreement with their
             target university, follow the prescribed curriculum exactly, and transfer before
@@ -80,7 +123,11 @@ export default function CommunityVsUniversity() {
           </p>
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
             For competitive universities, transfer admission rates are often lower than freshman
-            admission rates. At selective schools, transfer acceptance rates are typically 5–15%
+            admission rates, comparable to the{" "}
+            <Link href="/guide/college-acceptance-rates-2026" style={{ color: "var(--color-primary)" }}>
+              acceptance rates 2026
+            </Link>
+            . At selective schools, transfer acceptance rates are typically 5–15%
             compared to 5–20% for freshmen. The AdmitGPT engine does not currently model transfer
             admissions, but the general academic competitiveness thresholds are similar.
           </p>
@@ -113,9 +160,13 @@ export default function CommunityVsUniversity() {
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
             If you have strong academics but financial constraints, a community college with a
             guaranteed transfer agreement to a four-year university can be a smart path. If your
-            goal is a highly selective university, direct admission as a freshman — or a targeted
+            goal is a highly selective university, direct admission as a freshman — or             a targeted
             transfer with a near-perfect community college GPA — are both viable. Use the AdmitGPT
-            calculator to see your freshman admission odds and plan accordingly.
+            calculator, alongside our{" "}
+            <Link href="/guide/how-to-choose-a-college" style={{ color: "var(--color-primary)" }}>
+              college selection guide
+            </Link>
+            , to see your freshman admission odds and plan accordingly.
           </p>
           <div style={{ marginTop: 24 }}>
             <Link href="/" className="btn btn-primary">
@@ -125,7 +176,14 @@ export default function CommunityVsUniversity() {
               Back to Guides
             </Link>
           </div>
-          <RelatedGuides current="/guide/community-college-vs-university" />
+          <GuideFAQ
+            items={[
+              { q: "How much can I save by starting at a community college?", a: "Community college tuition averages about $3,500–$5,000 per year versus $10,000–$40,000+ at four-year universities, saving $20,000–$70,000 over two years. But lower tuition isn't guaranteed savings if you never finish the degree." },
+              { q: "Is it easier to get into a selective school as a transfer?", a: "No — at selective schools transfer acceptance rates are typically 5–15%, comparable to or lower than the 5–20% freshman rates. Successful transfers choose a college with a strong articulation agreement and follow the prescribed curriculum exactly." },
+            ]}
+          />
+
+<RelatedGuides current="/guide/community-college-vs-university" />
         </section>
       </main>
     </div>

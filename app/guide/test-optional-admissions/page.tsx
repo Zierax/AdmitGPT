@@ -2,6 +2,9 @@
 import Link from "next/link";
 import { RelatedGuides } from "@/app/components/RelatedGuides";
 import { SITE_ORIGIN } from "@/lib/siteConfig";
+import { GuideByline } from "@/app/guide/GuideByline";
+import { GuideFAQ } from "@/app/guide/GuideFAQ";
+import { QuickAnswer } from "@/app/guide/QuickAnswer";
 
 export const metadata: Metadata = {
   title: "Does Going Test-Optional Hurt Your College Chances?",
@@ -41,9 +44,39 @@ export default function TestOptionalGuide() {
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: "Does Going Test-Optional Hurt Your College Chances?",
+            description: "Should you submit SAT/ACT scores or skip them? Data-backed analysis of test-optional admissions from the open-source AdmitGPT engine. See how missing scores affect your profile.",
+            inLanguage: "en-US",
+            datePublished: "2025-08-01",
+            dateModified: "2026-04-11",
+            author: { "@id": SITE_ORIGIN + "/#author" },
+            publisher: { "@id": SITE_ORIGIN + "/#organization" },
+            mainEntityOfPage: { "@type": "WebPage", "@id": SITE_ORIGIN + "/guide/test-optional-admissions" },
+            isPartOf: { "@type": "WebSite", "@id": SITE_ORIGIN + "/#website" },
+          }),
+        }}
+      />
       <main className="tp-wrap">
         <div className="tp-eyebrow">Knowledge Base / Test-Optional</div>
         <h1 className="tp-h1">Does Going Test-Optional Hurt Your Chances?</h1>
+        <GuideByline updated="2026-04-11" />
+        <QuickAnswer>
+          Going test-optional rarely helps and sometimes hurts: AdmitGPT treats a missing SAT as a
+          GPA-only academic Z minus a 0.20 penalty, so you start slightly behind a peer with a
+          comparable GPA and a confirming score. When you do submit, your score is z-scored against
+          the college&rsquo;s own 25th/75th percentile spread, weighted 55% SAT and 45% GPA; a score
+          above the mean boosts you, below it drags you down. The practical rule: if your SAT is at or
+          above the school&rsquo;s reported average, submit &mdash; it will likely help. If it is
+          significantly below, the omission penalty (GPA-only with &minus;0.2) is usually smaller
+          than the drag of a weak score. Note the landscape shifted in 2026: all Ivy League schools
+          have returned to requiring test scores, so test-optional is off the table for that tier.
+        </QuickAnswer>
         <p className="tp-lead">
           Many colleges remain test-optional, giving you the choice to submit SAT/ACT scores or
           leave them out. But which option actually improves your odds? Here is what the data says.
@@ -54,9 +87,23 @@ export default function TestOptionalGuide() {
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
             The engine treats a missing SAT differently than a low one. When you provide no score,
             your academic strength is determined entirely by your GPA — with a small uncertainty
-            penalty: <code style={{ fontFamily: "var(--font-mono)", fontSize: 13 }}>Academic_Z = GPA_Z &minus; 0.20</code>.
-            This means a strong GPA can still carry your profile, but you start slightly behind
+            penalty:             <code style={{ fontFamily: "var(--font-mono)", fontSize: 13 }}>Academic_Z = GPA_Z &minus; 0.20</code>.
+            This means a strong GPA (see our{" "}
+            <Link href="/guide/what-gpa-do-you-need-for-college" style={{ color: "var(--color-primary)" }}>
+              GPA guide
+            </Link>
+            ) can still carry your profile, but you start slightly behind
             someone with a comparable GPA and a confirmed test score at or above the college average.
+            The percentile spread used to score a submitted score is drawn from each school&rsquo;s{" "}
+            <a
+              href="https://commondataset.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "var(--color-primary)" }}
+            >
+              Common Data Set
+            </a>{" "}
+            25th/75th figures.
           </p>
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
             When you do submit a score, it is z-scored against the college&rsquo;s own SAT distribution
@@ -69,8 +116,12 @@ export default function TestOptionalGuide() {
         <section className="tp-section">
           <h2 className="tp-h2">Should you submit or not?</h2>
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
-            A useful rule of thumb: if your SAT is at or above the college&rsquo;s reported average,
-            submitting it will likely help. If it is significantly below, the penalty for omitting it
+            A useful rule of thumb: if your SAT is at or above the college&rsquo;s reported average
+            (check the{" "}
+            <Link href="/guide/good-sat-score-for-ivy-league" style={{ color: "var(--color-primary)" }}>
+              Ivy League SAT ranges
+            </Link>
+            ), submitting it will likely help. If it is significantly below, the penalty for omitting it
             (GPA-only with &minus;0.2) is usually smaller than the drag from a weak score. You can
             test both scenarios in the calculator — it shows the score both ways so you can decide.
           </p>
@@ -90,7 +141,14 @@ export default function TestOptionalGuide() {
               Back to Guides
             </Link>
           </div>
-          <RelatedGuides current="/guide/test-optional-admissions" />
+          <GuideFAQ
+            items={[
+              { q: "Does applying test-optional hurt my chances?", a: "When you omit a score, AdmitGPT uses GPA-only with a −0.20 penalty, so you start slightly behind a peer with a comparable GPA and a confirming score. If your SAT is below the college's average, that penalty is usually smaller than the drag of a weak score." },
+              { q: "Can I still go test-optional for Ivy League schools?", a: "No — as of 2026 all Ivy League schools have returned to requiring test scores, so test-optional is off the table for that tier. Test-optional remains an option only at non-Ivy schools that still allow it." },
+            ]}
+          />
+
+<RelatedGuides current="/guide/test-optional-admissions" />
         </section>
       </main>
     </div>

@@ -1,14 +1,12 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import dynamic from "next/dynamic";
 import { TEST_PROFILES } from "@/lib/testProfiles";
-import { generatePDFReport } from "@/lib/pdfReport";
 import { useAdmitEngine } from "@/app/hooks/useAdmitEngine";
 import { EngineResult } from "@/lib/types";
 import { LandingPage } from "@/app/components/screens/LandingPage";
 import { LoadingScreen } from "@/app/components/screens/LoadingScreen";
-import { FormPage } from "@/app/components/FormPage";
-import { ResultsPage } from "@/app/components/ResultsPage";
 import { AIPromptModal } from "@/app/components/modals/AIPromptModal";
 import { CalculationsModal } from "@/app/components/modals/CalculationsModal";
 import { WhyModal } from "@/app/components/modals/WhyModal";
@@ -18,6 +16,18 @@ import {
   Terminal,
   X,
 } from "lucide-react";
+
+// Lazy-load the heavy form/results screens so the initial homepage bundle
+// stays light (better INP / Core Web Vitals). They only load when the user
+// starts the calculator.
+const FormPage = dynamic(
+  () => import("@/app/components/FormPage").then((m) => m.FormPage),
+  { loading: () => <LoadingScreen message="Loading application form..." /> }
+);
+const ResultsPage = dynamic(
+  () => import("@/app/components/ResultsPage").then((m) => m.ResultsPage),
+  { loading: () => <LoadingScreen message="Loading results..." /> }
+);
 
 type AppView = "landing" | "form" | "loading" | "results";
 
@@ -38,8 +48,9 @@ export default function ClientApp() {
     setShowAIPromptModal(true);
   }, [engine.stats]);
 
-  const executeDownload = useCallback(() => {
+  const executeDownload = useCallback(async () => {
     if (!engine.stats) return;
+    const { generatePDFReport } = await import("@/lib/pdfReport");
     generatePDFReport(
       engine.profile,
       engine.engineResults,

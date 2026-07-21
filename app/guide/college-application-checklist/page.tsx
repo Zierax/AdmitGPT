@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { RelatedGuides } from "@/app/components/RelatedGuides";
 import { SITE_ORIGIN } from "@/lib/siteConfig";
+import { GuideByline } from "@/app/guide/GuideByline";
+import { GuideFAQ } from "@/app/guide/GuideFAQ";
+import { QuickAnswer } from "@/app/guide/QuickAnswer";
 
 export const metadata: Metadata = {
   title: "College Application Checklist — Complete Step-by-Step Guide 2026",
@@ -36,37 +39,50 @@ export default function ChecklistGuide() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@graph": [
-              {
-                "@type": "BreadcrumbList",
-                itemListElement: [
-                  { "@type": "ListItem", position: 1, name: "Home", item: SITE_ORIGIN },
-                  { "@type": "ListItem", position: 2, name: "Guides", item: SITE_ORIGIN + "/guide" },
-                  { "@type": "ListItem", position: 3, name: "College Application Checklist", item: SITE_ORIGIN + "/guide/college-application-checklist" },
-                ],
-              },
-              {
-                "@type": "HowTo",
-                name: "Complete Your College Application",
-                description: "A step-by-step guide to completing every part of your college application.",
-                step: [
-                  { "@type": "HowToStep", position: 1, name: "Create Common App account", text: "Go to commonapp.org and create your account. Fill in personal, family, and education sections." },
-                  { "@type": "HowToStep", position: 2, name: "Request recommendations", text: "Ask two teachers and your counselor for letters. Give them a packet with your resume and deadlines." },
-                  { "@type": "HowToStep", position: 3, name: "Write Common App essay", text: "Brainstorm, draft, revise, and finalize your 650-word personal statement. Have at least two people read it." },
-                  { "@type": "HowToStep", position: 4, name: "Build activities list", text: "List your top 10 activities with 150-character descriptions. Lead with your strongest involvements." },
-                  { "@type": "HowToStep", position: 5, name: "Send test scores", text: "Request official SAT/ACT score reports from College Board or ACT. Allow 2–3 weeks for delivery." },
-                  { "@type": "HowToStep", position: 6, name: "Write supplemental essays", text: "Research each school's supplements. Focus especially on 'Why This School?' essays with specific details." },
-                  { "@type": "HowToStep", position: 7, name: "File financial aid forms", text: "Submit FAFSA and CSS Profile (if required) by each school's priority deadline." },
-                  { "@type": "HowToStep", position: 8, name: "Submit applications", text: "Review every application for errors. Submit 48–72 hours before the deadline to avoid server issues." },
-                ],
-              },
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: SITE_ORIGIN },
+              { "@type": "ListItem", position: 2, name: "Guides", item: SITE_ORIGIN + "/guide" },
+              { "@type": "ListItem", position: 3, name: "College Application Checklist", item: SITE_ORIGIN + "/guide/college-application-checklist" },
             ],
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: "College Application Checklist — Complete Step-by-Step Guide 2026",
+            description: "Your complete college application checklist: Common App setup, essays, recommendations, test scores, activities list, financial aid forms, and final submission checklist. Everything you need organized by priority.",
+            inLanguage: "en-US",
+            datePublished: "2025-08-01",
+            dateModified: "2026-01-30",
+            author: { "@id": SITE_ORIGIN + "/#author" },
+            publisher: { "@id": SITE_ORIGIN + "/#organization" },
+            mainEntityOfPage: { "@type": "WebPage", "@id": SITE_ORIGIN + "/guide/college-application-checklist" },
+            isPartOf: { "@type": "WebSite", "@id": SITE_ORIGIN + "/#website" },
           }),
         }}
       />
       <main className="tp-wrap">
         <div className="tp-eyebrow">Knowledge Base / Checklist</div>
         <h1 className="tp-h1">College Application Checklist</h1>
+        <GuideByline updated="2026-01-30" />
+        <QuickAnswer>
+          A complete college application checklist runs from account setup through final submission.
+          Start by creating your Common App (the 2026&ndash;27 version opens August 1) and entering
+          personal, education, GPA, and test data early. Request two teacher and one counselor
+          recommendations in the first week of senior year. Draft the 650-word Common App personal
+          statement by June and finalize before October. Build a 10-slot activities list led by your
+          most meaningful work. Confirm test scores and transcripts 2&ndash;3 weeks ahead, and
+          complete each school&rsquo;s supplemental &ldquo;Why Us&rdquo; essays by August&ndash;
+          September. File the FAFSA at opening and the CSS Profile if required, watching earlier
+          institutional aid dates. Finally, submit 48&ndash;72 hours before the deadline and verify
+          recommendations, transcripts, and scores arrived. Prioritize with AdmitGPT to flag which
+          schools are reach, target, or safety.
+        </QuickAnswer>
         <p className="tp-lead">
           Applying to college involves dozens of components — and missing one can delay or derail
           your application. Here is everything you need, organized in priority order so you know
@@ -78,7 +94,11 @@ export default function ChecklistGuide() {
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
             Create your Common App account at commonapp.org. The 2026–27 application opens August 1.
             Fill in your personal information, family background, education history (courses, GPA,
-            class rank), and test scores. This section is straightforward but time-consuming — do it
+            class rank), and test scores. Pair this with our{" "}
+            <Link href="/guide/college-application-deadlines-2026" style={{ color: "var(--color-primary)" }}>
+              deadlines calendar
+            </Link>
+            . This section is straightforward but time-consuming — do it
             early to avoid errors under deadline pressure.
           </p>
         </section>
@@ -139,8 +159,22 @@ export default function ChecklistGuide() {
           <h2 className="tp-h2">7. Financial aid forms</h2>
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
             File the FAFSA as soon as it opens. File the CSS Profile if any of your schools require
-            it. Check each school for institutional aid deadlines — many are earlier than you think.
-            Missing a financial aid deadline is the most expensive mistake in the entire process.
+            it, following the steps in our{" "}
+            <Link href="/guide/financial-aid-explained" style={{ color: "var(--color-primary)" }}>
+              financial aid guide
+            </Link>
+            . Check each school for institutional aid deadlines — many are earlier than you think.
+            Missing a financial aid deadline is the most expensive mistake in the entire process. The
+            official FAFSA form and federal dates are at{" "}
+            <a
+              href="https://studentaid.gov"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "var(--color-primary)" }}
+            >
+              StudentAid.gov
+            </a>
+            .
           </p>
         </section>
 
@@ -169,7 +203,14 @@ export default function ChecklistGuide() {
               Back to Guides
             </Link>
           </div>
-          <RelatedGuides current="/guide/college-application-checklist" />
+          <GuideFAQ
+            items={[
+              { q: "When should I start my college application?", a: "The 2026–27 Common App opens August 1, and you should draft the 650-word personal statement by June and finalize before October. Request two teacher and one counselor recommendations in the first week of senior year to avoid deadline-pressure errors." },
+              { q: "How early should I submit my applications?", a: "Submit 48–72 hours before the deadline — Common App servers are unreliable on deadline day. After submitting, confirm that your recommendations, transcripts, and test scores have all been received by each school." },
+            ]}
+          />
+
+<RelatedGuides current="/guide/college-application-checklist" />
         </section>
       </main>
     </div>

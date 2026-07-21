@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { RelatedGuides } from "@/app/components/RelatedGuides";
 import { SITE_ORIGIN } from "@/lib/siteConfig";
+import { GuideByline } from "@/app/guide/GuideByline";
+import { GuideFAQ } from "@/app/guide/GuideFAQ";
+import { QuickAnswer } from "@/app/guide/QuickAnswer";
 
 export const metadata: Metadata = {
   title: "College Application Deadlines 2026–2027 — Complete Calendar",
@@ -47,9 +50,41 @@ export default function DeadlinesGuide() {
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: "College Application Deadlines 2026–2027 — Complete Calendar",
+            description: "Every college application deadline you need to know for the 2026–27 admissions cycle: Early Decision, Early Action, Regular Decision, FAFSA, CSS Profile, and scholarship deadlines. Month-by-month timeline included.",
+            inLanguage: "en-US",
+            datePublished: "2025-08-01",
+            dateModified: "2026-05-15",
+            author: { "@id": SITE_ORIGIN + "/#author" },
+            publisher: { "@id": SITE_ORIGIN + "/#organization" },
+            mainEntityOfPage: { "@type": "WebPage", "@id": SITE_ORIGIN + "/guide/college-application-deadlines-2026" },
+            isPartOf: { "@type": "WebSite", "@id": SITE_ORIGIN + "/#website" },
+          }),
+        }}
+      />
       <main className="tp-wrap">
         <div className="tp-eyebrow">Knowledge Base / Deadlines</div>
         <h1 className="tp-h1">College Application Deadlines 2026–2027</h1>
+        <GuideByline updated="2026-05-15" />
+        <QuickAnswer>
+          The key 2026&ndash;27 college deadlines center on two clusters. Early applications are due
+          November 1 for nearly all Ivies plus Stanford, MIT, Duke, Northwestern, and UChicago, with a
+          smaller November 15 group and a single November 30 University of California deadline.
+          Regular Decision falls on January 1 or 15 (all Ivies use January 1&ndash;2; USC and UNC use
+          January 15), and Early Decision II matches the RD window. Financial aid: the 2027&ndash;28
+          FAFSA opens in September 2026 with a federal June 30, 2028 deadline that you should ignore
+          in favor of much-earlier state and school priority dates (often November&ndash;February),
+          while the CSS Profile &mdash; required by ~250 private colleges &mdash; usually tracks the
+          admissions deadline. Merit scholarship cutoffs often land November 1 or December 1. Plan
+          backward: finalize essays by August, submit early apps 48&ndash;72 hours before the due
+          date.
+        </QuickAnswer>
         <p className="tp-lead">
           Missing a deadline is the single most avoidable mistake in college admissions. Here is
           every key date for the 2026–27 cycle — Early Decision, Early Action, Regular Decision,
@@ -60,7 +95,11 @@ export default function DeadlinesGuide() {
           <h2 className="tp-h2">Early application deadlines (November 2026)</h2>
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
             <strong>November 1</strong> is the single biggest deadline day. Most Early Decision I and
-            Early Action applications are due. This includes all Ivy League schools (Harvard, Yale,
+            Early Action applications are due — understand the trade-offs in our{" "}
+            <Link href="/guide/early-decision-vs-early-action" style={{ color: "var(--color-primary)" }}>
+              ED vs EA guide
+            </Link>
+            . This includes all Ivy League schools (Harvard, Yale,
             Princeton, Columbia, Penn, Brown, Dartmouth, Cornell), plus Stanford, MIT, Duke,
             Northwestern, UChicago, and most other selective private universities. A smaller cluster
             of schools has a <strong>November 15</strong> deadline.
@@ -92,7 +131,22 @@ export default function DeadlinesGuide() {
           <h2 className="tp-h2">Financial aid deadlines</h2>
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
             <strong>FAFSA:</strong> The 2027–28 FAFSA opens in September 2026. The federal deadline
-            is June 30, 2028, but ignore that — state and institutional deadlines are much earlier.
+            is June 30, 2028, but ignore that — state and institutional deadlines are much earlier. See
+            our{" "}
+            <Link href="/guide/financial-aid-explained" style={{ color: "var(--color-primary)" }}>
+              financial aid guide
+            </Link>{" "}
+            for how aid fits your plan.
+            File through the official portal at{" "}
+            <a
+              href="https://studentaid.gov"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "var(--color-primary)" }}
+            >
+              StudentAid.gov
+            </a>
+            , which also lists state priority dates.
             Many schools set priority deadlines between November 2026 and February 2027. File within
             the first three months to maximize grant aid.
           </p>
@@ -145,7 +199,14 @@ export default function DeadlinesGuide() {
               Back to Guides
             </Link>
           </div>
-          <RelatedGuides current="/guide/college-application-deadlines-2026" />
+          <GuideFAQ
+            items={[
+              { q: "When are most Early Decision and Early Action deadlines?", a: "November 1 is the single biggest deadline day, covering most ED I and EA applications including all eight Ivy League schools. A smaller cluster uses November 15, and University of California schools have one November 30 deadline with no ED/EA distinction." },
+              { q: "When is the FAFSA due and should I file early?", a: "The 2027–28 FAFSA opens in September 2026; the federal deadline is June 30, 2028, but state and institutional deadlines are much earlier, often between November and February. Students who file within the first three months typically receive more grant aid." },
+            ]}
+          />
+
+<RelatedGuides current="/guide/college-application-deadlines-2026" />
         </section>
       </main>
     </div>

@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { RelatedGuides } from "@/app/components/RelatedGuides";
 import { SITE_ORIGIN } from "@/lib/siteConfig";
+import { GuideByline } from "@/app/guide/GuideByline";
+import { GuideFAQ } from "@/app/guide/GuideFAQ";
+import { QuickAnswer } from "@/app/guide/QuickAnswer";
 
 export const metadata: Metadata = {
   title: "Good SAT Score for Ivy League — Ranges, Percentiles & Strategy",
@@ -45,9 +48,40 @@ export default function SatIvyGuide() {
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: "Good SAT Score for Ivy League — Ranges, Percentiles & Strategy",
+            description: "What SAT score do you need for Ivy League admission? Complete guide to Harvard, Yale, Princeton, and Columbia SAT ranges, how AdmitGPT z-scores your test results, and when to go test-optional.",
+            inLanguage: "en-US",
+            datePublished: "2025-08-01",
+            dateModified: "2026-04-02",
+            author: { "@id": SITE_ORIGIN + "/#author" },
+            publisher: { "@id": SITE_ORIGIN + "/#organization" },
+            mainEntityOfPage: { "@type": "WebPage", "@id": SITE_ORIGIN + "/guide/good-sat-score-for-ivy-league" },
+            isPartOf: { "@type": "WebSite", "@id": SITE_ORIGIN + "/#website" },
+          }),
+        }}
+      />
       <main className="tp-wrap">
         <div className="tp-eyebrow">Knowledge Base / SAT & Testing</div>
         <h1 className="tp-h1">Good SAT Score for Ivy League Admission</h1>
+        <GuideByline updated="2026-04-02" />
+        <QuickAnswer>
+          A good SAT score for the Ivy League is at or above 1500, and ideally above 1550. The
+          middle 50% ranges cluster tightly: Harvard 1490&ndash;1580, Yale 1500&ndash;1580,
+          Princeton 1490&ndash;1570, Columbia 1470&ndash;1570, Penn 1480&ndash;1570, Brown
+          1480&ndash;1560, Dartmouth 1440&ndash;1560, Cornell 1450&ndash;1550. A score above 1550
+          sits at or above the 75th percentile at every Ivy; below 1450 you fall under the 25th
+          percentile at most, making test-optional worth considering where it exists. AdmitGPT
+          z-scores your SAT against each college&rsquo;s own distribution, so a 1500 is near-neutral
+          at Cornell (median ~1500) but negative at Harvard (median ~1540). Because the academic Z is
+          multiplied by 1.5 in the logit, a strong score carries roughly 1.5x the weight of
+          extracurriculars. As of 2026 all Ivies require scores, so test-optional is off the table.
+        </QuickAnswer>
         <p className="tp-lead">
           "What SAT score do I need for Harvard?" is one of the most searched college admissions
           questions. The honest answer depends on the school, your GPA, and the rest of your
@@ -70,11 +104,28 @@ export default function SatIvyGuide() {
             <li><strong>Brown:</strong> 1480–1560</li>
             <li><strong>Dartmouth:</strong> 1440–1560</li>
             <li><strong>Cornell:</strong> 1450–1550</li>
-          </ul>
+           </ul>
+           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
+             These ranges map directly onto the school-by-school{" "}
+             <Link href="/guide/college-acceptance-rates-2026" style={{ color: "var(--color-primary)" }}>
+               acceptance rates 2026
+             </Link>{" "}
+             data.
+           </p>
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
             A score above 1550 is at or above the 75th percentile at every Ivy. Below 1450, you are
             below the 25th percentile at most Ivies, which makes test-optional a serious consideration
-            at schools that still offer it.
+            at schools that still offer it. The percentile boundaries above come from each
+            school&rsquo;s published{" "}
+            <a
+              href="https://commondataset.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "var(--color-primary)" }}
+            >
+              Common Data Set
+            </a>{" "}
+            SAT ranges.
           </p>
         </section>
 
@@ -101,9 +152,13 @@ export default function SatIvyGuide() {
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
             If your SAT is at or above the school's 25th percentile, submitting helps. If it is
             below the 25th percentile, going test-optional may be the better move — but only at
-            schools where the policy exists. As of 2026, all Ivy League schools have returned to
+            schools where the policy exists.             As of 2026, all Ivy League schools have returned to
             requiring test scores, so the test-optional option is effectively off the table for
-            this tier.
+            this tier. Read our{" "}
+            <Link href="/guide/test-optional-admissions" style={{ color: "var(--color-primary)" }}>
+              test-optional analysis
+            </Link>{" "}
+            for non-Ivy schools that still allow it.
           </p>
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
             For non-Ivy schools that remain test-optional, a strong SAT is still a positive signal
@@ -126,7 +181,14 @@ export default function SatIvyGuide() {
               Back to Guides
             </Link>
           </div>
-          <RelatedGuides current="/guide/good-sat-score-for-ivy-league" />
+          <GuideFAQ
+            items={[
+              { q: "What SAT score is considered good for the Ivy League?", a: "A good SAT score is at or above 1500, and ideally above 1550 — a score above 1550 sits at or above the 75th percentile at every Ivy. Below 1450 you fall under the 25th percentile at most, making test-optional worth considering where it still exists." },
+              { q: "Should I submit my SAT if it's below a school's average?", a: "AdmitGPT z-scores your SAT against each college's own distribution, so a 1500 is near-neutral at Cornell (median ~1500) but negative at Harvard (median ~1540). If your score is below the 25th percentile, test-optional may be the better move at schools that offer it." },
+            ]}
+          />
+
+<RelatedGuides current="/guide/good-sat-score-for-ivy-league" />
         </section>
       </main>
     </div>

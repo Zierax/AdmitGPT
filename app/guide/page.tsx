@@ -72,7 +72,7 @@ const guides = [
   {
     slug: "college-application-checklist",
     title: "College Application Checklist",
-    desc: "Everything you need to apply: Common App, essays, recommendations, test scores, activities, financial aid — with HowTo structured data for featured snippets.",
+    desc: "Everything you need to apply: Common App, essays, recommendations, test scores, activities, and financial aid — organized step by step.",
     tags: "college checklists, application requirements, how to apply to college, admission steps",
   },
   {

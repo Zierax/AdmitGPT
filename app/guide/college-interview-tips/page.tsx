@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { RelatedGuides } from "@/app/components/RelatedGuides";
 import { SITE_ORIGIN } from "@/lib/siteConfig";
+import { GuideByline } from "@/app/guide/GuideByline";
+import { GuideFAQ } from "@/app/guide/GuideFAQ";
+import { QuickAnswer } from "@/app/guide/QuickAnswer";
 
 export const metadata: Metadata = {
   title: "College Interview Tips — How to Ace Your Admissions Interview",
@@ -45,9 +48,40 @@ export default function InterviewTips() {
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: "College Interview Tips — How to Ace Your Admissions Interview",
+            description: "Complete guide to college admissions interviews: common questions, how to prepare, what to wear, questions to ask the interviewer, and how interviews actually affect your admission decision.",
+            inLanguage: "en-US",
+            datePublished: "2025-08-01",
+            dateModified: "2026-02-20",
+            author: { "@id": SITE_ORIGIN + "/#author" },
+            publisher: { "@id": SITE_ORIGIN + "/#organization" },
+            mainEntityOfPage: { "@type": "WebPage", "@id": SITE_ORIGIN + "/guide/college-interview-tips" },
+            isPartOf: { "@type": "WebSite", "@id": SITE_ORIGIN + "/#website" },
+          }),
+        }}
+      />
       <main className="tp-wrap">
         <div className="tp-eyebrow">Knowledge Base / Interviews</div>
         <h1 className="tp-h1">College Interview Tips</h1>
+        <GuideByline updated="2026-02-20" />
+        <QuickAnswer>
+          College interviews are a minor but controllable factor: they rarely make or break an
+          application, but a strong one can confirm a borderline file while a weak one raises doubts.
+          At most selective schools interviews are evaluative &mdash; the alumni interviewer submits
+          a report assessing intellectual curiosity, interpersonal skills, and fit &mdash; though
+          not receiving one (often just no alumnus nearby) does not hurt you. Prepare for predictable
+          questions (&ldquo;Tell me about yourself,&rdquo; &ldquo;Why this school?&rdquo;) with
+          specific, non-memorized answers, and bring 3&ndash;5 thoughtful questions (not Google-able
+          ones). Dress business casual, test your video setup if virtual, be on time, and send a
+          thank-you email within 24 hours. Remember the interview is also your chance to evaluate
+          the school. Your odds still hinge on GPA, tests, extracurriculars, and essays.
+        </QuickAnswer>
         <p className="tp-lead">
           College interviews are one of the most misunderstood parts of the admissions process.
           They rarely make or break an application, but a strong interview can confirm what the
@@ -61,13 +95,27 @@ export default function InterviewTips() {
             At most selective schools, interviews are <strong>evaluative</strong> — the interviewer
             submits a report that becomes part of your file. At other schools, interviews are
             <strong>informational</strong> — they exist to answer your questions and are not
-            factored into admissions decisions. The evaluative interview report typically assesses
+            factored into admissions decisions. The relative weight of interviews versus academics is
+            visible in each school&rsquo;s{" "}
+            <a
+              href="https://commondataset.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "var(--color-primary)" }}
+            >
+              Common Data Set
+            </a>{" "}
+            profile. The evaluative interview report typically assesses
             intellectual curiosity, interpersonal skills, and fit. It rarely outweighs a weak GPA
             or test score, but it can tip a borderline candidate into the admit pile.
           </p>
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
             At Ivy League schools and other highly selective universities, alumni conduct most
-            interviews. The interview is typically offered to as many applicants as possible, but
+            interviews, where the odds are covered in our{" "}
+            <Link href="/guide/ivy-league-chances" style={{ color: "var(--color-primary)" }}>
+              Ivy League chances guide
+            </Link>
+            . The interview is typically offered to as many applicants as possible, but
             not receiving an interview does not hurt your chances — it often just means no alumnus
             was available in your area.
           </p>
@@ -112,8 +160,12 @@ export default function InterviewTips() {
         <section className="tp-section">
           <h2 className="tp-h2">Interviews in context of your full application</h2>
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
-            Your admission odds are determined primarily by your GPA, test scores, extracurriculars,
-            and essays. The interview is a minor factor — but it is one you can control with
+            Your admission odds are determined primarily by your GPA, test scores, extracurriculars
+            (see our{" "}
+            <Link href="/guide/evaluate-extracurriculars" style={{ color: "var(--color-primary)" }}>
+              spike scoring guide
+            </Link>
+            ), and essays. The interview is a minor factor — but it is one you can control with
             preparation. Use the AdmitGPT calculator to understand your baseline probability, then
             use the interview to reinforce the narrative your application tells.
           </p>
@@ -125,7 +177,14 @@ export default function InterviewTips() {
               Back to Guides
             </Link>
           </div>
-          <RelatedGuides current="/guide/college-interview-tips" />
+          <GuideFAQ
+            items={[
+              { q: "Do college interviews actually affect admission?", a: "At most selective schools interviews are evaluative and become part of your file, but they rarely outweigh a weak GPA or test score — though they can tip a borderline candidate into the admit pile. Not receiving an alumni interview does not hurt your chances." },
+              { q: "What should I ask in a college interview?", a: "Prepare 3–5 questions like what the interviewer got out of their experience or how they'd describe the intellectual culture. Avoid questions answerable with a Google search, such as class size, application deadline, or available majors." },
+            ]}
+          />
+
+<RelatedGuides current="/guide/college-interview-tips" />
         </section>
       </main>
     </div>

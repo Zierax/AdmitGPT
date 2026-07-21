@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { SITE_ORIGIN, GITHUB_URL } from "@/lib/siteConfig";
+import { SITE_ORIGIN, GITHUB_URL, BRAND_PROFILES } from "@/lib/siteConfig";
 import "./globals.css";
 
 const siteUrl = SITE_ORIGIN;
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: "AdmitGPT | Free Open-Source College Admissions Chance Calculator & AI Predictor",
-    template: "%s | AdmitGPT | Admissions Calculator",
+    template: "%s | AdmitGPT",
   },
   description:
     "AdmitGPT is a free, open-source college admissions chance calculator. See your real Ivy League, MIT, and Stanford acceptance odds from SAT, ACT, GPA, and extracurriculars — with every formula published and your data never leaving your browser.",
@@ -154,7 +154,28 @@ const jsonLd = {
         width: 512,
         height: 512,
       },
-      sameAs: [GITHUB_URL, "https://instagram.com/z14d.d"],
+      founder: { "@id": `${siteUrl}/#author` },
+      sameAs: BRAND_PROFILES,
+    },
+    {
+      "@type": "Person",
+      "@id": `${siteUrl}/#author`,
+      name: "Ziad Salah",
+      alternateName: "Zierax",
+      url: GITHUB_URL,
+      image: `${siteUrl}/assets/Ziad_Salah_Photo.jpg`,
+      jobTitle: "Creator & Maintainer, AdmitGPT",
+      description:
+        "Creator of AdmitGPT, an open-source, transparent college admissions probability engine. Writes data-driven admissions guides grounded in published research and real applicant data.",
+      knowsAbout: [
+        "College admissions",
+        "Ivy League admissions",
+        "Admissions statistics",
+        "Standardized testing (SAT/ACT)",
+        "Financial aid",
+        "Machine learning for admissions modeling",
+      ],
+      sameAs: BRAND_PROFILES,
     },
     {
       "@type": "Dataset",

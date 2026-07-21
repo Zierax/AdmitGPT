@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { QuickAnswer } from "@/app/guide/QuickAnswer";
 
 export function HomeSEO() {
   return (
@@ -29,6 +30,16 @@ export function HomeSEO() {
           personalized admission chances for Ivy League schools, top national universities, liberal
           arts colleges, and state flagships.
         </p>
+        <QuickAnswer>
+          A college admissions chance calculator estimates your probability of acceptance at a given
+          school from your academic and extracurricular profile. AdmitGPT does this with a transparent
+          additive-logistic model calibrated on 1,122 real applicant profiles and 6,273 colleges&rsquo;
+          admission data (IPEDS). You enter your GPA, SAT/ACT scores, extracurriculars, intended major,
+          and early-decision plans, and it returns a percentage per school — ranked by how you compare
+          to each college&rsquo;s own admitted-student distribution. It is a directional planning signal,
+          not a guarantee: at schools admitting under 10%, the model under-predicts the true rate, and
+          its ordinal accuracy is AUC ~0.74 (it reliably ranks similar applicants in the right order).
+        </QuickAnswer>
         <p className="ag-muted" style={{ fontSize: 14, lineHeight: 1.8, marginBottom: 16 }}>
           The engine uses an <strong>additive-logistic model</strong> — the same class of model
           used in published admissions research — combining academic z-scores, a six-dimension
@@ -111,6 +122,29 @@ export function HomeSEO() {
           your real odds helps you make smarter decisions about where to apply, when to apply, and
           where to invest your energy. No consultant can give you a more honest answer than the
           data itself.
+        </p>
+
+        <h3
+          style={{
+            fontSize: 18,
+            fontWeight: 600,
+            color: "var(--color-foreground)",
+            marginTop: 36,
+            marginBottom: 14,
+          }}
+        >
+          How accurate is AdmitGPT?
+        </h3>
+        <p className="ag-muted" style={{ fontSize: 14, lineHeight: 1.8, marginBottom: 16 }}>
+          No calculator can predict an individual outcome, and we are open about that. AdmitGPT is
+          calibrated on 1,122 self-reported applicant profiles and validated to an ordinal AUC of
+          ~0.74 — meaning it reliably ranks similar applicants in the correct order. Its percentage
+          estimates are well-calibrated for schools admitting above 10–25%, but at the most selective
+          schools it systematically under-predicts (predicted ~1.3% vs an observed ~24.6% in the
+          hardest decile). We publish the full calibration analysis on the{" "}
+          <Link href="/transparency" style={{ color: "var(--color-primary)" }}>Transparency page</Link>{" "}
+          and the underlying data on the{" "}
+          <Link href="/data" style={{ color: "var(--color-primary)" }}>dataset page</Link>.
         </p>
 
         <h3

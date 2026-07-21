@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { RelatedGuides } from "@/app/components/RelatedGuides";
 import { SITE_ORIGIN } from "@/lib/siteConfig";
+import { GuideByline } from "@/app/guide/GuideByline";
+import { GuideFAQ } from "@/app/guide/GuideFAQ";
+import { QuickAnswer } from "@/app/guide/QuickAnswer";
 
 export const metadata: Metadata = {
   title: "Harvard vs Stanford vs MIT — Admission Chances, Culture & Fit Compared",
@@ -46,9 +49,41 @@ export default function HarvardStanfordMIT() {
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: "Harvard vs Stanford vs MIT — Admission Chances, Culture & Fit Compared",
+            description: "Harvard vs Stanford vs MIT: side-by-side comparison of admission rates, GPA and SAT ranges, campus culture, financial aid, and career outcomes. See which school fits your profile — and where you have the best admission odds.",
+            inLanguage: "en-US",
+            datePublished: "2025-08-01",
+            dateModified: "2026-04-29",
+            author: { "@id": SITE_ORIGIN + "/#author" },
+            publisher: { "@id": SITE_ORIGIN + "/#organization" },
+            mainEntityOfPage: { "@type": "WebPage", "@id": SITE_ORIGIN + "/guide/harvard-vs-stanford-vs-mit" },
+            isPartOf: { "@type": "WebSite", "@id": SITE_ORIGIN + "/#website" },
+          }),
+        }}
+      />
       <main className="tp-wrap">
         <div className="tp-eyebrow">Knowledge Base / School Comparisons</div>
         <h1 className="tp-h1">Harvard vs Stanford vs MIT</h1>
+        <GuideByline updated="2026-04-29" />
+        <QuickAnswer>
+          Harvard, Stanford, and MIT are all sub-5% admits but differ sharply in profile and culture.
+          Estimated acceptance rates are Harvard ~3.6%, Stanford ~3.9%, and MIT ~4.5%; the effective
+          rate for unhooked applicants falls to 2&ndash;3% at Harvard and Stanford and 3&ndash;4% at
+          MIT (which ignores legacy). Academically, Harvard and Stanford share a median unweighted GPA
+          ~3.95 (SAT 1490&ndash;1580 and 1500&ndash;1580 respectively) and value broad excellence and
+          intellectual vitality, while MIT&rsquo;s median GPA is ~4.0 with SAT 1510&ndash;1580 and the
+          heaviest STEM weight. All three are need-blind for domestic students; Harvard and MIT extend
+          that to internationals, and all meet 100% of demonstrated need. Harvard offers traditional
+          academics and alumni reach, Stanford an entrepreneurial West Coast culture, and MIT a
+          collaborative, hands-on technical environment &mdash; so your best odds depend on whether
+          your numbers skew STEM, humanities, or interdisciplinary.
+        </QuickAnswer>
         <p className="tp-lead">
           Harvard, Stanford, and MIT are the three most searched colleges in the world — and the
           three most competitive. Each offers a radically different experience despite similar
@@ -60,7 +95,21 @@ export default function HarvardStanfordMIT() {
           <h2 className="tp-h2">Admission selectivity</h2>
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
             All three schools admit fewer than 5% of applicants. Harvard's estimated acceptance
-            rate is ~3.6%, Stanford's ~3.9%, and MIT's ~4.5%. However, the effective rate for
+            rate is ~3.6%, Stanford's ~3.9%, and MIT's ~4.5%, figures reported in each
+            school&rsquo;s{" "}
+            <a
+              href="https://commondataset.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "var(--color-primary)" }}
+            >
+              Common Data Set
+            </a>
+            , and comparable to the{" "}
+            <Link href="/guide/ivy-league-chances" style={{ color: "var(--color-primary)" }}>
+              Ivy League chances
+            </Link>{" "}
+            data. However, the effective rate for
             unhooked applicants (no legacy, no athlete status) is lower at every school — estimated
             at 2–3% at Harvard and Stanford, and 3–4% at MIT (which does not consider legacy).
           </p>
@@ -111,9 +160,13 @@ export default function HarvardStanfordMIT() {
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
             All three schools are need-blind for domestic applicants. Harvard and MIT are also
             need-blind for international students. Stanford meets full demonstrated need for all
-            admitted students and does not require loans in its aid packages. All three guarantee
+            admitted students and does not require loans in its aid packages.             All three guarantee
             to meet 100% of demonstrated need. The net price calculators on each school's website
-            are your best tool for estimating actual cost.
+            are your best tool for estimating actual cost, as explained in our{" "}
+            <Link href="/guide/financial-aid-explained" style={{ color: "var(--color-primary)" }}>
+              financial aid guide
+            </Link>
+            .
           </p>
         </section>
 
@@ -134,7 +187,14 @@ export default function HarvardStanfordMIT() {
               Back to Guides
             </Link>
           </div>
-          <RelatedGuides current="/guide/harvard-vs-stanford-vs-mit" />
+          <GuideFAQ
+            items={[
+              { q: "Which is hardest to get into: Harvard, Stanford, or MIT?", a: "All three admit fewer than 5%: Harvard ~3.6%, Stanford ~3.9%, and MIT ~4.5%. The effective rate for unhooked applicants is 2–3% at Harvard and Stanford and 3–4% at MIT, which does not consider legacy." },
+              { q: "Do these schools offer binding Early Decision?", a: "No — Harvard and Stanford offer Restrictive Early Action (non-binding but limits other early apps) and MIT offers Early Action (non-binding, no restrictions). The EA boost is typically 1.2–1.5x rather than the 2–4x ED advantage at binding schools." },
+            ]}
+          />
+
+<RelatedGuides current="/guide/harvard-vs-stanford-vs-mit" />
         </section>
       </main>
     </div>

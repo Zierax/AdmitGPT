@@ -1,0 +1,59 @@
+{
+  "collegeCount": 6273,
+  "withRate": 1781,
+  "avgRate": 71,
+  "medianRate": 76.4,
+  "states": 59,
+  "profileCount": 1122,
+  "profileYears": {
+    "2017": 32,
+    "2018": 17,
+    "2019": 28,
+    "2020": 126,
+    "2021": 325,
+    "2022": 383,
+    "2023": 211
+  },
+  "mostSelective": [
+    {
+      "name": "Alliant International University-San Diego",
+      "rate": 0
+    },
+    {
+      "name": "Belanger School of Nursing",
+      "rate": 0
+    },
+    {
+      "name": "School of Professional Horticulture New York Botanical Garden",
+      "rate": 0
+    },
+    {
+      "name": "Atlantic Acting School",
+      "rate": 2
+    },
+    {
+      "name": "California Institute of Technology",
+      "rate": 3
+    },
+    {
+      "name": "Minerva University",
+      "rate": 3
+    },
+    {
+      "name": "Stanford University",
+      "rate": 4
+    },
+    {
+      "name": "Harvard University",
+      "rate": 4
+    },
+    {
+      "name": "Yale University",
+      "rate": 4
+    },
+    {
+      "name": "Columbia University in the City of New York",
+      "rate": 4
+    }
+  ]
+}

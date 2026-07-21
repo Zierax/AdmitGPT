@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { RelatedGuides } from "@/app/components/RelatedGuides";
+import { GuideByline } from "@/app/guide/GuideByline";
+import { GuideFAQ } from "@/app/guide/GuideFAQ";
+import { QuickAnswer } from "@/app/guide/QuickAnswer";
 import { SITE_ORIGIN } from "@/lib/siteConfig";
 
 export const metadata: Metadata = {
@@ -45,9 +48,40 @@ export default function GpaCollegeGuide() {
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: "What GPA Do You Need for College? — Admission Requirements by School Type",
+            description: "A complete guide to GPA requirements for US college admissions: Ivy League GPA thresholds, state school minimums, weighted vs unweighted GPA, and how AdmitGPT converts your grades into an accurate probability.",
+            inLanguage: "en-US",
+            datePublished: "2025-08-01",
+            dateModified: "2026-05-01",
+            author: { "@id": SITE_ORIGIN + "/#author" },
+            publisher: { "@id": SITE_ORIGIN + "/#organization" },
+            mainEntityOfPage: { "@type": "WebPage", "@id": SITE_ORIGIN + "/guide/what-gpa-do-you-need-for-college" },
+            isPartOf: { "@type": "WebSite", "@id": SITE_ORIGIN + "/#website" },
+          }),
+        }}
+      />
       <main className="tp-wrap">
         <div className="tp-eyebrow">Knowledge Base / GPA & Academics</div>
         <h1 className="tp-h1">What GPA Do You Need for College?</h1>
+        <GuideByline updated="2026-05-01" />
+        <QuickAnswer>
+          There is no single &ldquo;good&rdquo; GPA for college — it depends entirely on where you
+          apply. At Ivy League and Ivy+ schools (Harvard, Yale, Princeton, Stanford, MIT), the median
+          admitted unweighted GPA is about 3.95, and anything below 3.7 places you under the 25th
+          percentile. At top 20–50 national universities (NYU, USC, UNC, Michigan), the median range
+          is roughly 3.6–3.9 and a 3.5 with strong course rigor is competitive. Selective liberal arts
+          colleges (Williams, Amherst, Swarthmore) sit similarly, often above 3.9. State flagships and
+          broad-access schools typically admit most applicants with unweighted GPAs of 3.0–3.5.
+          Colleges recalculate GPA on their own scale, so course rigor matters as much as the number.
+          AdmitGPT normalizes your GPA against each school&rsquo;s own admitted-student distribution
+          for an apples-to-apples comparison.
+        </QuickAnswer>
         <p className="tp-lead">
           GPA is the single most important number in your college application. But what counts as
           "good" depends entirely on where you are applying. Here is a school-by-school breakdown
@@ -61,7 +95,16 @@ export default function GpaCollegeGuide() {
             <strong>Ivy League &amp; Ivy+ (Harvard, Yale, Princeton, Stanford, MIT):</strong> Median
             unweighted GPA of admitted students is approximately 3.95. Anything below 3.7 unweighted
             places you below the 25th percentile. Weighted GPAs above 4.3 are common among admitted
-            students taking 8+ AP/IB courses.
+            students taking 8+ AP/IB courses. These figures come from each school&rsquo;s annual{" "}
+            <a
+              href="https://commondataset.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "var(--color-primary)" }}
+            >
+              Common Data Set
+            </a>{" "}
+            report, the standard source for admitted-student profile statistics.
           </p>
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
             <strong>Top 20–50 national universities (NYU, USC, UNC, Michigan):</strong> Median
@@ -99,7 +142,14 @@ export default function GpaCollegeGuide() {
             The AdmitGPT model allows extracurricular spike (capped at ±2.0 logit), demonstrated
             passion in a niche field, or exceptional personal circumstances to move the needle. For
             schools in the top 20–50 range, a strong SAT score and compelling spike can often
-            compensate for a GPA around the 25th percentile.
+            compensate for a GPA around the 25th percentile. See{" "}
+            <Link href="/guide/evaluate-extracurriculars" style={{ color: "var(--color-primary)" }}>
+              how colleges score your extracurriculars
+            </Link>{" "}
+            to understand the spike rubric, and{" "}
+            <Link href="/guide/good-sat-score-for-ivy-league" style={{ color: "var(--color-primary)" }}>
+              what SAT score helps at the Ivies
+            </Link>.
           </p>
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
             The engine's calibration data shows that for schools with admission rates above 25%,
@@ -122,7 +172,14 @@ export default function GpaCollegeGuide() {
               Back to Guides
             </Link>
           </div>
-          <RelatedGuides current="/guide/what-gpa-do-you-need-for-college" />
+          <GuideFAQ
+            items={[
+              { q: "Is a 3.7 GPA good enough for an Ivy League school?", a: "Below 3.7 unweighted you fall under the 25th percentile at Ivy League schools, where the median admitted GPA is about 3.95. A 3.7 is competitive but thin — a strong SAT, rigorous course load, and an extracurricular spike matter more at the margin." },
+              { q: "Do colleges look at weighted or unweighted GPA?", a: "Colleges recalculate GPA on their own scale, so course rigor matters as much as the number. Weighted GPAs above 4.0 are common among admitted Ivy League students because they take the most rigorous courses (AP, IB, or dual enrollment) available." },
+            ]}
+          />
+
+<RelatedGuides current="/guide/what-gpa-do-you-need-for-college" />
         </section>
       </main>
     </div>
