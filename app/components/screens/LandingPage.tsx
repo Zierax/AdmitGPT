@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Header from "@/app/components/Header";
 import { CONTACT_EMAIL, GITHUB_URL } from "@/lib/siteConfig";
-import { Sparkles, ArrowRight, Mail, Shield, Eye, Lock, GraduationCap, Quote } from "lucide-react";
+import { ArrowRight, Mail, Shield, Eye, Lock, GraduationCap, Quote, Sparkles } from "lucide-react";
 
 export function LandingPage({
   onStart,
@@ -40,7 +40,6 @@ export function LandingPage({
     ["Know your next move", "What actually moves the needle before you submit."],
   ];
 
-  // Real acceptance rates (honest, sourced from the app guides).
   const odds = [
     { school: "Harvard", rate: "3.6%", hot: true },
     { school: "Stanford", rate: "3.9%", hot: true },
@@ -60,12 +59,12 @@ export function LandingPage({
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[var(--color-background)]">
       <Header />
 
       <main className="flex-1">
         <div className="ag-container">
-          {/* ===== HERO — zine, mascot-led ===== */}
+          {/* ===== HERO ===== */}
           <section className="grid items-center gap-12 py-16 lg:grid-cols-12 lg:gap-16 lg:py-24">
             <div className="lg:col-span-7">
               <div className="ag-eyebrow mb-7">
@@ -77,7 +76,7 @@ export function LandingPage({
                 <span className="ag-underline">odds</span>.
               </h1>
 
-              <p className="ag-lead mb-9" style={{ color: "var(--color-foreground-dim)", maxWidth: "52ch" }}>
+              <p className="ag-lead mb-9">
                 AdmitGPT shows your actual acceptance chances from your GPA,
                 test scores, and extracurriculars — for every school on your list.
                 Honest math, private by design, and free. Built by a student who was
@@ -88,27 +87,27 @@ export function LandingPage({
                 <button
                   onClick={onStart}
                   disabled={isLoading}
-                  className="btn-zine group/btn w-full sm:w-auto"
+                  className="btn btn-primary w-full sm:w-auto"
                 >
                   {isLoading ? (
                     <>
-                      <div className="loading-spinner !w-5 !h-5 !border-2 !border-black" />
+                      <div className="loading-spinner !w-5 !h-5 !border-2 !border-[#0b0c0a]" />
                       <span>{loadingMessage}</span>
                     </>
                   ) : (
                     <>
                       <span>See my chances</span>
-                      <ArrowRight size={20} className="ml-1 transition-transform group-hover/btn:translate-x-1" />
+                      <ArrowRight size={18} />
                     </>
                   )}
                 </button>
 
-                <button onClick={onShowWhy} className="btn-zine secondary w-full sm:w-auto">
+                <button onClick={onShowWhy} className="btn btn-secondary w-full sm:w-auto">
                   Why trust us
                 </button>
               </div>
 
-              <dl className="mt-14 grid max-w-xl grid-cols-3 gap-6 border-t-2 border-[var(--color-border-strong)] pt-8">
+              <dl className="mt-14 grid max-w-xl grid-cols-3 gap-6 border-t border-[var(--color-border-strong)] pt-8">
                 <div>
                   <dt className="ag-figure">1,122+</dt>
                   <dd className="ag-figure-label">Real profiles the engine is calibrated on.</dd>
@@ -124,12 +123,11 @@ export function LandingPage({
               </dl>
             </div>
 
-            {/* Right: mascot merged into the page — same off-black field, gray brackets, lime shard echo */}
             <div className="lg:col-span-5">
-              <div className="ag-mascot-merge mx-auto max-w-sm">
+              <div className="ag-mascot mx-auto max-w-sm">
                 <Image
                   src="/assets/AdmitGPT.png"
-                  alt="AdmitGPT"
+                  alt="AdmitGPT mascot"
                   width={877}
                   height={872}
                   className="ag-mascot-img"
@@ -147,7 +145,7 @@ export function LandingPage({
           <div className="my-6" aria-hidden />
         </div>
 
-        {/* ===== REAL ODDS — static, honest, the most useful thing on the page ===== */}
+        {/* ===== REAL ODDS ===== */}
         <div className="ag-container">
           <div className="ag-section-head">
             <span className="idx">01</span>
@@ -171,8 +169,8 @@ export function LandingPage({
           </p>
         </div>
 
+        {/* ===== PILLARS ===== */}
         <div className="ag-container">
-          {/* ===== PILLARS — zine sticker cards ===== */}
           <section className="py-16">
             <div className="ag-section-head">
               <span className="idx">02</span>
@@ -183,8 +181,8 @@ export function LandingPage({
             </div>
 
             <div className="grid gap-5 md:grid-cols-3">
-              {pillars.map((p, i) => (
-                <article key={p.title} className="ag-sticker-card">
+              {pillars.map((p) => (
+                <article key={p.title} className="ag-card">
                   <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--color-primary-faint)] text-[var(--color-primary)] border border-[var(--color-primary-line)]">
                     <p.Icon size={20} />
                   </div>
@@ -208,7 +206,7 @@ export function LandingPage({
             </div>
             <div className="ag-steps">
               {steps.map(([t, d], i) => (
-                <div key={t} className="ag-step" style={{ border: "2px solid var(--color-border-strong)", borderRadius: "16px 20px 14px 18px / 18px 14px 20px 16px" }}>
+                <div key={t} className="ag-step">
                   <span className="ag-step-num">{i + 1}</span>
                   <span className="ag-step-txt"><b>{t}.</b> {d}</span>
                 </div>
@@ -216,9 +214,9 @@ export function LandingPage({
             </div>
           </section>
 
-          {/* ===== FOUNDER VOICE — human, not corporate ===== */}
+          {/* ===== FOUNDER VOICE ===== */}
           <section className="py-16">
-            <div className="ag-sticker-card" style={{ padding: "clamp(28px, 5vw, 56px)" }}>
+            <div className="ag-card" style={{ padding: "clamp(28px, 5vw, 56px)" }}>
               <Quote size={28} className="text-[var(--color-primary)] mb-6" />
               <div className="ag-quote">
                 <p>
@@ -232,25 +230,25 @@ export function LandingPage({
           </section>
 
           {/* ===== CTA BAND ===== */}
-          <section className="ag-sticker-card my-12 overflow-hidden p-10 text-center lg:p-16">
+          <section className="ag-card my-12 overflow-hidden p-10 text-center lg:p-16">
             <div className="mx-auto max-w-2xl">
               <h2 className="ag-h1 mb-4">
                 Stop wondering. <span className="ag-underline">Start knowing</span>.
               </h2>
-              <p className="ag-lead mx-auto mb-8" style={{ color: "var(--color-foreground-dim)" }}>
+              <p className="ag-lead mx-auto mb-8">
                 It takes about a minute. Answer a few questions about your grades and
                 activities, and see where you actually stand — for every school on your list.
               </p>
-              <button onClick={onStart} disabled={isLoading} className="btn-zine w-full sm:w-auto">
+              <button onClick={onStart} disabled={isLoading} className="btn btn-primary w-full sm:w-auto">
                 {isLoading ? (
                   <>
-                    <div className="loading-spinner !w-5 !h-5 !border-2 !border-black" />
+                    <div className="loading-spinner !w-5 !h-5 !border-2 !border-[#0b0c0a]" />
                     <span>{loadingMessage}</span>
                   </>
                 ) : (
                   <>
                     <span>Get my free analysis</span>
-                    <ArrowRight size={20} />
+                    <ArrowRight size={18} />
                   </>
                 )}
               </button>
@@ -259,7 +257,7 @@ export function LandingPage({
         </div>
       </main>
 
-      <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface-2)] px-6 py-8">
+      <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-8">
         <div className="ag-container flex flex-col items-center justify-between gap-4 md:flex-row">
           <p className="text-xs text-[var(--color-muted)]">&copy; 2026 AdmitGPT. Built for students, by students.</p>
           <div className="flex items-center gap-6 text-xs">

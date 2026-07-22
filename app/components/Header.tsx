@@ -41,8 +41,8 @@ export default function Header({
                 <Image src="/assets/AdmitGPT.png" alt="AdmitGPT" fill className="object-contain" />
                 <span className="pointer-events-none absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" style={{ boxShadow: "0 0 0 2px var(--color-primary), 0 0 12px rgba(0,254,0,0.5)" }} />
               </div>
-              <span className="text-xl uppercase tracking-tighter ag-wordmark">
-                Admit<span className="accent">GPT</span>
+              <span className="text-xl font-bold tracking-tight text-[var(--color-foreground)]">
+                Admit<span className="text-[var(--color-primary)]">GPT</span>
               </span>
             </button>
 
@@ -53,7 +53,7 @@ export default function Header({
               }`}
             >
               Philosophy
-              <ChevronDown size={14} className={`transition-transform duration-500 ${isWhyOpen ? "rotate-180" : ""}`} />
+              <ChevronDown size={14} className={`transition-transform duration-300 ${isWhyOpen ? "rotate-180" : ""}`} />
             </button>
           </div>
 
@@ -79,7 +79,7 @@ export default function Header({
             {showDownloadPDF && (
               <button
                 onClick={onDownloadPDF}
-                className="btn-zine !px-4 !py-2 !text-[11px]"
+                className="btn btn-secondary !px-4 !py-2 !text-[11px]"
               >
                 Full Audit
               </button>
@@ -101,11 +101,11 @@ export default function Header({
       </nav>
 
       {isWhyOpen && (
-        <div className="animate-fade-in-up relative overflow-hidden border-b-2 border-[var(--color-border-strong)] bg-[var(--color-card)]">
+        <div className="animate-fade-in-up relative overflow-hidden border-b border-[var(--color-border)] bg-[var(--color-card)]">
           <div className="ag-container grid gap-10 py-14 md:grid-cols-12 md:py-18">
             <div className="space-y-6 md:col-span-4">
-                <div className="group relative">
-                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[var(--radius-lg)] border-2 border-[var(--color-border-strong)] bg-[var(--color-surface-2)]">
+              <div className="group relative">
+                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)]">
                   <Image
                     src="/assets/Ziad_Salah_Photo.jpg"
                     alt="Ziad Salah"
@@ -119,7 +119,7 @@ export default function Header({
                 </div>
               </div>
 
-                <div className="ag-sticker-card !border-[var(--color-primary-line)]">
+              <div className="ag-card !border-[var(--color-primary-line)]">
                 <div className="mb-4 flex items-center gap-2 text-[var(--color-primary)]">
                   <Shield size={18} />
                   <span className="text-base font-bold tracking-tight">Verified Student</span>
@@ -135,7 +135,7 @@ export default function Header({
 
             <div className="space-y-8 md:col-span-8 md:space-y-10">
               <div className="space-y-4">
-                <div className="inline-block border border-[var(--color-primary)] px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-[var(--color-primary)]">
+                <div className="ag-pill pill-primary">
                   The Transparency Manifesto
                 </div>
                 <h2 className="text-3xl font-black tracking-tighter text-[var(--color-foreground)] md:text-5xl">
