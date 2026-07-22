@@ -39,18 +39,19 @@ export default function Header({
             >
               <div className="relative h-11 w-11 shrink-0 transition-transform group-hover:scale-105">
                 <Image src="/assets/AdmitGPT.png" alt="AdmitGPT" fill className="object-contain" />
-                <span className="pointer-events-none absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" style={{ boxShadow: "0 0 0 2px var(--color-primary), 0 0 12px rgba(0,254,0,0.5)" }} />
+                <span className="pointer-events-none absolute inset-0 rounded-[var(--radius-wobbly-1)] opacity-0 group-hover:opacity-100 transition-opacity" style={{ boxShadow: "0 0 0 2px var(--color-primary), 0 0 12px rgba(0,254,0,0.5)" }} />
               </div>
-              <span className="text-xl font-bold tracking-tight text-[var(--color-foreground)]">
-                Admit<span className="text-[var(--color-primary)]">GPT</span>
+              <span className="text-xl text-[var(--color-foreground)]" style={{ fontFamily: "var(--font-display)" }}>
+                Admit<span className="text-[var(--color-red-marker)]">GPT</span>
               </span>
             </button>
 
             <button
               onClick={() => setIsWhyOpen(!isWhyOpen)}
-              className={`hidden text-xs font-semibold uppercase tracking-wide transition-colors md:flex md:items-center md:gap-2 ${
-                isWhyOpen ? "text-[var(--color-primary)]" : "text-[var(--color-foreground-dim)] hover:text-[var(--color-foreground)]"
+              className={`hidden text-sm transition-colors md:flex md:items-center md:gap-2 ${
+                isWhyOpen ? "text-[var(--color-red-marker)]" : "text-[var(--color-foreground-dim)] hover:text-[var(--color-foreground)]"
               }`}
+              style={{ fontFamily: "var(--font-hand)" }}
             >
               Philosophy
               <ChevronDown size={14} className={`transition-transform duration-300 ${isWhyOpen ? "rotate-180" : ""}`} />
@@ -62,7 +63,8 @@ export default function Header({
               {showBack && (
                 <button
                   onClick={onBack}
-                  className="text-[11px] font-bold uppercase tracking-widest text-[var(--color-muted)] transition-colors hover:text-[var(--color-foreground)]"
+                  className="text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-foreground)]"
+                  style={{ fontFamily: "var(--font-hand)" }}
                 >
                   Modify Profile
                 </button>
@@ -70,7 +72,8 @@ export default function Header({
 
               <a
                 href="/transparency"
-                className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-[var(--color-muted)] transition-colors hover:text-[var(--color-primary)]"
+                className="flex items-center gap-2 text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-red-marker)]"
+                style={{ fontFamily: "var(--font-hand)" }}
               >
                 <Eye size={14} /> Transparency
               </a>
@@ -79,13 +82,13 @@ export default function Header({
             {showDownloadPDF && (
               <button
                 onClick={onDownloadPDF}
-                className="btn btn-secondary !px-4 !py-2 !text-[11px]"
+                className="btn btn-secondary !px-4 !py-2 !text-sm"
               >
                 Full Audit
               </button>
             )}
 
-            <div className="flex items-center gap-4 border-l border-[var(--color-border)] pl-5">
+            <div className="flex items-center gap-4 border-l-2 border-[var(--color-border)] pl-5">
               <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="text-[var(--color-muted)] transition-colors hover:text-[var(--color-foreground)]" aria-label="GitHub">
                 <Github size={19} />
               </a>
@@ -101,44 +104,44 @@ export default function Header({
       </nav>
 
       {isWhyOpen && (
-        <div className="animate-fade-in-up relative overflow-hidden border-b border-[var(--color-border)] bg-[var(--color-card)]">
+        <div className="animate-fade-in-up relative overflow-hidden border-b-2 border-[var(--color-border)] bg-[var(--color-card)]">
           <div className="ag-container grid gap-10 py-14 md:grid-cols-12 md:py-18">
             <div className="space-y-6 md:col-span-4">
               <div className="group relative">
-                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)]">
+                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[var(--radius-wobbly-2)] border-2 border-[var(--color-border)] bg-[var(--color-surface)]">
                   <Image
                     src="/assets/Ziad_Salah_Photo.jpg"
                     alt="Ziad Salah"
                     fill
                     className="object-cover grayscale transition-all duration-700 hover:grayscale-0"
                   />
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[var(--color-foreground)]/80 to-transparent p-4">
-                    <p className="text-lg font-bold text-[var(--color-foreground)]">Ziad Salah</p>
-                    <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-muted)]">Creator // Student</p>
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                    <p className="text-lg text-white" style={{ fontFamily: "var(--font-display)" }}>Ziad Salah</p>
+                    <p className="text-[10px] uppercase tracking-widest text-white/70" style={{ fontFamily: "var(--font-hand)" }}>Creator // Student</p>
                   </div>
                 </div>
               </div>
 
-              <div className="ag-card !border-[var(--color-primary-line)]">
-                <div className="mb-4 flex items-center gap-2 text-[var(--color-primary)]">
+              <div className="ag-card !border-[var(--color-red-marker)]">
+                <div className="mb-4 flex items-center gap-2 text-[var(--color-red-marker)]">
                   <Shield size={18} />
-                  <span className="text-base font-bold tracking-tight">Verified Student</span>
+                  <span className="text-base tracking-tight" style={{ fontFamily: "var(--font-display)" }}>Verified Student</span>
                 </div>
-                <p className="text-lg font-bold leading-tight text-[var(--color-foreground)]">
-                  &quot;I am like you &mdash; a student.&quot;
+                <p className="text-lg leading-tight text-[var(--color-foreground)]" style={{ fontFamily: "var(--font-display)" }}>
+                  &quot;I am like you — a student.&quot;
                 </p>
-                <p className="mt-2 text-sm italic leading-relaxed text-[var(--color-muted)]">
-                  I built this because I faced the same black box you&apos;re facing now. I wanted the tool I wish I had &mdash; honest, mathematical, and free.
+                <p className="mt-2 text-sm italic leading-relaxed text-[var(--color-muted)]" style={{ fontFamily: "var(--font-hand)" }}>
+                  I built this because I faced the same black box you&apos;re facing now. I wanted the tool I wish I had — honest, mathematical, and free.
                 </p>
               </div>
             </div>
 
             <div className="space-y-8 md:col-span-8 md:space-y-10">
               <div className="space-y-4">
-                <div className="ag-pill pill-primary">
+                <div className="ag-pill">
                   The Transparency Manifesto
                 </div>
-                <h2 className="text-3xl font-black tracking-tighter text-[var(--color-foreground)] md:text-5xl">
+                <h2 className="text-3xl tracking-tighter text-[var(--color-foreground)] md:text-5xl" style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}>
                   No black boxes.<br />
                   <span className="ag-underline">Zero secrets.</span>
                 </h2>
@@ -146,19 +149,19 @@ export default function Header({
 
               <div className="grid gap-8 sm:grid-cols-2">
                 <div className="space-y-4">
-                  <p className="text-base font-medium leading-relaxed text-[var(--color-foreground)] md:text-lg">
+                  <p className="text-base leading-relaxed text-[var(--color-foreground)] md:text-lg" style={{ fontFamily: "var(--font-hand)" }}>
                     Mathematics should never be a secret sold for thousands.
                   </p>
-                  <p className="text-sm leading-relaxed text-[var(--color-muted)]">
+                  <p className="text-sm leading-relaxed text-[var(--color-muted)]" style={{ fontFamily: "var(--font-hand)" }}>
                     While consultants sell &quot;insider magic&quot;, AdmitGPT gives you calculated reality. The logic is open-source and runs entirely in your browser. No data collection, no hidden formulas.
                   </p>
                 </div>
                 <div className="space-y-4">
-                  <p className="text-base font-medium leading-relaxed text-[var(--color-foreground)] md:text-lg">
+                  <p className="text-base leading-relaxed text-[var(--color-foreground)] md:text-lg" style={{ fontFamily: "var(--font-hand)" }}>
                     A systematic strike against information inequality.
                   </p>
-                  <p className="text-sm leading-relaxed text-[var(--color-muted)]">
-                    The admissions industry thrives on fear and ambiguity. By making the math transparent, we return the power to students &mdash; leveling the playing field for everyone.
+                  <p className="text-sm leading-relaxed text-[var(--color-muted)]" style={{ fontFamily: "var(--font-hand)" }}>
+                    The admissions industry thrives on fear and ambiguity. By making the math transparent, we return the power to students — leveling the playing field for everyone.
                   </p>
                 </div>
               </div>

@@ -5,6 +5,46 @@ import Header from "@/app/components/Header";
 import { CONTACT_EMAIL, GITHUB_URL } from "@/lib/siteConfig";
 import { ArrowRight, Mail, Shield, Eye, Lock, GraduationCap, Quote, Sparkles } from "lucide-react";
 
+/* Inline SVG doodles — hand-drawn style */
+function DoodleArrow({ className = "" }: { className?: string }) {
+  return (
+    <svg className={className} width="60" height="24" viewBox="0 0 60 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 14C8 12 20 8 30 10C40 12 48 14 56 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeDasharray="4 3" />
+      <path d="M50 6L58 12L50 18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function DoodleCircle({ className = "" }: { className?: string }) {
+  return (
+    <svg className={className} width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="40" cy="40" rx="35" ry="32" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeDasharray="6 4" transform="rotate(-3 40 40)" />
+    </svg>
+  );
+}
+
+function DoodleUnderline({ className = "" }: { className?: string }) {
+  return (
+    <svg className={className} width="120" height="12" viewBox="0 0 120 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 8C15 4 30 10 45 6C60 2 75 9 90 5C105 1 115 7 118 6" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function DoodleStar({ className = "" }: { className?: string }) {
+  return (
+    <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2L14 9L21 9L15.5 13.5L17.5 21L12 16.5L6.5 21L8.5 13.5L3 9L10 9Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function TapeStrip({ className = "" }: { className?: string }) {
+  return (
+    <div className={`absolute -top-2 left-6 w-16 h-5 bg-[var(--color-yellow-highlight)] border border-black/10 z-10 ${className}`} style={{ transform: "rotate(-2deg)" }} />
+  );
+}
+
 export function LandingPage({
   onStart,
   isLoading,
@@ -59,7 +99,7 @@ export function LandingPage({
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-[var(--color-background)]">
+    <div className="min-h-screen flex flex-col">
       <Header />
 
       <main className="flex-1">
@@ -91,7 +131,7 @@ export function LandingPage({
                 >
                   {isLoading ? (
                     <>
-                      <div className="loading-spinner !w-5 !h-5 !border-2 !border-[#0b0c0a]" />
+                      <div className="loading-spinner !w-5 !h-5 !border-2 !border-[#1A1A1A]" />
                       <span>{loadingMessage}</span>
                     </>
                   ) : (
@@ -107,7 +147,7 @@ export function LandingPage({
                 </button>
               </div>
 
-              <dl className="mt-14 grid max-w-xl grid-cols-3 gap-6 border-t border-[var(--color-border-strong)] pt-8">
+              <dl className="mt-14 grid max-w-xl grid-cols-3 gap-6 border-t-2 border-[var(--color-border)] pt-8">
                 <div>
                   <dt className="ag-figure">1,122+</dt>
                   <dd className="ag-figure-label">Real profiles the engine is calibrated on.</dd>
@@ -123,7 +163,11 @@ export function LandingPage({
               </dl>
             </div>
 
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-5 relative">
+              {/* Doodle decorations around mascot */}
+              <DoodleCircle className="absolute -top-6 -right-4 text-[var(--color-red-marker)] opacity-40 hidden lg:block" />
+              <DoodleStar className="absolute top-10 -left-2 text-[var(--color-primary)] opacity-60 hidden lg:block" />
+
               <div className="ag-mascot mx-auto max-w-sm">
                 <Image
                   src="/assets/AdmitGPT.png"
@@ -181,12 +225,13 @@ export function LandingPage({
             </div>
 
             <div className="grid gap-5 md:grid-cols-3">
-              {pillars.map((p) => (
-                <article key={p.title} className="ag-card">
-                  <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--color-primary-faint)] text-[var(--color-primary)] border border-[var(--color-primary-line)]">
+              {pillars.map((p, i) => (
+                <article key={p.title} className="ag-card relative" style={{ transform: i === 1 ? "rotate(0.5deg)" : i === 2 ? "rotate(-0.5deg)" : undefined }}>
+                  <TapeStrip className={i === 0 ? "" : "hidden"} />
+                  <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-[var(--radius-wobbly-2)] bg-[var(--color-yellow-highlight)] text-[var(--color-foreground)] border-2 border-[var(--color-border)]">
                     <p.Icon size={20} />
                   </div>
-                  <h3 className="text-lg font-bold text-[var(--color-foreground)] mb-2 tracking-tight">{p.title}</h3>
+                  <h3 className="text-lg text-[var(--color-foreground)] mb-2">{p.title}</h3>
                   <p className="text-[var(--text-small)] leading-relaxed text-[var(--color-foreground-dim)]">
                     {p.body}
                   </p>
@@ -206,7 +251,7 @@ export function LandingPage({
             </div>
             <div className="ag-steps">
               {steps.map(([t, d], i) => (
-                <div key={t} className="ag-step">
+                <div key={t} className="ag-step" style={{ transform: i === 1 ? "rotate(0.3deg)" : i === 2 ? "rotate(-0.4deg)" : undefined }}>
                   <span className="ag-step-num">{i + 1}</span>
                   <span className="ag-step-txt"><b>{t}.</b> {d}</span>
                 </div>
@@ -216,8 +261,9 @@ export function LandingPage({
 
           {/* ===== FOUNDER VOICE ===== */}
           <section className="py-16">
-            <div className="ag-card" style={{ padding: "clamp(28px, 5vw, 56px)" }}>
-              <Quote size={28} className="text-[var(--color-primary)] mb-6" />
+            <div className="ag-card relative" style={{ padding: "clamp(28px, 5vw, 56px)" }}>
+              <TapeStrip />
+              <Quote size={28} className="text-[var(--color-red-marker)] mb-6" />
               <div className="ag-quote">
                 <p>
                   I am like you — a student. I built this because I faced the same black box
@@ -230,7 +276,8 @@ export function LandingPage({
           </section>
 
           {/* ===== CTA BAND ===== */}
-          <section className="ag-card my-12 overflow-hidden p-10 text-center lg:p-16">
+          <section className="ag-card my-12 overflow-hidden p-10 text-center lg:p-16 relative" style={{ transform: "rotate(-0.3deg)" }}>
+            <DoodleArrow className="absolute top-6 right-8 text-[var(--color-red-marker)] opacity-40 hidden lg:block" />
             <div className="mx-auto max-w-2xl">
               <h2 className="ag-h1 mb-4">
                 Stop wondering. <span className="ag-underline">Start knowing</span>.
@@ -242,7 +289,7 @@ export function LandingPage({
               <button onClick={onStart} disabled={isLoading} className="btn btn-primary w-full sm:w-auto">
                 {isLoading ? (
                   <>
-                    <div className="loading-spinner !w-5 !h-5 !border-2 !border-[#0b0c0a]" />
+                    <div className="loading-spinner !w-5 !h-5 !border-2 !border-[#1A1A1A]" />
                     <span>{loadingMessage}</span>
                   </>
                 ) : (
@@ -257,7 +304,7 @@ export function LandingPage({
         </div>
       </main>
 
-      <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-8">
+      <footer className="border-t-2 border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-8">
         <div className="ag-container flex flex-col items-center justify-between gap-4 md:flex-row">
           <p className="text-xs text-[var(--color-muted)]">&copy; 2026 AdmitGPT. Built for students, by students.</p>
           <div className="flex items-center gap-6 text-xs">
