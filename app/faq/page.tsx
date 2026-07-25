@@ -6,6 +6,33 @@ export const metadata: Metadata = {
   title: "College Admissions FAQ — Free Guide | AdmitGPT",
   description:
     "Answers to the most common college admissions questions: how chances calculators work, what GPA and SAT scores you need, test-optional policies, early decision strategy, and more — from the creators of the open-source AdmitGPT engine.",
+  keywords: [
+    "college admissions FAQ",
+    "how does college admissions calculator work",
+    "what GPA do you need for college",
+    "SAT score for Ivy League",
+    "Early Decision vs Early Action",
+    "test-optional admissions",
+    "college application tips",
+    "admissions chances calculator",
+    "free college admissions help",
+  ],
+  openGraph: {
+    title: "College Admissions FAQ — Free Guide | AdmitGPT",
+    description:
+      "Answers to the most common college admissions questions: how chances calculators work, what GPA and SAT scores you need, test-optional policies, early decision strategy, and more.",
+    url: "/faq",
+    type: "website",
+    images: [{ url: "/og/faq.png", width: 1200, height: 630, alt: "College Admissions FAQ — Answers to Common Questions" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "College Admissions FAQ — Free Guide | AdmitGPT",
+    description:
+      "Answers to the most common college admissions questions: how chances calculators work, what GPA and SAT scores you need, test-optional policies, early decision strategy, and more.",
+    images: ["/og/faq.png"],
+  },
+  alternates: { canonical: "/faq" },
 };
 
 const faqs = [
@@ -140,6 +167,15 @@ export default function FaqPage() {
             View All Guides
           </Link>
         </div>
+
+        <section style={{ marginTop: 56, paddingTop: 32, borderTop: "1px solid var(--color-border)" }}>
+          <h2 className="tp-h2" style={{ textAlign: "center" }}>Explore more</h2>
+          <ul style={{ fontSize: 15, lineHeight: 2.2, paddingLeft: 20, maxWidth: 500, margin: "16px auto 0" }}>
+            <li>→ <Link href="/best-college-admissions-calculator" style={{ color: "var(--color-primary)" }}>Best College Admissions Calculator 2026</Link></li>
+            <li>→ <Link href="/college-search" style={{ color: "var(--color-primary)" }}>College Search by Acceptance Rate</Link></li>
+            <li>→ <Link href="/college-gpa-requirements" style={{ color: "var(--color-primary)" }}>College GPA Requirements</Link></li>
+          </ul>
+        </section>
       </main>
     </div>
   );

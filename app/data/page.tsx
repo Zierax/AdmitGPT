@@ -21,6 +21,14 @@ export const metadata: Metadata = {
       "6,273 US colleges and 1,122 applicant profiles, free and open. The transparent data behind AdmitGPT's probability engine.",
     url: "/data",
     type: "article",
+    images: [{ url: "/og/data.png", width: 1200, height: 630, alt: "AdmitGPT Admissions Dataset — 6,273 Colleges, 1,122 Profiles" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The AdmitGPT Admissions Dataset — Original Research",
+    description:
+      "6,273 US colleges and 1,122 applicant profiles, free and open. The transparent data behind AdmitGPT's probability engine.",
+    images: ["/og/data.png"],
   },
   alternates: { canonical: "/data" },
 };
@@ -35,18 +43,45 @@ export default function DataPage() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "Article",
-            headline: "The AdmitGPT Admissions Dataset",
+            "@type": "Dataset",
+            "@id": `${SITE_ORIGIN}/data#dataset`,
+            name: "AdmitGPT Admissions Dataset — 6,273 US Colleges & 1,122 Applicant Profiles",
             description:
-              "A free, open dataset of 6,273 US colleges and 1,122 self-reported applicant profiles used to calibrate the AdmitGPT admissions probability engine.",
+              "A free, open dataset of 6,273 US colleges with admission rates, test scores, cost data, and outcomes from IPEDS, plus 1,122 self-reported applicant profiles (2020–2023) used to calibrate the AdmitGPT additive-logistic admissions probability engine (ordinal AUC ~0.74).",
             inLanguage: "en-US",
             datePublished: "2025-08-01",
             dateModified: "2026-05-12",
-            author: { "@id": SITE_ORIGIN + "/#author" },
+            creator: { "@id": SITE_ORIGIN + "/#author" },
             publisher: { "@id": SITE_ORIGIN + "/#organization" },
             mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_ORIGIN}/data` },
             isPartOf: { "@type": "WebSite", "@id": `${SITE_ORIGIN}/#website` },
             about: { "@type": "Thing", name: "College admissions data" },
+            license: "https://opensource.org/licenses/MIT",
+            isAccessibleForFree: true,
+            spatialCoverage: "United States",
+            temporalCoverage: "2017/2023",
+            variableMeasured: [
+              { "@type": "PropertyValue", name: "Admission rate", unitText: "percentage" },
+              { "@type": "PropertyValue", name: "SAT scores", unitText: "score" },
+              { "@type": "PropertyValue", name: "ACT scores", unitText: "score" },
+              { "@type": "PropertyValue", name: "Tuition cost", unitText: "USD" },
+              { "@type": "PropertyValue", name: "Student enrollment", unitText: "count" },
+              { "@type": "PropertyValue", name: "Graduation rate", unitText: "percentage" },
+            ],
+            distribution: [
+              {
+                "@type": "DataDownload",
+                encodingFormat: "application/json",
+                contentUrl: `${SITE_ORIGIN}/data/collegesdata.json",
+                name: "collegesdata.json — 6,273 US colleges",
+              },
+              {
+                "@type": "DataDownload",
+                encodingFormat: "application/json",
+                contentUrl: `${SITE_ORIGIN}/data/studentsdata.json",
+                name: "studentsdata.json — 1,122 applicant profiles",
+              },
+            ],
             citation: [
               { "@type": "CreativeWork", name: "IPEDS, National Center for Education Statistics", url: "https://nces.ed.gov/ipeds" },
               { "@type": "CreativeWork", name: "Common Data Set Initiative", url: "https://commondataset.org" },
@@ -214,6 +249,16 @@ export default function DataPage() {
             <li>
               <Link href="/guide/what-gpa-do-you-need-for-college" style={{ color: "var(--color-primary)" }}>
                 What GPA Do You Need for College?
+              </Link>
+            </li>
+            <li>
+              <Link href="/college-search" style={{ color: "var(--color-primary)" }}>
+                College Search by Acceptance Rate
+              </Link>
+            </li>
+            <li>
+              <Link href="/best-college-admissions-calculator" style={{ color: "var(--color-primary)" }}>
+                Best College Admissions Calculator 2026
               </Link>
             </li>
           </ul>

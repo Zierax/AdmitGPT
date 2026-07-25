@@ -82,12 +82,19 @@ export default function AcceptanceRatesGuide() {
           and development cases, so Early Decision (2&ndash;4x higher) and hooks dramatically
           reshape your real odds versus the headline number.
         </QuickAnswer>
-        <p className="tp-lead">
-          Acceptance rates are the most visible — and most misunderstood — number in college
-          admissions. A school's published rate blends preferred applicants (athletes, legacies,
-          development cases) with the general pool. Here is the data for the most-selective US
-          universities and what it means for your actual chances.
-        </p>
+          <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
+            Acceptance rates are the most visible — and most misunderstood — number in college
+            admissions. A school&apos;s published rate blends preferred applicants (athletes, legacies,
+            development cases) with the general pool. See our{" "}
+            <Link href="/college-search" style={{ color: "var(--color-primary)" }}>
+              full college search tool
+            </Link>{" "}
+            for 1,910 schools ranked by selectivity, or use the{" "}
+            <Link href="/best-college-admissions-calculator" style={{ color: "var(--color-primary)" }}>
+              best college admissions calculator
+            </Link>{" "}
+            to see your personalized odds at any school.
+          </p>
 
         <section className="tp-section">
           <h2 className="tp-h2">Ivy League acceptance rates (Class of 2029)</h2>
@@ -151,6 +158,17 @@ export default function AcceptanceRatesGuide() {
             applicants overall (more competitive than many Ivies), UC Berkeley ~11%, University of
             Michigan ~18%, UNC Chapel Hill ~17%, UVA ~16%, University of Texas ~29%. Out-of-state
             acceptance rates at these schools are often significantly lower than in-state rates.
+          </p>
+        </section>
+
+        <section className="tp-section">
+          <h2 className="tp-h2">College GPA requirements</h2>
+          <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
+            GPA requirements vary by selectivity tier. See our complete{" "}
+            <Link href="/college-gpa-requirements" style={{ color: "var(--color-primary)" }}>
+              college GPA requirements guide
+            </Link>{" "}
+            for data-backed GPA ranges from Ivy League (3.9+) to open admission schools.
           </p>
         </section>
 

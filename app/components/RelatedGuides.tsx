@@ -19,6 +19,12 @@ const allGuides: Record<string, { slug: string; title: string }> = {
   "college-interview-tips": { slug: "college-interview-tips", title: "College Interview Tips" },
   "community-college-vs-university": { slug: "community-college-vs-university", title: "Community College vs University" },
   "harvard-vs-stanford-vs-mit": { slug: "harvard-vs-stanford-vs-mit", title: "Harvard vs Stanford vs MIT" },
+  "college-waitlist-strategy": { slug: "college-waitlist-strategy", title: "College Waitlist Strategy" },
+  "scholarship-application-tips": { slug: "scholarship-application-tips", title: "Scholarship Application Tips" },
+  "transfer-admissions-guide": { slug: "transfer-admissions-guide", title: "Transfer Admissions Guide" },
+  "best-college-admissions-calculator": { slug: "best-college-admissions-calculator", title: "Best College Admissions Calculator 2026" },
+  "college-search": { slug: "college-search", title: "College Search by Acceptance Rate" },
+  "college-gpa-requirements": { slug: "college-gpa-requirements", title: "College GPA Requirements" },
 };
 
 // Topically adjacent guides shown as "Further Reading" for each page.
@@ -26,10 +32,10 @@ const relatedBySlug: Record<string, string[]> = {
   "ivy-league-chances": ["how-to-get-into-ivy-league", "good-sat-score-for-ivy-league", "what-gpa-do-you-need-for-college", "harvard-vs-stanford-vs-mit", "early-decision-vs-early-action"],
   "how-to-get-into-ivy-league": ["ivy-league-chances", "good-sat-score-for-ivy-league", "what-gpa-do-you-need-for-college", "early-decision-vs-early-action", "evaluate-extracurriculars"],
   "early-decision-vs-early-action": ["ivy-league-chances", "how-to-get-into-ivy-league", "college-application-deadlines-2026", "test-optional-admissions", "college-acceptance-rates-2026"],
-  "what-gpa-do-you-need-for-college": ["good-sat-score-for-ivy-league", "evaluate-extracurriculars", "ivy-league-chances", "college-rankings-explained", "how-to-get-into-ivy-league"],
+  "what-gpa-do-you-need-for-college": ["good-sat-score-for-ivy-league", "evaluate-extracurriculars", "ivy-league-chances", "college-gpa-requirements", "college-search"],
   "good-sat-score-for-ivy-league": ["what-gpa-do-you-need-for-college", "ivy-league-chances", "test-optional-admissions", "how-to-get-into-ivy-league", "harvard-vs-stanford-vs-mit"],
   "college-application-essay-tips": ["college-application-checklist", "how-to-get-into-ivy-league", "college-interview-tips", "evaluate-extracurriculars", "early-decision-vs-early-action"],
-  "college-acceptance-rates-2026": ["ivy-league-chances", "harvard-vs-stanford-vs-mit", "college-rankings-explained", "early-decision-vs-early-action", "what-gpa-do-you-need-for-college"],
+  "college-acceptance-rates-2026": ["ivy-league-chances", "harvard-vs-stanford-vs-mit", "college-rankings-explained", "college-search", "best-college-admissions-calculator"],
   "financial-aid-explained": ["international-student-admissions", "college-application-checklist", "how-to-choose-a-college", "early-decision-vs-early-action", "community-college-vs-university"],
   "how-to-choose-a-college": ["college-rankings-explained", "community-college-vs-university", "financial-aid-explained", "harvard-vs-stanford-vs-mit", "what-gpa-do-you-need-for-college"],
   "college-rankings-explained": ["how-to-choose-a-college", "college-acceptance-rates-2026", "harvard-vs-stanford-vs-mit", "community-college-vs-university", "ivy-league-chances"],
@@ -40,7 +46,13 @@ const relatedBySlug: Record<string, string[]> = {
   "college-application-checklist": ["college-application-deadlines-2026", "college-application-essay-tips", "college-interview-tips", "financial-aid-explained", "evaluate-extracurriculars"],
   "college-interview-tips": ["college-application-essay-tips", "college-application-checklist", "how-to-get-into-ivy-league", "evaluate-extracurriculars", "college-application-deadlines-2026"],
   "community-college-vs-university": ["how-to-choose-a-college", "college-rankings-explained", "financial-aid-explained", "college-acceptance-rates-2026", "international-student-admissions"],
-  "harvard-vs-stanford-vs-mit": ["ivy-league-chances", "college-acceptance-rates-2026", "good-sat-score-for-ivy-league", "how-to-get-into-ivy-league", "college-rankings-explained"],
+  "harvard-vs-stanford-vs-mit": ["ivy-league-chances", "college-acceptance-rates-2026", "good-sat-score-for-ivy-league", "how-to-get-into-ivy-league", "best-college-admissions-calculator"],
+  "college-waitlist-strategy": ["early-decision-vs-early-action", "college-acceptance-rates-2026", "ivy-league-chances", "how-to-get-into-ivy-league", "financial-aid-explained"],
+  "scholarship-application-tips": ["financial-aid-explained", "what-gpa-do-you-need-for-college", "good-sat-score-for-ivy-league", "college-application-checklist", "community-college-vs-university"],
+  "transfer-admissions-guide": ["community-college-vs-university", "financial-aid-explained", "what-gpa-do-you-need-for-college", "how-to-choose-a-college", "college-application-checklist"],
+  "best-college-admissions-calculator": ["college-acceptance-rates-2026", "what-gpa-do-you-need-for-college", "ivy-league-chances", "college-rankings-explained", "college-search"],
+  "college-search": ["college-acceptance-rates-2026", "college-gpa-requirements", "ivy-league-chances", "how-to-choose-a-college", "best-college-admissions-calculator"],
+  "college-gpa-requirements": ["good-sat-score-for-ivy-league", "what-gpa-do-you-need-for-college", "test-optional-admissions", "ivy-league-chances", "college-search"],
 };
 
 export function RelatedGuides({ current }: { current: string }) {

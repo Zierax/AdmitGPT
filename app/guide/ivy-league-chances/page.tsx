@@ -121,7 +121,11 @@ export default function IvyLeagueGuide() {
                 academic strength
               </Link>
             </strong>,
-            <strong>extracurricular spike</strong>, and <strong>fit</strong>.
+            <strong>extracurricular spike</strong>, and <strong>fit</strong>. See our{" "}
+            <Link href="/methodology" style={{ color: "var(--color-primary)" }}>
+              methodology page
+            </Link>{" "}
+            for the complete model explanation.
           </p>
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
             Academically, your SAT and GPA are z-scored against each college&rsquo;s own distribution

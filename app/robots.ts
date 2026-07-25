@@ -17,6 +17,8 @@ const AI_SEARCH_BOTS = [
   "Perplexity-User",
   "Google-Extended",
   "Applebot-Extended",
+  "Bytespider",
+  "Amazonbot",
 ];
 
 export default function robots(): MetadataRoute.Robots {
@@ -37,6 +39,12 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
         disallow,
       })),
+      // Allow Google specifically for rich results and AI Overviews
+      {
+        userAgent: "Googlebot",
+        allow: "/",
+        disallow,
+      },
     ],
     sitemap: `${SITE_ORIGIN}/sitemap.xml`,
     host: SITE_ORIGIN,

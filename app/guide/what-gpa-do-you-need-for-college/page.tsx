@@ -159,6 +159,18 @@ export default function GpaCollegeGuide() {
         </section>
 
         <section className="tp-section">
+          <h2 className="tp-h2">Explore colleges by GPA and selectivity</h2>
+          <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
+            See how your GPA compares across every selectivity tier:
+          </p>
+          <ul style={{ fontSize: 15, lineHeight: 2, paddingLeft: 20, listStyle: "none" }}>
+            <li>→ <Link href="/college-gpa-requirements" style={{ color: "var(--color-primary)" }}>College GPA Requirements by Selectivity Tier</Link> — data-backed GPA ranges from Ivy League to open admission</li>
+            <li>→ <Link href="/college-search" style={{ color: "var(--color-primary)" }}>College Search by Acceptance Rate</Link> — 1,910 schools ranked by selectivity with SAT/ACT and tuition</li>
+            <li>→ <Link href="/best-college-admissions-calculator" style={{ color: "var(--color-primary)" }}>Best College Admissions Calculator 2026</Link> — compare AdmitGPT with other free calculators</li>
+          </ul>
+        </section>
+
+        <section className="tp-section">
           <h2 className="tp-h2">Get your personalized GPA-based probability</h2>
           <p className="ag-muted" style={{ fontSize: 15, lineHeight: 1.75 }}>
             Enter your GPA, course load, and test scores into the AdmitGPT calculator for a

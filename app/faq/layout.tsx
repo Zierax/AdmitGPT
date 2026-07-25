@@ -21,6 +21,11 @@ export const metadata: Metadata = {
     url: "/faq",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "College Admissions FAQ — Free Guide | AdmitGPT",
+    description: "Everything you need to know about college admissions chances, GPA and SAT requirements, early decision strategy, and the AdmitGPT open-source engine.",
+  },
   alternates: { canonical: "/faq" },
 };
 

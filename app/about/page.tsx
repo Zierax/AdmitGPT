@@ -14,6 +14,8 @@ export const metadata: Metadata = {
     "college admissions calculator disclaimer",
     "Ziad Salah admissions",
     "open source college counselor",
+    "college admissions probability engine",
+    "additive-logistic admissions model",
   ],
   openGraph: {
     title: "About AdmitGPT — Team, Methodology & Editorial Standards",
@@ -21,6 +23,14 @@ export const metadata: Metadata = {
       "A transparent, open-source college admissions engine. Meet the author, the methodology, and our editorial standards.",
     url: "/about",
     type: "profile",
+    images: [{ url: "/og/about.png", width: 1200, height: 630, alt: "About AdmitGPT — Team, Methodology & Editorial Standards" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About AdmitGPT — Team, Methodology & Editorial Standards",
+    description:
+      "A transparent, open-source college admissions engine. Meet the author, the methodology, and our editorial standards.",
+    images: ["/og/about.png"],
   },
   alternates: { canonical: "/about" },
 };
@@ -31,15 +41,54 @@ export default function AboutPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "AboutPage",
-            name: "About AdmitGPT",
-            url: `${SITE_ORIGIN}/about`,
-            mainEntity: { "@id": `${SITE_ORIGIN}/#organization` },
-            about: { "@id": `${SITE_ORIGIN}/#author` },
-            inLanguage: "en-US",
-          }),
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "AboutPage",
+              name: "About AdmitGPT",
+              url: `${SITE_ORIGIN}/about`,
+              mainEntity: { "@id": `${SITE_ORIGIN}/#organization` },
+              about: { "@id": `${SITE_ORIGIN}/#author` },
+              inLanguage: "en-US",
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "@id": `${SITE_ORIGIN}/#author`,
+              name: "Ziad Salah",
+              alternateName: "Zierax",
+              url: GITHUB_URL,
+              image: `${SITE_ORIGIN}/assets/Ziad_Salah_Photo.jpg`,
+              jobTitle: "Creator & Maintainer, AdmitGPT",
+              description:
+                "Creator of AdmitGPT, an open-source, transparent college admissions probability engine. Writes data-driven admissions guides grounded in published research and real applicant data.",
+              knowsAbout: [
+                "College admissions",
+                "Ivy League admissions",
+                "Admissions statistics",
+                "Standardized testing (SAT/ACT)",
+                "Financial aid",
+                "Machine learning for admissions modeling",
+                "Additive-logistic models",
+                "Educational data science",
+              ],
+              sameAs: [
+                "https://github.com/Zierax/AdmitGPT",
+                "https://instagram.com/z14d.d",
+                "https://www.linkedin.com/in/z14d",
+                "https://www.wikidata.org/wiki/Q140676440",
+              ],
+              alumniOf: {
+                "@type": "EducationalOrganization",
+                name: "AdmitGPT",
+              },
+              worksFor: {
+                "@type": "Organization",
+                name: "AdmitGPT",
+                url: SITE_ORIGIN,
+              },
+            },
+          ]),
         }}
       />
       <main className="tp-wrap">

@@ -93,10 +93,14 @@ export function HomeSEO() {
           <li>→ <Link href="/guide/college-acceptance-rates-2026" style={{ color: "var(--color-primary)" }}>College Acceptance Rates 2026</Link></li>
           <li>→ <Link href="/guide/how-to-choose-a-college" style={{ color: "var(--color-primary)" }}>How to Choose a College</Link></li>
           <li>→ <Link href="/guide/college-rankings-explained" style={{ color: "var(--color-primary)" }}>College Rankings Explained</Link></li>
+          <li>→ <Link href="/methodology" style={{ color: "var(--color-primary)" }}>Methodology — How the Model Works</Link></li>
           <li>→ <Link href="/guide/international-student-admissions" style={{ color: "var(--color-primary)" }}>International Student US Admissions</Link></li>
           <li>→ <Link href="/guide/test-optional-admissions" style={{ color: "var(--color-primary)" }}>Does Test-Optional Hurt Your Chances?</Link></li>
           <li>→ <Link href="/guide/evaluate-extracurriculars" style={{ color: "var(--color-primary)" }}>How Colleges Score Your Extracurriculars</Link></li>
           <li>→ <Link href="/faq" style={{ color: "var(--color-primary)" }}>College Admissions FAQ</Link></li>
+          <li>→ <Link href="/best-college-admissions-calculator" style={{ color: "var(--color-primary)" }}>Best College Admissions Calculator 2026</Link></li>
+          <li>→ <Link href="/college-search" style={{ color: "var(--color-primary)" }}>College Search by Acceptance Rate</Link></li>
+          <li>→ <Link href="/college-gpa-requirements" style={{ color: "var(--color-primary)" }}>College GPA Requirements by Selectivity</Link></li>
         </ul>
 
         <h3

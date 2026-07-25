@@ -52,3 +52,6 @@ next-env.d.ts
 _review/
 # raw College Scorecard source (large; regenerate via scripts/build_colleges.mjs)
 Most-Recent-Cohorts-Institution.csv
+
+# outreach campaign data (private)
+thingsdontmakethispublic/

@@ -19,12 +19,14 @@ export const metadata: Metadata = {
       "Every formula, weight, and limitation behind our open-source admissions engine. No black boxes.",
     url: "/transparency",
     type: "article",
+    images: [{ url: "/og/transparency.png", width: 1200, height: 630, alt: "Transparency & Methodology — Every Formula Published" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "How AdmitGPT Works — The Exact Admissions Math",
     description:
       "Every formula, weight, and limitation behind our open-source admissions engine.",
+    images: ["/og/transparency.png"],
   },
 };
 

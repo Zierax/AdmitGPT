@@ -20,6 +20,9 @@ const GUIDE_SLUGS = [
   "college-interview-tips",
   "community-college-vs-university",
   "harvard-vs-stanford-vs-mit",
+  "college-waitlist-strategy",
+  "scholarship-application-tips",
+  "transfer-admissions-guide",
 ];
 
 export const dynamic = "force-static";
@@ -30,10 +33,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: SITE_ORIGIN, lastModified: now, changeFrequency: "weekly", priority: 1 },
     { url: `${SITE_ORIGIN}/guide`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${SITE_ORIGIN}/faq`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${SITE_ORIGIN}/transparency`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${SITE_ORIGIN}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${SITE_ORIGIN}/data`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${SITE_ORIGIN}/faq`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${SITE_ORIGIN}/transparency`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_ORIGIN}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${SITE_ORIGIN}/methodology`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_ORIGIN}/data`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_ORIGIN}/college-data-explorer`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${SITE_ORIGIN}/best-college-admissions-calculator`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${SITE_ORIGIN}/college-search`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${SITE_ORIGIN}/college-gpa-requirements`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
   ];
 
   const guideRoutes: MetadataRoute.Sitemap = GUIDE_SLUGS.map((slug) => ({

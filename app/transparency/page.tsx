@@ -246,7 +246,7 @@ International &amp; weak academics &rarr; &times;1.25 boost on spike weight
         <div style={{ marginTop: 56, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
           <Link href="/" className="btn btn-primary">Try AdmitGPT</Link>
           <Link href="/verify" className="btn btn-secondary">Verify a profile</Link>
-          <a href="https://github.com/ChillingZierax/AdmitGPT" className="btn btn-secondary" target="_blank" rel="noreferrer">Read the source</a>
+          <a href="https://github.com/Zierax/AdmitGPT" className="btn btn-secondary" target="_blank" rel="noreferrer">Read the source</a>
         </div>
 
         <footer className="ag-footer" style={{ border: 0, padding: '40px 0 0' }}>

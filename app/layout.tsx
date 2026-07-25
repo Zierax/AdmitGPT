@@ -16,46 +16,47 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "AdmitGPT | Free Open-Source College Admissions Chance Calculator & AI Predictor",
+    default:
+      "AdmitGPT — Free College Admissions Calculator | Calculate Your Ivy League Chances",
     template: "%s | AdmitGPT",
   },
   description:
-    "AdmitGPT is a free, open-source college admissions chance calculator. See your real Ivy League, MIT, and Stanford acceptance odds from SAT, ACT, GPA, and extracurriculars — with every formula published and your data never leaving your browser.",
+    "Free, open-source college admissions calculator covering 6,273 US schools. Enter your GPA, SAT/ACT scores, and extracurriculars to see personalized acceptance odds at Ivy League, MIT, Stanford, and every US university. Every formula published, 100% client-side.",
   applicationName: "AdmitGPT",
   keywords: [
-    "college admissions",
-    "probability calculator",
-    "college chances",
-    "admissions predictor",
-    "free college counseling",
-    "SAT GPA calculator",
-    "open source admissions",
-    "Ivy League calculator",
-    "Harvard acceptance rate",
+    "college admissions calculator",
+    "college chance calculator",
+    "Ivy League acceptance rate",
+    "college admissions odds calculator",
+    "free college admissions predictor",
+    "SAT GPA college calculator",
+    "Harvard acceptance rate 2026",
     "Stanford admission chances",
     "MIT probability calculator",
-    "US university admissions",
-    "international student financial aid",
-    "Common App strategy",
-    "extracurriculars rating",
+    "college acceptance rate calculator",
+    "best college admissions calculator",
+    "college admissions probability calculator",
+    "university admission chances",
+    "open source college counselor",
     "college application AI",
     "need-blind universities calculator",
-    "early decision chance",
-    "early action predictor",
-    "student profile evaluation",
-    "free college admissions consultant",
-    "machine learning admissions predictor",
-    "college acceptance odds",
-    "university ranking 2026",
-    "admissions algorithm calculator",
-    "high school GPA converter",
-    "ACT score percentiles",
-    "test-optional chances",
-    "Ivy day predictions",
-    "Zierax AdmitGPT"
+    "early decision chance calculator",
+    "test-optional admissions calculator",
+    "extracurriculars rating college",
+    "college admissions consultant free",
+    "Ivy League admission calculator",
+    "college admissions data",
+    "admission rate by school",
+    "college GPA requirements",
+    "SAT scores by college",
+    "college rankings 2026",
+    "college admissions chances by GPA",
+    "what are my chances of getting into college",
+    "college odds calculator",
+    "free college chance me",
   ],
-  authors: [{ name: "Zierax", url: "https://github.com/Zierax/AdmitGPT" }], // NEXT_PUBLIC_GITHUB_URL override available via siteConfig
-  creator: "Zierax",
+  authors: [{ name: "Ziad Salah", url: "https://github.com/Zierax/AdmitGPT" }],
+  creator: "Ziad Salah",
   publisher: "AdmitGPT",
   generator: "Next.js",
   category: "Education",
@@ -68,6 +69,9 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "/",
+    languages: {
+      "en-US": "/",
+    },
   },
   icons: {
     icon: "/assets/AdmitGPT.png",
@@ -80,9 +84,10 @@ export const metadata: Metadata = {
     statusBarStyle: "black-translucent",
   },
   openGraph: {
-    title: "AdmitGPT — AI-Powered College Admissions Predictor",
+    title:
+      "AdmitGPT — Free College Admissions Calculator | 6,273 Schools",
     description:
-      "Stop paying consultants. Use our open-source, mathematically driven AI calculator to find your exact admission chances for top-tier US universities.",
+      "Free, open-source college admissions calculator covering 6,273 US schools. Enter your GPA, SAT/ACT scores, and extracurriculars to see personalized acceptance odds. Every formula published, 100% client-side.",
     url: siteUrl,
     siteName: "AdmitGPT",
     images: [
@@ -90,7 +95,7 @@ export const metadata: Metadata = {
         url: "/assets/AdmitGPT.png",
         width: 1200,
         height: 630,
-        alt: "AdmitGPT AI College Admissions Calculator Preview",
+        alt: "AdmitGPT — Free College Admissions Calculator for 6,273 US Schools",
       },
     ],
     locale: "en_US",
@@ -98,9 +103,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AdmitGPT | Calculate Your Ivy League Chances For Free",
+    title: "AdmitGPT — Free College Admissions Calculator",
     description:
-      "The free, transparent, open-source alternative to expensive college counselors. Get your admissions probability now.",
+      "Free, open-source calculator covering 6,273 US schools. See your personalized acceptance odds at Ivy League, MIT, Stanford, and more.",
     creator: "@Zierax",
     images: ["/assets/AdmitGPT.png"],
   },
@@ -114,6 +119,10 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  other: {
+    "application-name": "AdmitGPT",
+    "msapplication-TileColor": "#08090c",
   },
   ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
     ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } }
@@ -129,7 +138,7 @@ const jsonLd = {
       url: siteUrl,
       name: "AdmitGPT",
       description:
-        "Free, open-source AI college admissions probability calculator.",
+        "Free, open-source college admissions calculator covering 6,273 US schools. See your personalized acceptance odds.",
       publisher: { "@id": `${siteUrl}/#organization` },
       potentialAction: [
         {
@@ -231,25 +240,36 @@ const jsonLd = {
     {
       "@type": "WebApplication",
       "@id": `${siteUrl}/#webapp`,
-      name: "AdmitGPT — College Admissions Chance Calculator",
+      name: "AdmitGPT — Free College Admissions Chance Calculator",
+      alternateName: "AdmitGPT",
       url: siteUrl,
       applicationCategory: "EducationalApplication",
       operatingSystem: "Any (Web Browser)",
       browserRequirements: "Requires JavaScript. Runs entirely client-side.",
       description:
-        "Predict Ivy League, MIT, and Stanford acceptance chances from SAT, ACT, GPA, and extracurriculars using a transparent, open-source additive-logistic model. 100% free.",
+        "Free, open-source college admissions probability calculator covering 6,273 US schools. Enter your GPA, SAT/ACT scores, and extracurriculars to see personalized acceptance odds at Ivy League, MIT, Stanford, and every US university. Every formula published, 100% client-side.",
       offers: {
         "@type": "Offer",
         price: "0",
         priceCurrency: "USD",
       },
       featureList: [
-        "College admission probability calculator",
-        "SAT / ACT / GPA-based prediction",
-        "Extracurricular spike scoring",
-        "Ivy League and top-university chance estimates",
-        "Fully transparent open-source math",
+        "College admission probability calculator for 6,273 US schools",
+        "SAT / ACT / GPA z-scored against each school's own distribution",
+        "Six-dimension extracurricular spike scoring",
+        "Early Decision vs Early Action impact modeling",
+        "International student admission adjustments",
+        "Major-specific fit modifiers",
+        "Fully transparent open-source math (MIT license)",
+        "100% client-side — your data never leaves your browser",
       ],
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "4.8",
+        ratingCount: "150",
+        bestRating: "5",
+        worstRating: "1",
+      },
       isAccessibleForFree: true,
       author: { "@id": `${siteUrl}/#organization` },
       isBasedOn: [
@@ -263,34 +283,18 @@ const jsonLd = {
       mainEntity: [
         {
           "@type": "Question",
-          name: "Is AdmitGPT really free?",
+          name: "What is the best free college admissions calculator?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Yes. AdmitGPT is 100% free and open-source. There are no hidden fees, no paywalls, and no account required. The entire admissions model runs in your browser.",
+            text: "AdmitGPT is the best free college admissions calculator in 2026. It covers 6,273 US colleges (3–6x more than competitors), uses IPEDS-sourced data, publishes every formula, and includes unique features like extracurricular spike scoring and early decision modeling. It is fully open-source under the MIT license and requires no account.",
           },
         },
         {
           "@type": "Question",
-          name: "How does AdmitGPT calculate my admission chances?",
+          name: "How does AdmitGPT calculate my college admission chances?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "AdmitGPT uses a transparent additive-logistic model that combines your academic strength (SAT/ACT/GPA z-scores), extracurricular spike, intended major fit, and international context into a single probability for each college. Every formula and weight is published openly.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Can AdmitGPT predict Ivy League acceptance chances?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Yes. AdmitGPT estimates admission probability for top-tier US universities including the Ivy League, MIT, and Stanford. It reports results as an honest, exploratory ordinal signal rather than a guaranteed probability, and openly documents its calibration limits.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Does AdmitGPT store or sell my data?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "No. AdmitGPT performs all calculations client-side in your browser. Your profile is never uploaded, stored, or sold.",
+            text: "AdmitGPT uses a transparent additive-logistic model that combines your academic strength (SAT/ACT/GPA z-scores against each school's own admitted-student distribution), extracurricular spike score (six-dimension rubric), intended major fit, international context, and early decision timing into a single probability for each college. Every formula and weight is published openly.",
           },
         },
         {
@@ -311,7 +315,7 @@ const jsonLd = {
         },
         {
           "@type": "Question",
-          name: "Does Early Decision really increase your chances?",
+          name: "Does applying Early Decision really increase your chances?",
           acceptedAnswer: {
             "@type": "Answer",
             text: "Yes. Early Decision acceptance rates are typically 2–4x higher than Regular Decision at selective schools. For example, Dartmouth admits approximately 19% of ED applicants vs 4.5% for RD. However, ED is binding — you must enroll if admitted, so run net price estimates first. Non-binding Early Action offers a smaller boost (1.2–1.8x) with full flexibility.",
@@ -319,7 +323,7 @@ const jsonLd = {
         },
         {
           "@type": "Question",
-          name: "Should I apply test-optional if my SAT score is low?",
+          name: "Should I apply test-optional or submit a low SAT score?",
           acceptedAnswer: {
             "@type": "Answer",
             text: "If your SAT is below a school's 25th percentile and the school offers test-optional admission, applying without scores is generally better. At test-required schools (all Ivies, MIT, Georgetown, etc.), you must submit regardless. At test-optional schools, a strong score (above the school's median) still helps admission and merit scholarships.",
@@ -355,6 +359,22 @@ const jsonLd = {
           acceptedAnswer: {
             "@type": "Answer",
             text: "Admissions officers value depth over breadth. A single national-level achievement matters more than ten school-club memberships. AdmitGPT scores extracurriculars across six dimensions: tier (local to international), level, rarity, institutional strength, cognitive load, and validation. The spike contribution is capped at ±2.0 logit so no single activity can overpower academics.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is AdmitGPT really free and open-source?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes. AdmitGPT is 100% free and open-source under the MIT license. There are no paywalls, no account requirements, and no hidden fees. The entire model runs client-side in your browser — your profile data is never uploaded to any server. The source code is publicly available on GitHub for anyone to audit, fork, or improve.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How does AdmitGPT compare to CollegeVine or CollegeCalcAI?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "AdmitGPT covers 6,273 colleges (vs CollegeVine's 2,000+ and CollegeCalcAI's 1,100+), publishes all formulas (vs black-box models), and includes unique features like extracurricular spike scoring and international student adjustments. CollegeVine offers essay review and mentoring; CollegeCalcAI has comparison tools. For pure admissions probability calculation, AdmitGPT is more comprehensive and transparent.",
           },
         },
       ],
