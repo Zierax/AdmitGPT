@@ -78,8 +78,11 @@ verbatim in `public/data/` so the engine is fully reproducible offline.
 | Lee, Kizilcec & Joachims (2023) | Preprint | `https://arxiv.org/abs/2302.03610` | "Evaluating a Learned Admission-Prediction Model as a Replacement for Standardized Tests in College Admissions." |
 
 **Provenance of reported metrics.** All AUC / Brier figures and decile-reliability
-tables in the paper and docs are computed by `scripts/evaluate_full.ts` (full
-engine, n = 11,685 pairs) and `scripts/calibration.ts` (academic-only, n =
-11,658 pairs) directly against `public/data/studentsdata.json`. No external or
-simulated data is used for those numbers.
+tables in the documentation are computed by `scripts/evaluate_full.ts` (full
+engine, n = 11,685 pairs), `scripts/calibration.ts` (academic-only, n =
+11,658 pairs), and `scripts/evaluate_heldout.ts` (5-fold stratified CV with baseline
+comparisons) directly against `public/data/studentsdata.json`. The AI Bridge
+benchmark (`scripts/ai_bridge_benchmark.ts`) uses synthetic data to demonstrate
+the anti-hallucination property. No external or simulated data is used for
+the core engine evaluation numbers.
 

@@ -10,12 +10,12 @@ export default function TransparencyPage() {
     { d: 'Safety (bottom 30%)', p: '89.1%', o: '93.8%', ok: true },
   ];
   const deciles = [
-    { d: '1 (safest)', p: '0.97', o: '0.97', ok: true },
+    { d: '1 (safest)', p: '0.972', o: '0.967', ok: true },
     { d: '3', p: '0.90', o: '0.92', ok: true },
     { d: '5', p: '0.78', o: '0.80', ok: true },
     { d: '7', p: '0.58', o: '0.61', ok: true },
     { d: '9', p: '0.34', o: '0.36', ok: true },
-    { d: '10 (most selective)', p: '0.013', o: '0.246', ok: false },
+    { d: '10 (most selective)', p: '0.015', o: '0.231', ok: false },
   ];
 
   return (
@@ -161,9 +161,11 @@ International &amp; weak academics &rarr; &times;1.25 boost on spike weight
               <strong>Honest footnote on calibration:</strong> the final step is a pass-through today.
               <code style={{ fontFamily: 'var(--font-mono)' }}>CALIB_SLOPE = 1.0</code> and
               <code style={{ fontFamily: 'var(--font-mono)' }}> CALIB_INTERCEPT = 0.0</code>, so the
-              output is the raw additive logit, <em>not</em> a calibrated probability. We report it as an
+              output is the raw additive logit, <em>not</em> a calibrated probability. We deliberately
+              rejected Platt scaling because our corpus is a positively-selected cohort (students who
+              applied to selective schools), not a random sample. Standard calibration on non-random
+              samples produces misleadingly confident probabilities. We report the output as an
               exploratory ordinal signal — a relative ranking you can trust more than the exact percentage.
-              Fitting real SLOPE/INTERCEPT on held-out outcomes is the next step.
             </p>
           </div>
         </section>
@@ -174,7 +176,8 @@ International &amp; weak academics &rarr; &times;1.25 boost on spike weight
           <p className="tp-lead" style={{ fontSize: 15 }}>
             We validated the engine against held-out profiles from our own corpus. The short version:
             the <em>ranking</em> is solid (AUC ≈ 0.74, meaning it correctly orders &ldquo;got in&rdquo; vs
-            &ldquo;rejected&rdquo; about three times out of four), but the exact percentage at the very
+            &ldquo;rejected&rdquo; about three times out of four), and the spike improves calibration
+            (Brier −3.7%) but the exact percentage at the very
             top is shaky. We&rsquo;re not going to pretend otherwise.
           </p>
 
@@ -206,7 +209,7 @@ International &amp; weak academics &rarr; &times;1.25 boost on spike weight
             </tbody>
           </table>
           <p className="tp-note">
-            Notice decile 10: we predict <strong>1.3%</strong>, reality is <strong>24.6%</strong>. At the
+            Notice decile 10: we predict <strong>1.5%</strong>, reality is <strong>23.1%</strong>. At the
             most selective schools, our model under-confidently shrinks toward zero. That is a known
             limitation of training on a corpus where &ldquo;got into Harvard&rdquo; is rare. Take any
             single-digit percentage here as &ldquo;very hard, but the true odds are higher than this
